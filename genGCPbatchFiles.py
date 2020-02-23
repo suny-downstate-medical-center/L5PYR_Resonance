@@ -26,10 +26,17 @@ else:
 
 try:
     os.mkdir(out_path + 'gcp_batch_files')
+except:
+    pass
 try:
     os.mkdir(out_path + 'logs')
+except:
+    pass
 try:
     os.mkdir(out_path + 'errs')
+except:
+    pass
+
 sh_file = open(out_path+'gcp_batch_files/chirp-batch.sh','w')
 sh_file.write('#!/bin/bash\n')
 

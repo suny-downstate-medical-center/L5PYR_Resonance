@@ -1,6 +1,4 @@
 # Load in the goods
-from neuron import h, init
-# h.load_file("stdrun.hoc")
 import numpy as np
 import sys
 from scipy.io import savemat
@@ -12,10 +10,33 @@ amp = 0.0025
 f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
 I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
-# load PT cell template
-h.load_file("./cells/PTcell.hoc")
-ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
-pt_cell = h.PTcell(ihMod2str['migliore'], 14*2)
+# parse cmd line inputs, load PT cell template
+if sys.argv[-2] == 'Hay':
+    from getCells import HayCell
+    pt_cell = HayCell()
+elif sys.argv[-2] == 'Neymotin':
+    from getCells import NeymotinCell
+    pt_cell = NeymotinCell()
+elif sys.argv[-2] == 'AckerAntic':
+    from getCells import AckerAnticCell
+    pt_cell = AckerAnticCell()
+elif sys.argv[-2] == 'Kole':
+    from getCells import KoleCell
+    pt_cell = KoleCell()
+else:
+    print('Error: invalid cell type')
+
+section = sys.argv[-1]
+if sys.argv[-2] == 'AckerAntic':
+    if section.split('.')[1][:4] == 'apic':
+        sec = pt_cell.apical[int(section.split('.')[1].split('[')[1].split(']')[0])]
+    else:
+        sec = pt_cell.basal[int(section.split('.')[1].split('[')[1].split(']')[0])]
+else:
+    if section.split('.')[1][:4] == 'apic':
+        sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
+    else:
+        sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
 
 # define output variables
 ZinResAmp = []
@@ -39,12 +60,6 @@ ZcSynchFreq = []
 ZcLeadPhaseBool = []
 
 #main loop
-section = sys.argv[-1]
-if section.split('.')[1][:4] == 'apic':
-    sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
-else:
-    sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
-
 nseg = sec.nseg
 if nseg == 1:
     loc = 0.5
@@ -121,4 +136,4 @@ output = { 'ZinResAmp' : ZinResAmp,
             'ZcSynchFreq' : ZcSynchFreq,
             'ZcLeadPhaseBool' : ZcLeadPhaseBool}
 
-savemat('/home/craig_kelley_downstate_edu/M1_Res/impedance_measures/'+sec.name()+'.mat',output)
+savemat('/home/craig_kelley_downstate_edu/' + sys.argv[-2] + '/impedance_measures/' + sec.name() + '.mat',output)

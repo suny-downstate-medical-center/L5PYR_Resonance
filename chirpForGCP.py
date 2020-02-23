@@ -136,4 +136,4 @@ output = { 'ZinResAmp' : ZinResAmp,
             'ZcSynchFreq' : ZcSynchFreq,
             'ZcLeadPhaseBool' : ZcLeadPhaseBool}
 
-savemat('/home/craig_kelley_downstate_edu/' + sys.argv[-2] + '/impedance_measures/' + sec.name() + '.mat',output)
+savemat('/home/craig_kelley_downstate_edu/L5PYR_Resonance/' + sys.argv[-2] + '/impedance_measures/' + sec.name() + '.mat',output)

@@ -1,6 +1,4 @@
 import os
-from neuron import h, init
-h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 
 neuronal_model_ids = [485591806]
 
@@ -38,6 +36,8 @@ def activeCell(path = None):
 def KoleCell():
 	owd = os.getcwd()
 	os.chdir('./Kole')
+	from neuron import h, init
+	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	h.load_file('cellTemplate.hoc')
 	cell = h.KoleCell()
 	os.chdir(owd)
@@ -46,6 +46,8 @@ def KoleCell():
 def AckerAnticCell():
 	owd = os.getcwd()
 	os.chdir('./AckerAntic')
+	from neuron import h, init
+	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	exec(open('./cells/eeeD.py').read())
 	cell = MakeCell()
 	os.chdir(owd)
@@ -54,6 +56,8 @@ def AckerAnticCell():
 def NeymotinCell():
 	owd = os.getcwd()
 	os.chdir('./Neymotin')
+	from neuron import h, init
+	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
 	cell = h.PTcell(ihMod2str['migliore'], 14*2)
@@ -63,6 +67,8 @@ def NeymotinCell():
 def HayCell():
 	owd = os.getcwd()
 	os.chdir('./Hay')
+	from neuron import h, init
+	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	h.load_file('import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')

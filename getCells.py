@@ -57,7 +57,6 @@ def NeymotinCell():
 	owd = os.getcwd()
 	os.chdir('./Neymotin')
 	from neuron import h, init
-	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
 	cell = h.PTcell(ihMod2str['migliore'], 14*2)
@@ -74,3 +73,5 @@ def HayCell():
 	h.load_file('./models/L5PCtemplate.hoc')
 	morphology_file = './morphologies/cell1.asc'
 	cell = h.L5PCtemplate(morphology_file)
+	os.chdir(owd)
+	return cell

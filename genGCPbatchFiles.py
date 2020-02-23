@@ -24,9 +24,12 @@ elif sys.argv[-1] == 'Kole':
 else:
     print('Error: invalid cell type')
 
-os.mkdir(out_path + 'gcp_batch_files')
-os.mkdir(out_path + 'logs')
-os.mkdir(out_path + 'errs')
+try:
+    os.mkdir(out_path + 'gcp_batch_files')
+try:
+    os.mkdir(out_path + 'logs')
+try:
+    os.mkdir(out_path + 'errs')
 sh_file = open(out_path+'gcp_batch_files/chirp-batch.sh','w')
 sh_file.write('#!/bin/bash\n')
 

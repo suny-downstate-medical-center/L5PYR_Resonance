@@ -3,13 +3,6 @@ import numpy as np
 import sys
 from scipy.io import savemat
 
-# define current stimulus
-from chirpUtils import applyChirp
-from chirpUtils import getChirp
-amp = 0.0025
-f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
-I, t = getChirp(f0, f1, t0, amp, Fs, delay)
-
 # parse cmd line inputs, load PT cell template
 if sys.argv[-2] == 'Hay':
     from getCells import HayCell
@@ -37,6 +30,13 @@ else:
         sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
+
+# define current stimulus
+from chirpUtils import applyChirp
+from chirpUtils import getChirp
+amp = 0.0025
+f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
+I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
 # define output variables
 ZinResAmp = []

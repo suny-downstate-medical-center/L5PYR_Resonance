@@ -1,21 +1,5 @@
 import os
 
-neuronal_model_ids = [485591806]
-
-# Func to download cell files from allen institute, not sure if keeping
-def getCells():
-	from allensdk.api.queries.biophysical_api import BiophysicalApi
-
-	bp = BiophysicalApi()
-	bp.cache_stimulus = False # change to False to not download the large stimulus NWB file
-
-	for neuronal_model_id in neuronal_model_ids:
-		os.system('mkdir ' + str(neuronal_model_id))
-		bp.cache_data(neuronal_model_id, working_directory=str(neuronal_model_id))
-		os.system('cd ' + str(neuronal_model_id) + '; nrnivmodl ./modfiles; cd ../')
-		os.system('cp ../471087975/cell_utils.py ' + str(neuronal_model_id))
-		os.system('cp ../471087975/cell_template.hoc ' + str(neuronal_model_id))
-
 # Generic function to return cell object containing sections 
 def Cell(path = None):
 	owd = os.getcwd()

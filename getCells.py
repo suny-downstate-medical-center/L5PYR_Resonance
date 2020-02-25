@@ -46,8 +46,8 @@ def KoleCell():
 def AckerAnticCell():
 	owd = os.getcwd()
 	os.chdir('./AckerAntic')
-	from neuron import h, init
-	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
+	# from neuron import h, init
+	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	exec(open('./cells/eeeD.py').read())
 	cell = MakeCell()
 	os.chdir(owd)

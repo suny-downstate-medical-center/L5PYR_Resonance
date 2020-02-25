@@ -25,11 +25,13 @@ if sys.argv[-2] == 'AckerAntic':
         sec = pt_cell.apical[int(section.split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.basal[int(section.split('[')[1].split(']')[0])]
+    soma_seg = pt_cell.soma[0](0.5)
 else:
     if section.split('.')[1][:4] == 'apic':
         sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
+    soma_seg = pt_cell.soma(0.5)
 
 # define current stimulus
 from chirpUtils import applyChirp
@@ -63,7 +65,7 @@ ZcLeadPhaseBool = []
 nseg = sec.nseg
 if nseg == 1:
     loc = 0.5
-    out = applyChirp(I, t, sec(loc), pt_cell.soma(0.5), t0, delay, Fs, f1)
+    out = applyChirp(I, t, sec(loc), soma_seg, t0, delay, Fs, f1)
     ZinResAmp.append(out['ZinResAmp'])
     ZinResFreq.append(out['ZinResFreq'])
     ZcResAmp.append(out['ZcResAmp'])
@@ -90,7 +92,7 @@ if nseg == 1:
     print(str(sec) + ' ' + str(loc))
 else:
     for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-        out = applyChirp(I, t, sec(loc), pt_cell.soma(0.5), t0, delay, Fs, f1)
+        out = applyChirp(I, t, sec(loc), soma_seg, t0, delay, Fs, f1)
         ZinResAmp.append(out['ZinResAmp'])
         ZinResFreq.append(out['ZinResFreq'])
         ZcResAmp.append(out['ZcResAmp'])

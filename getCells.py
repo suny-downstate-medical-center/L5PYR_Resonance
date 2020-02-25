@@ -32,7 +32,10 @@ def AckerAnticCell():
 	os.chdir('./AckerAntic')
 	# from neuron import h, init
 	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
-	exec(open('./cells/eeeD.py').read())
+	# exec(open('./cells/eeeD.py').read())
+	import sys 
+	sys.path.insert(1, './cells/')
+	from eeeD import MakeCell
 	cell = MakeCell()
 	os.chdir(owd)
 	return cell

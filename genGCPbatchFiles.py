@@ -60,7 +60,7 @@ for i, sec in enumerate(pt_cell.basal):
         file.write('#SBATCH --mail-type=end\n')
     file.write('source /home/craig_kelley_downstate_edu/.bashrc\n')
     file.write('cd /home/craig_kelley_downstate_edu/L5PYR_Resonance/\n')
-    run_line = 'mpirun -np 1 nrniv -python -mpi chirpForGCP.py ' + sys.argv[-1] + ' ' + str(sec) + '\n'
+    run_line = 'ipython chirpForGCP.py ' + sys.argv[-1] + ' ' + str(sec) + '\n'
     file.write(run_line)
     file.close()
     
@@ -88,7 +88,7 @@ for i, sec in enumerate(pt_cell.apical):
         file.write('#SBATCH --mail-type=end\n')
     file.write('source /home/craig_kelley_downstate_edu/.bashrc\n')
     file.write('cd /home/craig_kelley_downstate_edu/L5PYR_Resonance/\n')
-    run_line = 'mpirun -np 1 nrniv -python -mpi chirpForGCP.py ' + sys.argv[-1] + ' ' + str(sec) + '\n'
+    run_line = 'ipython chirpForGCP.py ' + sys.argv[-1] + ' ' + str(sec) + '\n'
     file.write(run_line)
     file.close()
     

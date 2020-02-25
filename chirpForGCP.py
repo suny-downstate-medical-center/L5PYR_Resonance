@@ -21,10 +21,10 @@ else:
 
 section = sys.argv[-1]
 if sys.argv[-2] == 'AckerAntic':
-    if section.split('.')[1][:4] == 'apic':
-        sec = pt_cell.apical[int(section.split('.')[1].split('[')[1].split(']')[0])]
+    if section.split('[')[0][:4] == 'apic':
+        sec = pt_cell.apical[int(section.split('[')[1].split(']')[0])]
     else:
-        sec = pt_cell.basal[int(section.split('.')[1].split('[')[1].split(']')[0])]
+        sec = pt_cell.basal[int(section.split('[')[1].split(']')[0])]
 else:
     if section.split('.')[1][:4] == 'apic':
         sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]

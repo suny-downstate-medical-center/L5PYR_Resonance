@@ -14,7 +14,7 @@ elif sys.argv[-1] == 'Neymotin':
 elif sys.argv[-1] == 'AckerAntic':
     from getCells import AckerAnticCell
     pt_cell = AckerAnticCell()
-    out_path = '/home/craig_kelley_downstate_edu/L5PYR_Resonance/AckerAnticy/'
+    out_path = '/home/craig_kelley_downstate_edu/L5PYR_Resonance/AckerAntic/'
     os.system('mkdir ./AckerAntic/impedance_measures/')
 elif sys.argv[-1] == 'Kole':
     from getCells import KoleCell

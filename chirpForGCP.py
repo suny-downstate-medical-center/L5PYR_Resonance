@@ -2,6 +2,7 @@
 import numpy as np
 import sys
 from scipy.io import savemat
+from math import nan
 
 # parse cmd line inputs, load PT cell template
 if sys.argv[-2] == 'Hay':
@@ -77,18 +78,32 @@ if nseg == 1:
     fVarTrans.append(out['fVarTrans'])
 
     freqs = out['Freq'][np.argwhere(out['ZinPhase'] > 0)]
-    ZinPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZinPhase'] == np.max(out['ZinPhase']))])
-    ZinLeadPhaseBW.append(freqs[-1] - freqs[0])
-    ZinLeadPhaseMinFreq.append(freqs[0])
-    ZinSynchFreq.append(freqs[-1])
-    ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
+    if len(freqs) > 0:
+        ZinPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZinPhase'] == np.max(out['ZinPhase']))])
+        ZinLeadPhaseBW.append(freqs[-1] - freqs[0])
+        ZinLeadPhaseMinFreq.append(freqs[0])
+        ZinSynchFreq.append(freqs[-1])
+        ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
+    else:
+        ZinPeakPhaseFreq.append(nan)
+        ZinLeadPhaseBW.append(0)
+        ZinLeadPhaseMinFreq.append(nan)
+        ZinSynchFreq.append(nan)
+        ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
 
     freqs = out['Freq'][np.argwhere(out['ZcPhase'] > 0)]
-    ZcPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZcPhase'] == np.max(out['ZcPhase']))])
-    ZcLeadPhaseBW.append(freqs[-1] - freqs[0])
-    ZcLeadPhaseMinFreq.append(freqs[0])
-    ZcSynchFreq.append(freqs[-1])
-    ZcLeadPhaseBool.append(out['ZcPhase'])
+    if len(freqs) > 0:
+        ZcPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZcPhase'] == np.max(out['ZcPhase']))])
+        ZcLeadPhaseBW.append(freqs[-1] - freqs[0])
+        ZcLeadPhaseMinFreq.append(freqs[0])
+        ZcSynchFreq.append(freqs[-1])
+        ZcLeadPhaseBool.append(out['ZcPhase'])
+    else:
+        ZcPeakPhaseFreq.append(nan)
+        ZcLeadPhaseBW.append(0)
+        ZcLeadPhaseMinFreq.append(nan)
+        ZcSynchFreq.append(nan)
+        ZcLeadPhaseBool.append(out['ZcPhase'])
     print(str(sec) + ' ' + str(loc))
 else:
     for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
@@ -104,19 +119,32 @@ else:
         fVarTrans.append(out['fVarTrans'])
 
         freqs = out['Freq'][np.argwhere(out['ZinPhase'] > 0)]
-        ZinPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZinPhase'] == np.max(out['ZinPhase']))])
-        ZinLeadPhaseBW.append(freqs[-1] - freqs[0])
-        ZinLeadPhaseMinFreq.append(freqs[0])
-        ZinSynchFreq.append(freqs[-1])
-        ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
+        if len(freqs) > 0:
+            ZinPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZinPhase'] == np.max(out['ZinPhase']))])
+            ZinLeadPhaseBW.append(freqs[-1] - freqs[0])
+            ZinLeadPhaseMinFreq.append(freqs[0])
+            ZinSynchFreq.append(freqs[-1])
+            ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
+        else:
+            ZinPeakPhaseFreq.append(nan)
+            ZinLeadPhaseBW.append(0)
+            ZinLeadPhaseMinFreq.append(nan)
+            ZinSynchFreq.append(nan)
+            ZinLeadPhaseBool.append(out['ZinPhase'] > 0)
 
         freqs = out['Freq'][np.argwhere(out['ZcPhase'] > 0)]
-        ZcPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZcPhase'] == np.max(out['ZcPhase']))])
-        ZcLeadPhaseBW.append(freqs[-1] - freqs[0])
-        ZcLeadPhaseMinFreq.append(freqs[0])
-        ZcSynchFreq.append(freqs[-1])
-        ZcLeadPhaseBool.append(out['ZcPhase'])
-        print(str(sec) + ' ' + str(loc))
+        if len(freqs) > 0:
+            ZcPeakPhaseFreq.append(out['Freq'][np.argwhere(out['ZcPhase'] == np.max(out['ZcPhase']))])
+            ZcLeadPhaseBW.append(freqs[-1] - freqs[0])
+            ZcLeadPhaseMinFreq.append(freqs[0])
+            ZcSynchFreq.append(freqs[-1])
+            ZcLeadPhaseBool.append(out['ZcPhase'])
+        else:
+            ZcPeakPhaseFreq.append(nan)
+            ZcLeadPhaseBW.append(0)
+            ZcLeadPhaseMinFreq.append(nan)
+            ZcSynchFreq.append(nan)
+            ZcLeadPhaseBool.append(out['ZcPhase'])
 
 output = { 'ZinResAmp' : ZinResAmp,
             'ZinResFreq' : ZinResFreq,

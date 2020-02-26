@@ -26,12 +26,15 @@ if sys.argv[-2] == 'AckerAntic':
         sec = pt_cell.apical[int(section.split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.basal[int(section.split('[')[1].split(']')[0])]
-    soma_seg = pt_cell.soma[0](0.5)
 else:
     if section.split('.')[1][:4] == 'apic':
         sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
+
+if sys.argv[-2] == 'AckerAntic' or sys.argv[-2] == 'Hay':
+    soma_seg = pt_cell.soma[0](0.5)
+else:
     soma_seg = pt_cell.soma(0.5)
 
 # define current stimulus

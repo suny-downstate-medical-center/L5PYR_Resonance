@@ -19,7 +19,7 @@ elif sys.argv[-1] == 'Kole':
 else:
     from getCells import AllenCell
     try:
-        pt_cell = AllenCell(sys.argv[-2])
+        pt_cell = AllenCell(sys.argv[-1])
     except:
         print('Error: invalid cell type')
 ## create output directories

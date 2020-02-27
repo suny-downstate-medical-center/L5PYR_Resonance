@@ -6,22 +6,22 @@ from math import nan
 
 # parse cmd line inputs, load PT cell template
 ## load cell
-if sys.argv[-1] == 'Hay':
+if sys.argv[-2] == 'Hay':
     from getCells import HayCell
     pt_cell = HayCell()
-elif sys.argv[-1] == 'Neymotin':
+elif sys.argv[-2] == 'Neymotin':
     from getCells import NeymotinCell
     pt_cell = NeymotinCell()
-elif sys.argv[-1] == 'AckerAntic':
+elif sys.argv[-2] == 'AckerAntic':
     from getCells import AckerAnticCell
     pt_cell = AckerAnticCell()
-elif sys.argv[-1] == 'Kole':
+elif sys.argv[-2] == 'Kole':
     from getCells import KoleCell
     pt_cell = KoleCell()
 else:
     from getCells import AllenCell
     try:
-        pt_cell = AllenCell(sys.argv[-1])
+        pt_cell = AllenCell(sys.argv[-2])
     except:
         print('Error: invalid cell type')
 

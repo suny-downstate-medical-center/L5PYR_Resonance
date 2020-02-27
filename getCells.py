@@ -6,8 +6,8 @@ active_model_ids = [497229117, 491766131, 497232312, 485591806,
 
 class allenCell:
 	def __init__(self):
-		self.dend = []
-		self.apic = []
+		self.basal = []
+		self.apical = []
 		self.soma = []
 		self.axon = []
 
@@ -15,9 +15,9 @@ class allenCell:
 		for sec in h.soma:
 			self.soma.append(sec)
 		for sec in h.apic:
-			self.apic.append(sec)
+			self.apical.append(sec)
 		for sec in h.dend:
-			self.dend.append(sec)
+			self.basal.append(sec)
 		for sec in h.axon:
 			self.axon.append(sec)
 

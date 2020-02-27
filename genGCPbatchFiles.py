@@ -23,7 +23,7 @@ else:
     except:
         print('Error: invalid cell type')
 ## create output directories
-out_path = '/home/craig_kelley_downstate_edu/' + sys.argv[-1] + '/'
+out_path = '/home/craig_kelley_downstate_edu/L5PYR_Resonance/' + sys.argv[-1] + '/'
 try:
     os.mkdir(out_path + 'impedance_measures')
 except:

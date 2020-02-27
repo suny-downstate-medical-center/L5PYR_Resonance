@@ -6,32 +6,37 @@ from math import nan
 
 # parse cmd line inputs, load PT cell template
 ## load cell
-if sys.argv[-2] == 'Hay':
+if sys.argv[-1] == 'Hay':
     from getCells import HayCell
     pt_cell = HayCell()
-elif sys.argv[-2] == 'Neymotin':
+elif sys.argv[-1] == 'Neymotin':
     from getCells import NeymotinCell
     pt_cell = NeymotinCell()
-elif sys.argv[-2] == 'AckerAntic':
+elif sys.argv[-1] == 'AckerAntic':
     from getCells import AckerAnticCell
     pt_cell = AckerAnticCell()
-elif sys.argv[-2] == 'Kole':
+elif sys.argv[-1] == 'Kole':
     from getCells import KoleCell
     pt_cell = KoleCell()
 else:
-    print('Error: invalid cell type')
+    from getCells import AllenCell
+    try:
+        pt_cell = AllenCell(sys.argv[-1])
+    except:
+        print('Error: invalid cell type')
+
 ## specify stimulated section and soma segment
 section = sys.argv[-1]
-if sys.argv[-2] == 'AckerAntic':
-    if section.split('[')[0][:4] == 'apic':
-        sec = pt_cell.apical[int(section.split('[')[1].split(']')[0])]
-    else:
-        sec = pt_cell.basal[int(section.split('[')[1].split(']')[0])]
-else:
+if sys.argv[-2] == 'Neymotin' or sys.argv[-2] == 'Hay' or sys.argv[-2] == 'Kole':
     if section.split('.')[1][:4] == 'apic':
         sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
     else:
         sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
+else:
+    if section.split('[')[0][:4] == 'apic':
+        sec = pt_cell.apical[int(section.split('[')[1].split(']')[0])]
+    else:
+        sec = pt_cell.basal[int(section.split('[')[1].split(']')[0])]
 
 if sys.argv[-2] == 'Neymotin' or sys.argv[-2] == 'Kole':
     soma_seg = pt_cell.soma(0.5)

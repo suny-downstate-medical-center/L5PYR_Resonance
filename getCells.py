@@ -1,21 +1,54 @@
 import os
 
-# Generic function to return cell object containing sections 
-def Cell(path = None):
-	owd = os.getcwd()
-	os.chdir(path)
-	from cell_utils import Utils
-	cell = Utils().cell
-	os.chdir(owd)
-	return cell
+active_model_ids = [497229117, 491766131, 497232312, 485591806,
+		497232419, 497232429, 496930324, 497232564, 497232839, 497232946,
+		497233049, 497233139, 497233307, 497229124]
 
-def activeCell(path = None):
+class allenCell:
+	def __init__(self):
+		self.dend = []
+		self.apic = []
+		self.soma = []
+		self.axon = []
+
+	def generate_cell(self, h):
+		for sec in h.soma:
+			self.soma.append(sec)
+		for sec in h.apic:
+			self.apic.append(sec)
+		for sec in h.dend:
+			self.dend.append(sec)
+		for sec in h.axon:
+			self.axon.append(sec)
+
+def GetAllenCells(neuronal_model_ids):
+
+	from allensdk.api.queries.biophysical_api import BiophysicalApi
+
+	bp = BiophysicalApi()
+	bp.cache_stimulus = False # change to True to download the large stimulus NWB file
+
+	for neuronal_model_id in neuronal_model_ids:
+		os.system('mkdir ' + str(neuronal_model_id))
+		bp.cache_data(neuronal_model_id, working_directory=str(neuronal_model_id))
+		os.system('cd ' + str(neuronal_model_id) + '; nrnivmodl ./modfiles; cd ../')
+
+def AllenCell(path = None):
 	owd = os.getcwd()
 	os.chdir(path)
-	from active_cell_utils import Utils
-	cell = Utils().cell
+	from allensdk.model.biophys_sim.config import Config                                         
+	from allensdk.model.biophysical import utils as Utils # this is basically "implied" in the tutorial                                   
+	description = Config().load('manifest.json')  
+	manifest = description.manifest                                                              
+	morphology_path = description.manifest.get_path('MORPHOLOGY') 
+	utils = Utils.create_utils(description, model_type='Biophysical - all active') # this is insane - help doc says ALL_ACTIVE_TYPE or PERISOMATIC_TYPE for model_type
+	h = utils.h
+	utils.generate_morphology(morphology_path) # in tutorial, they instead use mophology_path.encode('ascii','ignore')
+	utils.load_cell_parameters()
+	cell = allenCell()
+	cell.generate_cell(h)
 	os.chdir(owd)
-	return cell
+	return cell 
 
 def KoleCell():
 	owd = os.getcwd()
@@ -30,9 +63,6 @@ def KoleCell():
 def AckerAnticCell():
 	owd = os.getcwd()
 	os.chdir('./AckerAntic')
-	# from neuron import h, init
-	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
-	# exec(open('./cells/eeeD.py').read())
 	import sys 
 	sys.path.insert(1, './cells/')
 	from eeeD import MakeCell

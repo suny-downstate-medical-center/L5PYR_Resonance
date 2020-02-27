@@ -20,10 +20,10 @@ elif sys.argv[-2] == 'Kole':
     pt_cell = KoleCell()
 else:
     from getCells import AllenCell
-    try:
-        pt_cell = AllenCell(sys.argv[-2])
-    except:
-        print('Error: invalid cell type')
+    # try:
+    pt_cell = AllenCell(sys.argv[-2])
+    # except:
+    #     print('Error: invalid cell type')
 
 ## specify stimulated section and soma segment
 section = sys.argv[-1]

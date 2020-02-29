@@ -1,4 +1,5 @@
 import os
+import syss
 
 active_model_ids = [497229117, 491766131, 497232312, 485591806,
 		497232419, 497232429, 496930324, 497232564, 497232839, 497232946,
@@ -36,6 +37,7 @@ def GetAllenCells(neuronal_model_ids):
 def AllenCell(path = None):
 	owd = os.getcwd()
 	os.chdir(path)
+	sys.path.append('/usr/local/lib/python3.6/site-packages/allensdk')
 	from allensdk.model.biophys_sim.config import Config                                         
 	from allensdk.model.biophysical import utils as Utils # this is basically "implied" in the tutorial                                   
 	description = Config().load('manifest.json')  
@@ -70,13 +72,13 @@ def AckerAnticCell():
 	os.chdir(owd)
 	return cell
 
-def NeymotinCell():
+def NeymotinCell(slope=14*2):
 	owd = os.getcwd()
 	os.chdir('./Neymotin')
 	from neuron import h, init
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
-	cell = h.PTcell(ihMod2str['migliore'], 14*2)
+	cell = h.PTcell(ihMod2str['migliore'], slope)
 	os.chdir(owd)
 	return cell
 

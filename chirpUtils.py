@@ -81,25 +81,24 @@ def phaseLag(ZinPhase, ZcPhase):
 
 # apply chirp stimulus to segment
 def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
-    # h.dt = 0.001
 
-    #place current clamp on soma
+    ## place current clamp on soma
     stim = h.IClamp(seg)
     stim.amp = 0
     stim.dur = (t0+delay*2) * Fs + 1
     I.play(stim._ref_amp, t)
 
-    #Record time
+    ## Record time
     t_vec = h.Vector()
     t_vec.record(h._ref_t)
 
-    #Record soma voltage
+    ## Record soma voltage
     soma_v = h.Vector()
     soma_v.record(soma_seg._ref_v)
     cis_v = h.Vector()
     cis_v.record(seg._ref_v)
     
-    #run simulation
+    ## run simulation
     h.celsius = 34
     h.tstop = (t0+delay*2) * Fs + 1
     h.run()
@@ -108,13 +107,12 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     
     current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
                            np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs + 1,endpoint=True), I.as_numpy())
-    # current_np = I.as_numpy()
     time = t_vec.as_numpy()
     cis_np = cis_v.as_numpy()
     
     samp_rate = (1 / (time[1] - time[0])) * Fs
     
-    #calculate impedance
+    ## calculate impedance
     Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
     _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
 
@@ -123,6 +121,7 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
 
     dist = fromtodistance(seg, soma_seg)
 
+    ## generate output
     out = {'Freq' : Freq,
         'ZinRes' : ZinRes,
         'ZinReact' : ZinReact,

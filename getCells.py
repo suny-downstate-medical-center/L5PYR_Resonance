@@ -37,7 +37,7 @@ def GetAllenCells(neuronal_model_ids):
 def AllenCell(path = None):
 	owd = os.getcwd()
 	os.chdir(path)
-	sys.path.append('/usr/local/python/')
+	sys.path.append('/home/craig_kelley_downstate_edu/allensdk/lib/python3.6/site-packages/')
 	from allensdk.model.biophys_sim.config import Config                                         
 	from allensdk.model.biophysical import utils as Utils # this is basically "implied" in the tutorial                                   
 	description = Config().load('manifest.json')  

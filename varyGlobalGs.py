@@ -18,8 +18,14 @@ else:
 soma_seg = pt_cell.soma(0.5)
 
 ## specify factors to change gbar ih/im by, ih comes first
-ih_factor = float(sys.argv[-3])
-im_factor = float(sys.argv[-2])
+if sys.argv[-3][0] == 'm':
+    ih_factor = -0.15
+else:
+    ih_factor = float(sys.argv[-3])
+if sys.argv[-2][0] == 'm':
+    im_factor = -0.15
+else:
+    im_factor = float(sys.argv[-2])
 
 # changes to Im/Ih
 ## determine original values

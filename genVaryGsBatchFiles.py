@@ -23,7 +23,7 @@ try:
 except:
     pass
 
-factors = ['-0.15', '0.0', '0.15']
+factors = ['m0.15', '0.0', '0.15']
 
 # main code for generating sbatch files and bash file to submit them
 ## create bash file
@@ -74,9 +74,9 @@ for ih_factor in factors:
             file.write('#SBATCH -t 12:00:00\n')
             file.write('#SBATCH --nodes=1\n')
             file.write('#SBATCH --ntasks-per-node=1\n')
-            log_line = '#SBATCH -o ' + out_path + 'logs/' + str(sec) + '.log\n'
+            log_line = '#SBATCH -o ' + out_path + 'logs/' + str(sec) + '_ih_' + ih_factor + '_im_' + im_factor + '.log\n'
             file.write(log_line)
-            err_line = '#SBATCH -e ' + out_path + 'errs/' + str(sec) + '.err\n'
+            err_line = '#SBATCH -e ' + out_path + 'errs/' + str(sec) + '_ih_' + ih_factor + '_im_' + im_factor + '.err\n'
             file.write(err_line)
             if i == 0:
                 file.write('#SBATCH --mail-user=craig.kelley@downstate.edu\n')

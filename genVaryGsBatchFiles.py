@@ -33,10 +33,10 @@ sh_file.write('#!/bin/bash\n')
 ### loop through ih amd im factors
 for ih_factor in factors:
     for im_factor in factors:
-        os.mkdir(out_path + 'ih_' + ih_factor + '_im_' + im_factor + '')
+        os.mkdir(out_path + 'ih_' + ih_factor + '_im_' + im_factor)
         #### basal sections
         for i, sec in enumerate(pt_cell.basal):
-            file_name = str(sec)+'-batch.sbatch'
+            file_name = str(sec) + '_ih_' + ih_factor + '_im_' + im_factor + '-batch.sbatch'
             file = open(out_path+'gcp_batch_files/'+file_name,'w')
             
             file.write('#!/bin/bash\n')
@@ -64,7 +64,7 @@ for ih_factor in factors:
             sh_file.write(sh_line)
         #### apical sections
         for i, sec in enumerate(pt_cell.apical):
-            file_name = str(sec)+'-batch.sbatch'
+            file_name = str(sec) + '_ih_' + ih_factor + '_im_' + im_factor + '-batch.sbatch'
             file = open(out_path+'gcp_batch_files/'+file_name,'w')
             
             file.write('#!/bin/bash\n')

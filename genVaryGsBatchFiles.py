@@ -23,7 +23,7 @@ try:
 except:
     pass
 
-factors = ['-0.2', '-0.1', '0.0', '0.1', '0.2']
+factors = ['-0.15', '0.0', '0.15']
 
 # main code for generating sbatch files and bash file to submit them
 ## create bash file

@@ -181,4 +181,4 @@ output = { 'ZinResAmp' : ZinResAmp,
             'ZcSynchFreq' : ZcSynchFreq,
             'ZcLeadPhaseBool' : ZcLeadPhaseBool}
 
-savemat('/home/craig_kelley_downstate_edu/L5PYR_Resonance/Kole/Vary_Global_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + sec.name() + '.mat', output)
+savemat('/home/craig_kelley_downstate_edu/L5PYR_Resonance/Kole/Vary_Global_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)

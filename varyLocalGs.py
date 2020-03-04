@@ -31,29 +31,27 @@ else:
 ## determine original values
 orig_km = []
 orig_ih = []
-for sec in pt_cell.all:
-    for seg in sec.allseg():
-        try:
-            orig_km.append(seg.Km.gbar)
-        except:
-            orig_km.append(0)
-        try:
-            orig_ih.append(seg.ih.ghdbar)
-        except:
-            orig_ih.append(0)
+for seg in stim_sec.allseg():
+    try:
+        orig_km.append(seg.Km.gbar)
+    except:
+        orig_km.append(0)
+    try:
+        orig_ih.append(seg.ih.ghdbar)
+    except:
+        orig_ih.append(0)
 ## change Ih/Im
 count = 0
-for sec in pt_cell.all:
-    for seg in sec.allseg():
-        try:
-            seg.Km.gbar = orig_km[count] + im_factor * orig_km[count]
-        except:
-            pass
-        try:
-            seg.ih.ghdbar = orig_ih[count] + ih_factor * orig_ih[count]
-        except:
-            pass
-        count = count + 1
+for seg in stim_sec.allseg():
+    try:
+        seg.Km.gbar = orig_km[count] + im_factor * orig_km[count]
+    except:
+        pass
+    try:
+        seg.ih.ghdbar = orig_ih[count] + ih_factor * orig_ih[count]
+    except:
+        pass
+    count = count + 1
 
 # define current stimulus
 from chirpUtils import applyChirp

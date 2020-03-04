@@ -40,7 +40,7 @@ end
 clear file
 
 % plot
-fig = figure('units','normalized','outerposition',[0 0 1 1],'visible','off');
+fig = figure('units','normalized','outerposition',[0 0 1 1]);%,'visible','off');
 subplot(2,3,1)
 scatter(dist, ZinResAmp ./ max(ZinResAmp), 'k' ,'o')
 ylabel('Normalized Resonance Amplitude')
@@ -81,8 +81,8 @@ catch
 end
 ylabel('Leading Phase Bandwidth (Hz)')
 set(gca, 'FontSize', 14)
-
-saveas(fig, strcat(fig_name,'.png'))
-saveas(fig, strcat(fig_name,'.fig'))
+% 
+% saveas(fig, strcat(fig_name,'.png'))
+% saveas(fig, strcat(fig_name,'.fig'))
 
 end

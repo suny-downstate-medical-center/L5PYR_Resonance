@@ -82,7 +82,7 @@ def NeymotinCell(slope=14*2):
 	os.chdir(owd)
 	return cell
 
-def HayCell():
+def HayCell(morphology_file = './morphologies/cell1.asc'):
 	owd = os.getcwd()
 	os.chdir('./Hay')
 	from neuron import h, init
@@ -90,7 +90,6 @@ def HayCell():
 	h.load_file('import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')
-	morphology_file = './morphologies/cell1.asc'
 	cell = h.L5PCtemplate(morphology_file)
 	os.chdir(owd)
 	return cell

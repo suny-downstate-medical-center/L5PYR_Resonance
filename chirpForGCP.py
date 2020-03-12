@@ -47,7 +47,8 @@ else:
 from chirpUtils import applyChirp
 from chirpUtils import getChirp
 amp = 0.0025
-f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
+## f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12 # original for all cells
+f0, f1, t0, Fs, delay = 0.5, 100, 100, 1000, 5 # for looking at bimodal leading phase response in Hay cell
 I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
 # define output variables

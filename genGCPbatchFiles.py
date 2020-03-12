@@ -56,7 +56,7 @@ for i, sec in enumerate(pt_cell.basal):
     job_name = '#SBATCH --job-name=' + str(sec)+ '\n'
     file.write(job_name)
     file.write('#SBATCH -A default\n')
-    file.write('#SBATCH -t 12:00:00\n')
+    file.write('#SBATCH -t 24:00:00\n')
     file.write('#SBATCH --nodes=1\n')
     file.write('#SBATCH --ntasks-per-node=1\n')
     log_line = '#SBATCH -o ' + out_path + 'logs/' + str(sec) + '.log\n'
@@ -84,7 +84,7 @@ for i, sec in enumerate(pt_cell.apical):
     job_name = '#SBATCH --job-name=' + str(sec)+ '\n'
     file.write(job_name)
     file.write('#SBATCH -A default\n')
-    file.write('#SBATCH -t 12:00:00\n')
+    file.write('#SBATCH -t 24:00:00\n')
     file.write('#SBATCH --nodes=1\n')
     file.write('#SBATCH --ntasks-per-node=1\n')
     log_line = '#SBATCH -o ' + out_path + 'logs/' + str(sec) + '.log\n'

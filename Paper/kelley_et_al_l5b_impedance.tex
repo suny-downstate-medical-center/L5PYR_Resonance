@@ -30,8 +30,8 @@
 $^{2}$Department of Physiology \& Pharmacology, SUNY Downstate Health Sciences University, Brooklyn, NY, USA\\
 $^{3}$Center for Biomedical Imaging and Neuromodulation, Nathan S. Kline Institute for Psychiatric Research, Orangeburg, USA\\
 $^{4}$Department Neuroscience, Yale University, New Haven, USA\\
-$^{5}$Department of Neurology, SUNY Downstate Medical Center, Brooklyn, New York, USA
-$^{6}$Department of Neurology, Kings County Hospital Center, Brooklyn, New York, USA
+$^{5}$Department of Neurology, SUNY Downstate Medical Center, Brooklyn, New York, USA\\
+$^{6}$Department of Neurology, Kings County Hospital Center, Brooklyn, New York, USA\\
 $^{7}$The Robert F. Furchgott Center for Neural and Behavioral Science, Brooklyn, New York, USA}
 % The Corresponding Author should be marked with an asterisk
 % Provide the exact contact address (this time including street name and city zip code) and email of the corresponding author
@@ -54,10 +54,9 @@ $^{7}$The Robert F. Furchgott Center for Neural and Behavioral Science, Brooklyn
 
 \extraAuth{}% If there are more than 1 corresponding author, comment this line and uncomment the next one.
 %\extraAuth{corresponding Author2 \\ Laboratory X2, Institute X2, Department X2, Organization X2, Street X2, City X2 , State XX2 (only USA, Canada and Australia), Zip Code2, X2 Country X2, email2@uni2.edu}
-
+    
 
 \maketitle
-
 
 \begin{abstract}
 
@@ -78,7 +77,7 @@ showing that changes in HCN and M-type K+ channel conductances, both locally and
 impedance response, producing a wide range of profiles.  We also clearly demonstrate the impedance profile's dependence on cell
 morphology.  Although a number of cell models exhibit impedance profiles that diverge from the experimental data, some have 
 biologically plausible impedance profiles which may reflect regional variation or cells with different histories and therefore
-differently tuned impedance responses. Given the dearth of experimental data on resonance in neocortical pyrmaidal neurons 
+differently tuned impedance responses. Given the dearth of experimental data on dendritic impedance in neocortical pyrmaidal neurons 
 from different cortical regions, we hypothesize that neocortical pyramidal neurons have more diverse impedance profiles 
 than previously assumed.
 
@@ -87,8 +86,29 @@ than previously assumed.
 \end{abstract}
 
 \section{Introduction}
+The pyramidal cells (PCs) found in layer 5 (L5) of neocortex are the main outputs of the cortex and projecting to various other
+a number of other cortical and subcortical structures, implicating the role of PCs in top down control of other brain areas and 
+motor function \citep{Levesque1996-hf, Veinante2000-gg, Hattox2007-km, Aronoff2010-do, Harris2015-te, Naka2016-rn}.  Furthermore,
+In order to produce their outputs, L5 PCs integrate inputs from all other cortical layers and thalamus \citep{Agmon1992-mi, 
+Meyer2010-pe, Wimmer2010-lq, Oberlaender2012-fh, Rah2013-kr, Markram2015-zg}. There is also great diversity among PCs in L5, not just
+in their  morphologies and projections, but also in their spiking activity, with some PCs having high spontaneous firing rates while 
+others' firing rates are closely tied correlated with the activity of neurons in the surrounding population \citep{Markram2015-zg}.
+The balance of excitatory and inhibitory inputs and the electrotonic structure of PCs are key in understanding how PCs generate their
+outputs and exert top-down control over other parts of the neurvous system.  PCs are not, however, the only outputs of L5.  There are
+also intertelencephalic (IT) or commisural neurons, which project to contralateral cortex.  One of the main factors, besides their
+projections, that distinguish PCs from IT cells is their comparatively high expression of the hyperpolarization-activated cyclic 
+nucleotide–gated (HCN) channel, a nonselective voltage-gated cation channel responsible for the h-current (I$_h$) \citep{Oswald2013-lh}.
 
-For Original Research Articles \citep{conference}, Clinical Trial Articles \citep{article}, and Technology Reports \citep{patent}, the introduction should be succinct, with no subheadings \citep{book}. For Case Reports the Introduction should include symptoms at presentation \citep{chapter}, physical exams and lab results \citep{dataset}.
+I$_h$ has some dramatic effects on the intrinsic dynamics and exictability of neurons.  It acts as a pacemaker current, supporting burst
+and regular firing modes and mediating the sag potential observed during hyperpolarization and spike frequency adaptation during
+suprathreshold depolarization \citep{Robinson2003-uc, Oswald2013-lh}. I$_h$ also mediates coincidence detection \citep{Das2015-mh, Dewell2019-ra} 
+and has been suggested to determine the frequency response of neuronal membrane potential in response to weak 
+alternating electric field stimulation \citep{Toloza2018-vh}.  HCN channels have also been shown to have paradoxical effects on 
+excitatory post-synaptic potentials (EPSPs), enhancing spiking in response to EPSPs when the spike threshold is low and inhibiting 
+spiking in response to EPSPs when the spike threshold is low \citep{George2009-ad}.  This may implicate a role for HCN channels in the 
+separation of planning and action.  Due to the activity of HCN channels in PCs, PCs respond to dynamic stimuli as bandpass filters, 
+whereas IT cells behave like low-pass filters \citep{Dembrow2010-lb}.
+
 
 
 
@@ -164,7 +184,7 @@ The datasets [GENERATED/ANALYZED] for this study can be found in the [NAME OF RE
 
 \bibliographystyle{frontiersinSCNS_ENG_HUMS} % for Science, Engineering and Humanities and Social Sciences articles, for Humanities and Social Sciences articles please include page numbers in the in-text citations
 %\bibliographystyle{frontiersinHLTH&FPHY} % for Health, Physics and Mathematics articles
-\bibliography{test}
+\bibliography{impedance_biblio}
 
 %%% Make sure to upload the bib file along with the tex file and PDF
 %%% Please see the test.bib file for some examples of references

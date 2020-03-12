@@ -14,8 +14,8 @@ and M- and A-type K+ channels. We investigated the roles of different voltage-ga
 showing that changes in HCN and M-type K+ channel conductances, both locally and across the dendritic arbor, can modulate the
 impedance response, producing a wide range of profiles.  We also clearly demonstrate the impedance profile's dependence on cell
 morphology.  Although a number of cell models exhibit impedance profiles that diverge from the experimental data, some have 
-biologically plausible impedance profile    s which may reflect regional variation or cells with different histories and therefore
-differently tuned impedance responses. In light of the dirth of experimental data on resonance in neocortical pyrmaidal neurons 
+biologically plausible impedance profiles which may reflect regional variation or cells with different histories and therefore
+differently tuned impedance responses. Given the dearth of experimental data on resonance in neocortical pyrmaidal neurons 
 from different cortical regions, we hypothesize that neocortical pyramidal neurons have more diverse impedance profiles 
 than previously assumed.
 * [2020-3-10 Tue] - Introduction outline (cont to [2020-3-12 Thu])
@@ -100,3 +100,7 @@ elucidated the role of individual conductances in modulating sub-threshold imped
 frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) in active dendritic spectral tuning (Rathour2012-bu; Rathour2014-pl)." Das2017-nz
 ***** mainly studied in hippocampal neurons
 *** role in disease: Ih altered in temporal lobe epilepsy Shin2008-za, Marcelin2009-vy
+
+* [2020-3-12 Thu] 
+** fairly satisfied w/ intro outline
+** going with frontiers in neuroscience as target journal (in part becasue formatting is easy)

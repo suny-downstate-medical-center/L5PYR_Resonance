@@ -18,31 +18,27 @@ biologically plausible impedance profile    s which may reflect regional variati
 differently tuned impedance responses. In light of the dirth of experimental data on resonance in neocortical pyrmaidal neurons 
 from different cortical regions, we hypothesize that neocortical pyramidal neurons have more diverse impedance profiles 
 than previously assumed.
-* [2020-3-10 Tue] - Introduction outline (cont to [2020-3-11 Wed])
+* [2020-3-10 Tue] - Introduction outline (cont to [2020-3-12 Thu])
 ** Neocortical pyramidal neurons
 *** Main oupuuts of neocortex 
 **** something about I/O relationship
-
 *** Diversity:  
 **** Naka2016-rn
 "Before surveying the existent literature on layer 5 (L5) inhibitory neurons, we briefly review current
 knowledge on the connectivity and physiological properties of L5 pyramidal cells (PCs), as it
 provides important context for understanding L5 inhibitory circuits. One feature that distinguishes
 L5 from other cortical layers is the diversity of its PCs, which send a myriad of long-range
-projections to other cortical and sub-cortical structures (Lévesque et al., 1996; Veinante et al., 2000;
-Hattox and Nelson, 2007; Aronoff et al., 2010; reviewed in Harris and Shepherd, 2015). This simple
-anatomical fact establishes L5 as a primary cortical layer involved in the top-down control of
-other brain areas. Exactly how L5 circuits parse information to influence downstream circuits and
-control behavior is one of the central questions in neuroscience. Even though L5 is conventionally
-thought of as primarily an output layer, L5 PCs also receive direct thalamocortical input (Agmon
-and Connors, 1992; Meyer et al., 2010; Wimmer et al., 2010; Oberlaender et al., 2012; Rah et al.,
-2013) and can be driven by thalamic activity alone (Constantinople and Bruno, 2013), suggesting
-that L5 is an important input layer as well. L5 PCs also receive input from all cortical layers and
+projections to other cortical and sub-cortical structures (Levesque1996-hf; Veinante2000-gg;
+Hattox2007-km; Aronoff2010-do; Harris2015-te). This simple anatomical fact establishes L5 as a primary 
+cortical layer involved in the top-down control of other brain areas. Exactly how L5 circuits parse information to 
+influence downstream circuits and control behavior is one of the central questions in neuroscience. Even though L5 is
+conventionally thought of as primarily an output layer, L5 PCs also receive direct thalamocortical input (Agmon1992-mi;
+Meyer2010-pe; Wimmer2010-lq; Oberlaender2012-fh; Rah2013-kr) and can be driven by thalamic activity alone (Constantinople2013-bq), 
+suggesting that L5 is an important input layer as well. L5 PCs also receive input from all cortical layers and
 are thus uniquely positioned to integrate nearly every local and afferent pathway in the cortex
-(Markram et al., 2015). Without exception, signals transmitted via these pathways invoke a mixture
-of synaptic excitation and inhibition (reviewed in Isaacson and Scanziani, 2011). Thus inhibition
+(Markram2015-zg). Without exception, signals transmitted via these pathways invoke a mixture
+of synaptic excitation and inhibition (reviewed in Isaacson2011-qs). Thus inhibition
 onto L5 PCs, the focus of this review, is crucial for nearly every aspect of L5 function."
-
 *** Active conductances
 **** One of the main distinguishing factors between PT and IT neurons is the greater expression of 
 voltage-gated ion channels, like HCN. Oswald2013-lh
@@ -55,42 +51,52 @@ weak alternating electric field stimulation" Toloza2018-vh
 enhance spike firing in response to an EPSP when spike threshold is low and can inhibit firing when spike threshold is high." George2009-ad
 ***** check w/ salva/joao - pretty sure this is the paper proposing that Ih modulation determines planning versus action 
 
-*** Impedance as comprehensive tool for studying subthreshold dynamics
-**** As mentioned above, PT cells act as bandpass filters as characterized by their impedance profiles.
-**** some  background on impedance Puil1986-uv, Jaffe1999-pb: 
-***** complex function (resistance and reactance) from which can calculate the amplitude and phase 
-***** input vs transfer
-***** resonance - peak |Z| at some frequency
-***** resonance strength (Q-factor as in Dewell2019-ra)
-***** transfer frequency - resonance frequency of the transfer impedance amplitude 
-***** leading phase response - changes in V preceed changes in I
-***** synchronous frequency - frequency at which V and I are synchronous
+** Impedance as comprehensive tool for studying subthreshold dynamics
+*** As mentioned above, PT cells act as bandpass filters as characterized by their impedance profiles.
+*** some  background on impedance Puil1986-uv, Jaffe1999-pb: 
+**** complex function (resistance and reactance) from which can calculate the amplitude and phase 
+**** input vs transfer
+**** resonance - peak |Z| at some frequency - driven by inductive reactance imparted by voltage-gated ion channels like HCN, M-type K+, and K-type K+ channels
+**** resonance strength (Q-factor as in Dewell2019-ra)
+**** transfer frequency - resonance frequency of the transfer impedance amplitude 
+**** leading phase response - changes in V preceed changes in I, driven by the balance of capacitive and inductive reactances
+**** synchronous frequency - frequency at which V and I are synchronous
 
-**** importance of impedance
-***** resonance:  "Apart from invertebrate giant axons from where initial evidence came, direct evidence for the presence of electrical resonance
+*** importance of impedance
+**** resonance:  "Apart from invertebrate giant axons from where initial evidence came, direct evidence for the presence of electrical resonance
 also came from experiments on numerous neuronal subtypes of the central and peripheral nervous system (Crawford and Fettiplace, 1981; Puil et al.,1986;
-Hutcheon and Yarom, 2000; Pike et al., 2000). Subthreshold resonance in local responses and in dendrite-to-soma transfer endows neurons with the ability to
+Hutcheon2000-gs; Pike et al., 2000). Subthreshold resonance in local responses and in dendrite-to-soma transfer endows neurons with the ability to
 discriminate inputs based upon their frequency content."
-***** phase response: "the impedance phase profile quantifies the temporal dynamics between voltage and current. It has been shown that presence
+**** phase response: "the impedance phase profile quantifies the temporal dynamics between voltage and current. It has been shown that presence
 of inductive reactance in neuronal membrane causes the voltage response to lead the injected oscillatory current. The balance between capacitive and
 inductive reactances determines both the optimal lead frequency and the frequency bandwidth over which the voltage leads the current, providing a
 potential mechanism by which the subthreshold membrane dynamics of the neuron may maintain a phase relationship with an ongoing oscillation
-(Mauro, 1961; Cole, 1968; Sabah and Leibovic, 1969; Mauro et al., 1970; Hu et al., 2002, 2009; Ulrich, 2002; Cook et al., 2007; Narayanan and Johnston, 2008;
-Vaidya and Johnston, 2013)." Das2017-nz
-***** relation between subthreshold resonance and suprathreshold resonance via STA 
-**** By determining these factors across the dendritic arbor, we can produce intraneuronal functional maps characterizing
+(Mauro1961-ys; Cole, 1968; Sabah1969-at; Mauro1970-km; Hu2002-ga, Hu2009-qb; Ulrich2002-dd; Cook2007-cz; Narayanan2008-zw;
+Vaidya2013-sx)." Das2017-nz
+**** relation between subthreshold resonance and suprathreshold resonance via STA Das2015-mh
+*** By determining these factors across the dendritic arbor, we can produce intraneuronal functional maps characterizing
 the neuron's intrinsic dynamics and excitability Narayanan2012-hn 
 
-*** Experimental evidence of location dependence 
-**** relationships between aspects of the complex impedance and distance from the soma have been described in pyramidal neurons from CA1 and neocortex
+** Experimental evidence of location dependence 
+*** relationships between aspects of the complex impedance and distance from the soma have been described in pyramidal neurons from CA1 and neocortex
 Das2017-nz, Narayanan2007-gw, Ulrich2002-dd, Dembrow2015-zb
-***** first observed in PT neurons from somatosensory cortex.  Saw roughly linear relationships between distance and transfer impedance amplitude with
+**** first observed in PT neurons from somatosensory cortex.  Saw roughly linear relationships between distance and transfer impedance amplitude with
 strength increasing with distance from the soma. Ulrich2002-dd
-***** Dembrow et al additionally saw distance-dependence in the resoance frequency and phase response Dembrow2015-zb
-***** in both above studies resonance and synchronous frequencies were found in the theta range (3-10 Hz), but also sampled a fairly small fraction of the 
+**** Dembrow et al additionally saw distance-dependence in the resoance frequency and phase response Dembrow2015-zb
+**** in both above studies resonance and synchronous frequencies were found in the theta range (3-10 Hz), but also sampled a fairly small fraction of the 
 dendritic arbor (120-280 um and 200-600 um respectively)
 
-*** dynamic tunability and degeneracy impedance profile
-**** dynamically tunable subthreshold resonance along the neuronal topograph (Magee and Johnston, 2005; Narayanan and Johnston, 2007, 2008; Sjöström et al., 2008; 4
-Hu et al., 2009; Rathour and Narayanan, 2012a,b)
-
+** dynamic tunability and degeneracy impedance profile
+*** Tunability
+**** dynamically tunable subthreshold resonance along the neuronal topograph (Magee2005-oq; Narayanan2007-gw; Narayanan2008-zw; Sjostrom2008-sz; 
+Hu2009-qb; Rathour2012-am; Rathour2012-bu) Das2017-nz
+**** LTP induces changes in impedance profile Narayanan2007-gw
+*** Degeneracy:
+**** "With reference to sub- and supra-threshold frequency selectivity in neurons, several studies have demonstrated multi-channel regulation
+of somatodendritic spectral selectivity. Specifically, studies pertaining to sub-threshold resonance and phase dynamics have shown that impedance properties 
+mediated by HCN channel could be significantly modulated by the presenc eof other sub-threshold conductances and by morphological characteristics 
+(Hutcheon2000-gs; Hu2002-ga, 2009; Narayanan2008-zw; Zemankovics2010-zt; Rathour2012-bu; Dhupia2014-ad; Rathour2016-vv). While these studies
+elucidated the role of individual conductances in modulating sub-threshold impedance properties, computational
+frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) in active dendritic spectral tuning (Rathour2012-bu; Rathour2014-pl)." Das2017-nz
+***** mainly studied in hippocampal neurons
+*** role in disease: Ih altered in temporal lobe epilepsy Shin2008-za, Marcelin2009-vy

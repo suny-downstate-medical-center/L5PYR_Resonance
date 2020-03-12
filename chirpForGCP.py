@@ -11,7 +11,7 @@ if sys.argv[-2] == 'Hay':
     pt_cell = HayCell()
 elif sys.argv[-2] == 'Neymotin':
     from getCells import NeymotinCell
-    pt_cell = NeymotinCell()
+    pt_cell = NeymotinCell(slope=100)
 elif sys.argv[-2] == 'AckerAntic':
     from getCells import AckerAnticCell
     pt_cell = AckerAnticCell()

@@ -10,7 +10,8 @@
 \documentclass[utf8]{frontiersSCNS} % for Science, Engineering and Humanities and Social Sciences articles
 %\documentclass[utf8]{frontiersHLTH} % for Health articles
 %\documentclass[utf8]{frontiersFPHY} % for Physics and Applied Mathematics and Statistics articles
-
+\usepackage[english]{babel}
+\selectlanguage{english}
 %\setcitestyle{square} % for Physics and Applied Mathematics and Statistics articles
 \usepackage{url,hyperref,lineno,microtype,subcaption}
 \usepackage[onehalfspacing]{setspace}
@@ -20,7 +21,7 @@
 % Leave a blank line between paragraphs instead of using \\
 \def\keyFont{\fontsize{8}{11}\helveticabold }
 \def\firstAuthorLast{Kelley {et~al.}} %use et al only if is more than 1 author
-\def\Authors{Craig Kelley\,$^{1,*}$, Salvador Dura-Beranal\,$^{2,3}$, Samuel A. Neymotin\,$^{3}$, Nicholas T. Carnevale\,$^{3}$, and William W. Lytton\,$^{2,5,6,7}$}
+\def\Authors{Craig Kelley\,$^{1,*}$, Salvador Dura-Beranal\,$^{2,3}$, Samuel A. Neymotin\,$^{3}$, Nicholas T. Carnevale\,$^{4}$, and William W. Lytton\,$^{2,5,6,7}$}
 % Affiliations should be keyed to the author's name with superscript numbers and be listed as follows: Laboratory, Institute, Department, Organization, City, State abbreviation (USA, Canada, Australia), and Country (without detailed address information such as city zip codes or street names).
 % If one of the authors has a change of address, list the new address below the correspondence details using a superscript symbol and use the same symbol to indicate the author in the author list.
 \def\Address{$^{1}$Program in Biomedical Engineering, SUNY Downstate Health Sciences University \& NYU Tandon School of Engineering, Brooklyn, NY, USA \\
@@ -100,28 +101,55 @@ whereas IT cells behave like low-pass filters \citep{Dembrow2010-lb}.
 The filtering properties of the subthreshold voltage response can be characterized by the complex impedance profile of the neuron.
 A common experimental method for probing the complex impedance response is to stimulate the neuron with a chirp current injection, which
 is a constant-amplitude, sinusoidal waveform whose instantaneous frequency is a linear function of time.  The input impedance:
-\begin{equation}  Z_i{_n} = \frac{FFT(I_i{_n})}{FFT(V_m)} \label{eq:01}\end{equation}
+\begin{equation}  Z_i{_n} = \frac{FFT(V_m)}{FFT(I_i{_n})} \label{eq:01}\end{equation}
 is a complex valued function where FFT(I$_i{_n}$) is the Fourier transform of the injected current waveform and FFT(V$_m$) is the Fourier
 transform of the local change in membrane potential.  Similarly, the transfer impedance (Z$_c$) can be calculated between the site of stimulation
 and any point in the neuron by changing V$_m$ for some distal membrane voltage recording V$_s$ in \emph{Eq. 1}. From the impedance we can
-extract the real valued resitance (R) and the imaginary valued reactance ($X$).  From R and $X$ can calculate the impedance amplitude:
+extract the real valued resitance (R) and the imaginary valued reactance ($X$).  From R and $X$ we can calculate the impedance amplitude:
 \begin{equation} |Z| = \sqrt{R^2 + X^2} \label{eq:02}\end{equation}
-and the impedance phase:
-\begin{equation} \Phi = arctan(\frac{X}{R}) \label{eq:03}\end{equation}
 A peak in the $|$Z$|$ profile at some nonzero frequency is called resonance, and it is driven by
 the inductive reactances imparted by voltage-gated ion channels like HCN, M-type K+, and 
 K-type K+ channels \citep{Das2017-nz}.  The resonance strength can be quantified by the 
 Q-factor, the ratio of resonant $|$Z$|$ to the initial $|$Z$|$ \citep{Dewell2019-ra}. The 
 resonance frequency specifies the frequency at which $|Z_{in}|$ is maximized, while
-transfer frequency specifies the frequency at which $|$Z$_c|$ is maximized.  Meanwhile, 
-$\Phi$ defines the temporal relationship between I$_{in}$ and membrane potential. When 
-$\Phi$ $>$ 0, the changes in membrane potential lead  I$_{in}$, which is referred to as leading phase.
+transfer frequency specifies the frequency at which $|$Z$_c|$ between the stimulation site and 
+the soma is maximized \cite{Dembrow2015-zb}.  Subthrehold resonance has been observed in a wide 
+variety of species and neuronal cell types \citep{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
+and is proposed to impart neurons with the ability to discriminate their inputs by their 
+frequency content \citep{Das2017-nz}. Furthermore, a direct correlation has been shown between subthreshold resonance and suprathrehold
+resonance via spike-triggered averagin methods \citep{Das2015-mh}.
+Meanwhile, $\Phi$ defines the temporal relationship between I$_{in}$ and membrane potential:
+\begin{equation} \Phi = arctan(\frac{X}{R}) \label{eq:03}\end{equation}
+When $\Phi$ $>$ 0, the changes in membrane potential lead  I$_{in}$, which is referred to as leading phase.
 When $\Phi$ = 0 I$_{in}$ and membrane potential are synchronous, and otherwise I$_{in}$ leads the membrane potential.
-A leading is driven by the balance of capacitive and inductive reactances 
-\citep{Das2017-nz}.
+A leading is driven by the balance of capacitive and inductive reactances and is thought to provide a potential 
+mechanism by which subthreshold neuronal membrane oscillations might maintain phase relationships with ongoing
+local field potentials
+\citep{Mauro1961-ys, Sabah1969-at, Mauro1970-km, Hu2002-ga, Hu2009-qb, Ulrich2002-dd, Cook2007-cz, Narayanan2008-zw, Vaidya2013-sx, Das2017-nz}.  By determining the various properties of the impedance response 
+across the dendritic arbor, we can produce intraneuronal functional maps which characterize the neuron's intrinsic
+dynamics and excitability \citep{Narayanan2012-hn}.
 
+A fundamental property of the impedance profiles of PCs is location-dependence. Experimental
+studies show relationships between dendritic resonance, resonance strength, and 
+phase response with distance from the soma \citep{Das2017-nz, Narayanan2007-gw, Ulrich2002-dd, Dembrow2015-zb}.
+The earliest observations of location-dependence in neocrotical PCs from somatosensory cortex 
+showed transfer impedance amplitude between the dendrite and soma and resonance strength 
+increasing roughly linearly with distance the soma \citep{Ulrich2002-dd}. Further evidence for 
+location-dependence of resonance frequency and synchronous frequency in PCs from prefrontal cortex \citep{Dembrow2015-zb}.
+In both aforementioned studies, resonance and synchronous frequencies were found in the theta 
+range (3-12 Hz), but also sampled a fairly small fraction of the dendritic arbor (120-280 um and 
+200-600 um respectively) \citep{Ulrich2002-dd, Dembrow2015-zb}.
 
-
+Impedance profiles are note static.  There is overwhelming evidence that subthreshold resonance
+properties are dynamically tunable across the entire dendritic arbor \citep{Magee2005-oq, Narayanan2007-gw, Narayanan2008-zw, Sjostrom2008-sz, Hu2009-qb, Rathour2012-am, Rathour2012-bu, Das2017-nz}.  While resonance is 
+mediated by the HCN channel, it can be significantly modulated by other voltage-gated ion channels and morphological
+changes \citep{Hutcheon2000-gs, Hu2002-ga, 2009, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv}
+For instance, LTP induces changes in the impedance profile of hippocampal PCs \citep{Narayanan2007-gw}.
+At the same time, the impedance profile exhibits degeneracy: the same resonance properties can be arrived at by
+multiple combinations of channel expressions \citep{Rathour2012-bu, Rathour2014-pl, Das2017-nz}. While dynamic 
+tunability allows the impedance profile to change in response to external influences, degeneracy can maintain the 
+impedance in the presence of external influences.  Dynamic changes to impedance profiles may have a role in
+pathophysiology, with I$_h$ being significantly altered in temporal lobe epilepsy \citep{Shin2008-za, Marcelin2009-vy}.
 
 \section{Article types}
 
@@ -140,12 +168,6 @@ For requirements for a specific article type please refer to the Article Types o
 \paragraph{Level 4}
 \subparagraph{Level 5}
 
-\subsection{Equations}
-Equations should be inserted in editable format from the equation editor.
-
-\begin{equation}
-\sum x+ y =Z\label{eq:01}
-\end{equation}
 
 \subsection{Figures}
 Frontiers requires figures to be submitted individually, in the same order as they are referred to in the manuscript. Figures will then be automatically embedded at the bottom of the submitted manuscript. Kindly ensure that each table and figure is mentioned in the text and in numerical order. Figures must be of sufficient resolution for publication \href{http://home.frontiersin.org/about/author-guidelines#ResolutionRequirements}{see here for examples and minimum requirements}. Figures which are not according to the guidelines will cause substantial delay during the production process. Please see \href{http://home.frontiersin.org/about/author-guidelines#GeneralStyleGuidelinesforFigures}{here} for full figure guidelines. Cite figures with subfigures as figure \ref{fig:2}B.

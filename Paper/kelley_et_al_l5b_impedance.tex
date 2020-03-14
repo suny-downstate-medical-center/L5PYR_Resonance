@@ -59,13 +59,13 @@ Experimental studies of dendritic impedance show that pyramidal neurons in hippo
 relationships for the resonance and the phase responses with respect to the soma. We present a detailed study of
 the complex impedance profiles of biophysically detailed models of neocortical layer 5 pyramidal neurons from 
 across neocortex.  While none of these models were designed to fit the impedance response directly, two closely 
-recapitulate the distance-dependent relationships of the complex impedance response. The  impedance response is also
+recapitulate the distance-dependent relationships of the complex impedance response observed experimentally. The  impedance response is also
 dynamically tunable via the activity-dependent expression of voltage-gated ion channels in the dendrites, like HCN channels
 and M- and A-type K+ channels. We investigated the roles of different voltage-gated ion channels in tuning the impedance response,
 showing that changes in HCN and M-type K+ channel conductances, both locally and across the dendritic arbor, can modulate the
 impedance response, producing a wide range of profiles.  We also clearly demonstrate the impedance profile's dependence on cell
-morphology.  Although a number of cell models exhibit impedance profiles that diverge from the experimental data, some have 
-biologically plausible impedance profiles which may reflect regional variation or cells with different histories and therefore
+morphology.  Although a number of cell models exhibit impedance profiles that diverge from the experimental data, some are
+biologically plausible and may reflect regional variation or cells with different histories and therefore
 differently tuned impedance responses. Given the dearth of experimental data on dendritic impedance in neocortical pyrmaidal neurons 
 from different cortical regions, we hypothesize that neocortical pyramidal neurons have more diverse impedance profiles 
 than previously assumed.
@@ -75,6 +75,7 @@ than previously assumed.
 \end{abstract}
 
 \section{Introduction}
+% Overview of Neocortical Pyramidal Cells
 The pyramidal cells (PCs) found in layer 5 (L5) of neocortex are the main outputs of the cortex and project to various cortical 
 and subcortical structures, signaling their role in top down control of other brain areas and 
 motor function \citep{Levesque1996-hf, Veinante2000-gg, Hattox2007-km, Aronoff2010-do, Harris2015-te, Naka2016-rn}.
@@ -83,11 +84,12 @@ Meyer2010-pe, Wimmer2010-lq, Oberlaender2012-fh, Rah2013-kr, Markram2015-zg}. Th
 in their  morphologies and projections, but also in their spiking activity, with some PCs having high spontaneous firing rates while 
 others' firing rates are closely correlated with the activity of neurons in the surrounding population \citep{Markram2015-zg}.
 The balance of excitatory and inhibitory inputs and the electrotonic structure of PCs are key in understanding how PCs generate their
-outputs and exert top-down control over other parts of the neurvous system.  PCs are not, however, the only major output neurons in L5.
+outputs and exert top-down control over other parts of the nervous system.  PCs are not, however, the only major output neurons in L5.
 There are also intertelencephalic (IT) or commisural neurons, which project to contralateral cortex.  One of the main factors, besides their
 projections, that distinguish PCs from IT cells is their comparatively high expression of the hyperpolarization-activated cyclic 
 nucleotide–gated (HCN) channel, a nonselective voltage-gated cation channel responsible for the h-current (I$_h$) \citep{Oswald2013-lh}.
 
+% Overview of Ih
 I$_h$ has some dramatic effects on the intrinsic dynamics and exictability of neurons.  It acts as a pacemaker current, supporting burst
 and regular firing modes.  It mediates the sag potential observed during hyperpolarization and spike frequency adaptation during
 suprathreshold depolarization \citep{Robinson2003-uc, Oswald2013-lh}. I$_h$ also mediates coincidence detection \citep{Das2015-mh, Dewell2019-ra} 
@@ -95,17 +97,18 @@ and has been suggested to determine the frequency response of neuronal membrane 
 alternating electric field stimulation \citep{Toloza2018-vh}.  HCN channels have also been shown to have paradoxical effects on 
 excitatory post-synaptic potentials (EPSPs), enhancing spiking in response to EPSPs when the spike threshold is low and inhibiting 
 spiking in response to EPSPs when the spike threshold is low \citep{George2009-ad}.  This may implicate a role for HCN channels in the 
-separation of planning and action.  Due to the hifh expression of HCN channels in PCs, PCs respond to dynamic stimuli as bandpass filters, 
+separation of planning and action.  Due to the high expression of HCN channels in PCs, PCs respond to dynamic stimuli as bandpass filters, 
 whereas IT cells behave like low-pass filters \citep{Dembrow2010-lb}.
 
+% Intro to impedance
 The filtering properties of the subthreshold voltage response can be characterized by the complex impedance profile of the neuron.
 A common experimental method for probing the complex impedance response is to stimulate the neuron with a chirp current injection, which
 is a constant-amplitude, sinusoidal waveform whose instantaneous frequency is a linear function of time.  The input impedance:
 \begin{equation}  Z_i{_n} = \frac{FFT(V_m)}{FFT(I_i{_n})} \label{eq:01}\end{equation}
 is a complex valued function where FFT(I$_i{_n}$) is the Fourier transform of the injected current waveform and FFT(V$_m$) is the Fourier
 transform of the local change in membrane potential.  Similarly, the transfer impedance (Z$_c$) can be calculated between the site of stimulation
-and any point in the neuron by changing V$_m$ for some distal membrane voltage recording V$_s$ in \emph{Eq. 1}. From the impedance we can
-extract the real valued resitance (R) and the imaginary valued reactance ($X$).  From R and $X$ we can calculate the impedance amplitude:
+and any point on the neuron by changing V$_m$ for some distal membrane voltage recording V$_s$ in \emph{Eq. 1}. From the impedance we can
+extract the real valued resitance ($R$) and the imaginary valued reactance ($X$).  From $R$ and $X$ we can calculate the impedance amplitude:
 \begin{equation} |Z| = \sqrt{R^2 + X^2} \label{eq:02}\end{equation}
 A peak in the $|$Z$|$ profile at some nonzero frequency is called resonance, and it is driven by
 the inductive reactances imparted by voltage-gated ion channels like HCN, M-type K+, and 
@@ -117,18 +120,19 @@ the soma is maximized \cite{Dembrow2015-zb}.  Subthrehold resonance has been obs
 variety of species and neuronal cell types \citep{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
 and is proposed to impart neurons with the ability to discriminate their inputs by their 
 frequency content \citep{Das2017-nz}. Furthermore, a direct correlation has been shown between subthreshold resonance and suprathrehold
-resonance via spike-triggered averagin methods \citep{Das2015-mh}.
-Meanwhile, $\Phi$ defines the temporal relationship between I$_{in}$ and membrane potential:
+resonance via spike-triggered averaging methods \citep{Das2015-mh}.
+Meanwhile, impedance phase ($\Phi$) defines the temporal relationship between I$_{in}$ and membrane potential:
 \begin{equation} \Phi = arctan(\frac{X}{R}) \label{eq:03}\end{equation}
 When $\Phi$ $>$ 0, the changes in membrane potential lead  I$_{in}$, which is referred to as leading phase.
-When $\Phi$ = 0 I$_{in}$ and membrane potential are synchronous, and otherwise I$_{in}$ leads the membrane potential.
-A leading is driven by the balance of capacitive and inductive reactances and is thought to provide a potential 
+When $\Phi$ = 0, I$_{in}$ and membrane potential are synchronous, and otherwise I$_{in}$ leads the membrane potential.
+Leading phase is driven by the balance of capacitive and inductive reactances and is thought to provide a potential 
 mechanism by which subthreshold neuronal membrane oscillations might maintain phase relationships with ongoing
 local field potentials
 \citep{Mauro1961-ys, Sabah1969-at, Mauro1970-km, Hu2002-ga, Hu2009-qb, Ulrich2002-dd, Cook2007-cz, Narayanan2008-zw, Vaidya2013-sx, Das2017-nz}.  By determining the various properties of the impedance response 
 across the dendritic arbor, we can produce intraneuronal functional maps which characterize the neuron's intrinsic
 dynamics and excitability \citep{Narayanan2012-hn}.
 
+%% location dependence
 A fundamental property of the impedance profiles of PCs is location-dependence. Experimental
 studies show relationships between dendritic resonance, resonance strength, and 
 phase response with distance from the soma \citep{Das2017-nz, Narayanan2007-gw, Ulrich2002-dd, Dembrow2015-zb}.
@@ -140,15 +144,16 @@ In both aforementioned studies, resonance and synchronous frequencies were found
 range (3-12 Hz), but also sampled a fairly small fraction of the dendritic arbor (120-280 um and 
 200-600 um respectively) \citep{Ulrich2002-dd, Dembrow2015-zb}.
 
+%% tunability and degeneracy
 Impedance profiles are note static.  There is overwhelming evidence that subthreshold resonance
-properties are dynamically tunable across the entire dendritic arbor \citep{Magee2005-oq, Narayanan2007-gw, Narayanan2008-zw, Sjostrom2008-sz, Hu2009-qb, Rathour2012-am, Rathour2012-bu, Das2017-nz}.  While resonance is 
-mediated by the HCN channel, it can be significantly modulated by other voltage-gated ion channels and morphological
-changes \citep{Hutcheon2000-gs, Hu2002-ga, 2009, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv}
+properties are dynamically tunable across the entire dendritic arbor \citep{Magee2005-oq, Narayanan2007-gw, Narayanan2008-zw, Sjostrom2008-sz, Hu2009-qb, Rathour2012-am, Rathour2012-bu, Das2017-nz}.
 For instance, LTP induces changes in the impedance profile of hippocampal PCs \citep{Narayanan2007-gw}.
+While resonance is mediated by the HCN channel, it can be significantly modulated by other voltage-gated ion channels and morphological changes 
+\citep{Hutcheon2000-gs, Hu2002-ga, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv}
 At the same time, the impedance profile exhibits degeneracy: the same resonance properties can be arrived at by
 multiple combinations of channel expressions \citep{Rathour2012-bu, Rathour2014-pl, Das2017-nz}. While dynamic 
 tunability allows the impedance profile to change in response to external influences, degeneracy can maintain the 
-impedance in the presence of external influences.  Dynamic changes to impedance profiles may have a role in
+impedance profile in the presence of external influences.  Dynamic changes to impedance profiles may have a role in
 pathophysiology, with I$_h$ being significantly altered in temporal lobe epilepsy \citep{Shin2008-za, Marcelin2009-vy}.
 
 \section{Article types}

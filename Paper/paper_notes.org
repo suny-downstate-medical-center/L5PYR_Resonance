@@ -106,4 +106,84 @@ frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) 
 ** going with frontiers in neuroscience as target journal (in part becasue formatting is easy)**
 * [2020-3-13 Fri] - further along with intro
 ** may want to consolidate explanation and importance of impedance while separating amplitude/resonance and phase
-* [2020-3-14 Sat] - finished with draft of intro
+* [2020-3-14 Sat] - finished with draft of intro, methods outline 
+** Focus on 5  models
+*** Kole2008-aj
+**** Wistar rats, 2-4 weeks old, somatosensory cortex
+**** channels densities were adjusted primarily to account for perisomatic spiking actiivity:
+"The model included a high-voltage-activated K+ channel (Kv)16, a faster
+low-voltage activated Kv1-like K+ channel (‘Kv1’), as described49, and a slowly-activating and non-inactivating M-type K+ channel (‘Km’)16. Potassium
+channel densities were adjusted to obtain fast action potential repolarization
+and large amplitude afterhyperpolarizations in the distal AIS13. The density of
+Kv, Kv1 and Km were set to 20, 100 and 5 pS mm–2, respectively, in the soma,
+dendrites and inter-nodal sections, and increased linearly with distance from
+the axon hillock in the AIS to 2,000 pS mm–2 in the distal AIS and nodes for
+Kv and Kv1, and to 50 pS mm–2 for Km. The K+ reversal potential was set
+to –85 mV. Ih channels were included in the soma and dendrites with an
+exponential increase in density with distance from the soma, and kinetics and
+voltage dependence as described previously50." 50: Kole2006-bm
+*** Acker2009-yj
+**** Sprague–Dawley rats (postnatal day 21 [P21] to P33), frontal cortex
+**** fit using voltage-sensitive dye imaging focusing on back-propagating APs in basal dendrites 
+"The model was fit to experimental data using the
+following approach: AP waveforms from simulations were analyzed
+and amplitude data were averaged over the basal dendrites (Fig. 6B).
+Half-widths and latencies were calculated in exactly the same way as
+with the optical AP waveforms (Supplemental Fig. S5) and were
+averaged over the model basal dendrites. The model data averaged
+over the basal dendrites were taken as the fit data. AP amplitude ratios
+TTX/Control and AP amplitude ratios 4-AP/Control were used to fit
+the model.
+**** channel distributions
+. . . Basal dendritic sodium and A-type potassium conductance
+distributions were assumed linear and were systematically varied over
+a wide range over a four-dimensional parameter space to determine
+the best-fit values of these model parameters (Supplemental Fig. S7).
+Other parameters, such as delayed rectifier potassium conductance,
+leak conductance, and somatic conductances, were manually varied to
+find the lowest possible overall model fit. This was done by first
+determining the sensitivities of AP amplitudes, half-widths, and latencies
+ to each model parameter and using this information to modify
+parameters and improve fits before finally fitting the basal sodium and
+A-type potassium distributions. An automated optimization approach
+based on a genetic algorithm (Keren et al. 2005), if feasible, would
+allow a larger parameter space to be searched exhaustively and could
+potentially lead to improved overall fits, something that could be
+pursued in future studies."
+*** Hay2011-if
+**** P36 Wistar rat 
+**** model fit to perisomatic and backpropagating spiking
+**** channel distributions:
+"Dendritic channel distribution. All dendritic channels
+except for Ih, CaLVA and CaHVA were uniformly distributed. Ihchannels were distributed on the apical dendrites using an
+exponential density function suggested in [13]: gsoma: ð{0:8696z 2:087: e x
+323Þ, where x is the distance from the soma in mm, with gsoma = 1 pS/mm2 .
+The density of Ih on the basal dendrites was set to be uniform as suggested in [10]."
+10: Nevian2007-gw  13: Kole2006-bm
+*** Neymotin2017-dr
+**** Mice (strain: C57Bl/6J; Jackson Laboratories) postnatal day (P) 21,
+**** channel distributions:
+Somatic and dendritic compartments
+additionally contained CaL, CaN, BK, and HCN channels. KD was
+present in the soma and at 20 times somatic density in the axon. The
+axon contained only leak, Na, KA, Kdr, and KD ion channels. Basal
+dendrites contained uniform density of all their channels. Apical
+dendrite HCN channel density increased exponentially with distance
+from soma until reaching the nexus with apical dendrite tufts, where
+the HCN channel density plateaus at 0.00565 S/cm2 (Harnett et al.
+2015). This exponential increase of HCN channel density within the
+main apical trunk was set to gh·exp(d/h), where d is distance of the
+apical dendrite compartment from soma and h is the length constant,
+defined as dnexus/log(0.00565/gh), dnexus is distance from soma to
+nexus (300 m), and gh is somatic HCN channel density. Harnett2015-sj
+**** fitting was mostly focused on preisomatic spiking activity:
+. Focusing on spike times, we also
+provided some fitness function redundancy by using both
+overall spiking rate (F–I), along with spike timing [instantaneous firing rate (IFR)]. The degree of redundancy of these two
+measures was demonstrated in the final archive (Fig. 2, A and
+C). We included subthreshold fit, determined initially by
+PRAXIS, as an EMO fitness function as well so as not to lose
+fitness for this criterion while optimizing for the others.
+
+* [2020-3-15 Sun] - bimodal phase response
+** L5PCtemplate[0].apic[91].mat 

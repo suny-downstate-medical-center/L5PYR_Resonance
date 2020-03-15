@@ -18,7 +18,8 @@ biologically plausible impedance profiles which may reflect regional variation o
 differently tuned impedance responses. Given the dearth of experimental data on resonance in neocortical pyrmaidal neurons 
 from different cortical regions, we hypothesize that neocortical pyramidal neurons have more diverse impedance profiles 
 than previously assumed.
-* [2020-3-10 Tue] - Introduction outline (cont to [2020-3-12 Thu])
+
+* [2020-3-10 Tue] - Introduction outline (cont to [2020-3-13 Fri])
 ** Neocortical pyramidal neurons
 *** Main oupuuts of neocortex 
 **** something about I/O relationship
@@ -103,10 +104,17 @@ frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) 
 
 * [2020-3-12 Thu] 
 ** fairly satisfied w/ intro outline
-** going with frontiers in neuroscience as target journal (in part becasue formatting is easy)**
+** going with frontiers in neuroscience as target journal (in part becasue formatting is easy)
+
 * [2020-3-13 Fri] - further along with intro
 ** may want to consolidate explanation and importance of impedance while separating amplitude/resonance and phase
-* [2020-3-14 Sat] - finished with draft of intro, methods outline 
+
+* [2020-3-14 Sat] - finished with draft of intro, methods outline  (con't to [2020-3-15 Sun])
+** General stuff:
+*** All models have perviously been published and are freely available on modelDB
+*** Simulations were performed using NEURON in Python Hines2009-qx
+*** Code for simulation, analysis, and visualization was written in Python and MATLAB (Natick, Ma) and is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR_Resonance)
+
 ** Focus on 5  models
 *** Kole2008-aj
 **** Wistar rats, 2-4 weeks old, somatosensory cortex
@@ -161,6 +169,7 @@ exponential density function suggested in [13]: gsoma: ð{0:8696z 2:087: e x
 The density of Ih on the basal dendrites was set to be uniform as suggested in [10]."
 10: Nevian2007-gw  13: Kole2006-bm
 *** Neymotin2017-dr
+**** might leave out or stick in supplements, both because mice and wonky
 **** Mice (strain: C57Bl/6J; Jackson Laboratories) postnatal day (P) 21,
 **** channel distributions:
 Somatic and dendritic compartments
@@ -184,6 +193,24 @@ measures was demonstrated in the final archive (Fig. 2, A and
 C). We included subthreshold fit, determined initially by
 PRAXIS, as an EMO fitness function as well so as not to lose
 fitness for this criterion while optimizing for the others.
+*** allen institute cell(s) - may also leave out / move to supplements 
+
+** simulations 
+*** Impedance Profiles:
+****Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential was recorded
+from the site of stimulation and at the soma.
+***** For generating impednace profiles, the chirp-waveform instantaneous frequency changed linearly spanned 0.5-50 Hz over 50s.
+***** For investigating bimodal phase response, the chirp-waveform spanned 0.5-100 Hz over 100s.
+***** in experiments, typically 0.5-20 Hz (citations)
+**** We computed Z$_{in}$ and Z$_c$ and associated measures from each of the recorded waveforms via \emph{Eq. 1-3}.
+***** focused on six measures of the impedance response: 1) $|$Z$_{in}|$ resonance amplitude, 2) $|$Z$_{in}|$ resonance frequency,
+3) $|$Z$_{in}|$ Q-factor, 4) $|$Z$_{c}|$ transfer frequency, 5) $\Phi_{in}$ leading phase bandwidth, and 6) $\Phi_{in}$ synchronous frequency. 
+*** Influence of morphology
+**** same parameters as above, used biophysics template and three morphologies from Hay2011-if
+*** Ih and Im 
+**** used cell model from Kole2008-aj, only one that had Ih and Im distributed throughout the dendritic arbor.
+**** varied Ih and Im conductance in 5% increments up to +/- 20% either at the branch level or across the whole dendritic arbor 
+
 
 * [2020-3-15 Sun] - bimodal phase response
 ** L5PCtemplate[0].apic[91].mat 

@@ -89,7 +89,7 @@ There are also intertelencephalic (IT) or commisural neurons, which project to c
 projections, that distinguish PCs from IT cells is their comparatively high expression of the hyperpolarization-activated cyclic 
 nucleotide–gated (HCN) channel, a nonselective voltage-gated cation channel responsible for the h-current (I$_h$) \citep{Oswald2013-lh}.
 
-% Overview of Ih
+% Overview of I$_h$
 I$_h$ has some dramatic effects on the intrinsic dynamics and exictability of neurons.  It acts as a pacemaker current, supporting burst
 and regular firing modes.  It mediates the sag potential observed during hyperpolarization and spike frequency adaptation during
 suprathreshold depolarization \citep{Robinson2003-uc, Oswald2013-lh}. I$_h$ also mediates coincidence detection \citep{Das2015-mh, Dewell2019-ra} 
@@ -110,12 +110,12 @@ transform of the local change in membrane potential.  Similarly, the transfer im
 and any point on the neuron by changing V$_m$ for some distal membrane voltage recording V$_s$ in \emph{Eq. 1}. From the impedance we can
 extract the real valued resitance ($R$) and the imaginary valued reactance ($X$).  From $R$ and $X$ we can calculate the impedance amplitude:
 \begin{equation} |Z| = \sqrt{R^2 + X^2} \label{eq:02}\end{equation}
-A peak in the $|$Z$|$ profile at some nonzero frequency is called resonance, and it is driven by
+A peak in the $|Z|$ profile at some nonzero frequency is called resonance, and it is driven by
 the inductive reactances imparted by voltage-gated ion channels like HCN, M-type K+, and 
 K-type K+ channels \citep{Das2017-nz}.  The resonance strength can be quantified by the 
-Q-factor, the ratio of resonant $|$Z$|$ to the initial $|$Z$|$ \citep{Dewell2019-ra}. The 
+Q-factor, the ratio of resonant $|Z|$ to the initial $|Z|$ \citep{Dewell2019-ra}. The 
 resonance frequency specifies the frequency at which $|Z_{in}|$ is maximized, while
-transfer frequency specifies the frequency at which $|$Z$_c|$ between the stimulation site and 
+transfer frequency specifies the frequency at which $|Z_c|$ between the stimulation site and 
 the soma is maximized \cite{Dembrow2015-zb}.  Subthrehold resonance has been observed in a wide 
 variety of species and neuronal cell types \citep{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
 and is proposed to impart neurons with the ability to discriminate their inputs by their 
@@ -148,13 +148,54 @@ range (3-12 Hz), but also sampled a fairly small fraction of the dendritic arbor
 Impedance profiles are note static.  There is overwhelming evidence that subthreshold resonance
 properties are dynamically tunable across the entire dendritic arbor \citep{Magee2005-oq, Narayanan2007-gw, Narayanan2008-zw, Sjostrom2008-sz, Hu2009-qb, Rathour2012-am, Rathour2012-bu, Das2017-nz}.
 For instance, LTP induces changes in the impedance profile of hippocampal PCs \citep{Narayanan2007-gw}.
-While resonance is mediated by the HCN channel, it can be significantly modulated by other voltage-gated ion channels and morphological changes 
-\citep{Hutcheon2000-gs, Hu2002-ga, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv}
+While resonance is mediated by the HCN channel, it can be significantly modulated by other voltage-gated ion channel conductances, (like I$_m$ from M-type K$^+$ channels)
+and morphological changes \citep{Hutcheon2000-gs, Hu2002-ga, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv}
 At the same time, the impedance profile exhibits degeneracy: the same resonance properties can be arrived at by
 multiple combinations of channel expressions \citep{Rathour2012-bu, Rathour2014-pl, Das2017-nz}. While dynamic 
 tunability allows the impedance profile to change in response to external influences, degeneracy can maintain the 
 impedance profile in the presence of external influences.  Dynamic changes to impedance profiles may have a role in
 pathophysiology, with I$_h$ being significantly altered in temporal lobe epilepsy \citep{Shin2008-za, Marcelin2009-vy}.
+
+\section{Methods}
+% where you can find models and code used in this study
+The models studied in this paper have been previously published and are available for download on ModelDB (https://senselab.med.yale.edu/modeldb/).
+All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}.  The code 
+developed for simulation, data analysis, and visualization were written in Python and MATLAB (Natick, Ma), and it
+is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR\_Resonance).
+
+% overview of the models
+We focus our study on three models of rat neurons.  The first \citep{Kole2008-aj}, is based on data from
+somatosensory cortex of Wistar rats, postnatal-day (P) 14-28. Channel densities were adjusted primarily to 
+account for perisomatic spiking activity, particularly fast action potential repolarization and large amplitude 
+afterhyperpolarization in the axon initial segment.  I$_h$ channels were distributed throughout the dendritic
+arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}. The second model
+\citep{Acker2009-yj}, is based on data from frontal cortex of Sprague-Dawley rats, P21-33.  The model was fit
+using voltage-sensitive dye imaging data with a focus on backpropagating action potentials in the basal
+dendrites.  The third model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model
+was fit to perisomatic and backpropagating spiking activity.  In the model, all dendritic channels were 
+uniformly distributed with the exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites
+I$_h$ channels were distributed using a density function that increases exponentially with distance from the soma 
+\citep{Nevian2007-gw, Kole2006-bm}.
+
+% simulations
+Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential
+was recorded from the site of stimulation and at the soma. For generating impednace profiles, the chirp-waveform 
+instantaneous frequency changed linearly and spanned 0.5-50 Hz over 50s. To investigate bimodal phase responses, the
+span of the chirp-waveform instantaneous frequency was increased to 0.5-100 Hz over a 100s duration.  By contrast,
+most experimental studies of impedance limit the instantaneous frequency of the chirp stimulus to 20 Hz 
+\citep{Ulrich2002-dd, Dembrow2015-zb}.  We computed Z$_{in}$ and Z$_c$ and associated measures from each of the 
+recorded membrane potential waveforms via \emph{Eqs. 1-3}.  We focus our analysis on six measures of the complex 
+impedance response: 1) $|$Z$_{in}|$ resonance amplitude, 2) $|$Z$_{in}|$ resonance frequency,
+3) $|$Z$_{in}|$ Q-factor, 4) $|$Z$_{c}|$ transfer frequency, 5) $\Phi_{in}$ leading phase bandwidth, 
+and 6) $\Phi_{in}$ synchronous frequency (see \emph{Introduction}).
+
+To study the influence of morphology, we performed the same chirp stimulation on all segments of cell models with
+different morphologies but the same biophysical template \citep{Hay2011-if}.  Meanwhile, to study the roles of I$_h$ 
+and I$_m$, we took a two pronged approach.  First, either I$_h$ or I$_m$ conductance was changed by $\pm$15\% its original
+values across the dendritic arbor and generated impedance profiles as outlined above.  We then varied I$_h$ and I$_m$ in 5\%
+increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six complex
+impedance measures outlined above for an apical and a basal segment of the denritic arbor.
+
 
 \section{Article types}
 

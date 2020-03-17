@@ -160,7 +160,7 @@ pathophysiology, with I$_h$ being significantly altered in temporal lobe epileps
 % where you can find models and code used in this study
 Four of the models studied in this paper \citep{Kole2008-aj, Acker2009-yj, Hay2011-if, Neymotin2017-dr} are
 are available for download on ModelDB (https://senselab.med.yale.edu/modeldb/).  The fifth is an "all-active"
-biophysically detailed model available from the Allen Brain Atlas Data Portal (https://portal.brain-map.org/) \citep{Reimann2013-mg, Markram2015-zg}.
+biophysically detailed model available from the Allen Brain Atlas Data Portal (https://portal.brain-map.org/) \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}.
 All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}.  The code 
 developed for simulation, data analysis, and visualization were written in Python and MATLAB (Natick, Ma), and it
 is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR\_Resonance).
@@ -179,10 +179,15 @@ and backpropagating spiking activity.  In the model, all dendritic channels are 
 exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites I$_h$ channels are
 distributed using a density function that increases exponentially with distance from the soma 
 \citep{Nevian2007-gw, Kole2006-bm}.  Maximum I$_h$ conductance is 0.015 S/cm$^2$.  The first mouse model \citep{Neymotin2017-dr},
-is based on data from  motor cortex of C57Bl/6J mice, P21.  The model was fit based on perisomatic spiking activity and
+is based on data from primary motor cortex (M1) of C57Bl/6J mice, P21.  The model was fit based on perisomatic spiking activity and
 validated by simulating subthrehold somatic resonance.  I$_h$ conductance is constant in the basal dendrites, increases
 exponentially with distance from the soma along the apical trunk until the nexus with apical dendrite tufts, where
-the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-s}.  
+the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-s}.  The second mouse model \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}
+is based on data from primary visual cortex (V1) of C57BL/6 mice, P35-62. It is based largely on a previous model also 
+studied here \citep{Hay2011-if}.  The major modification to the original is that Ih conductance is constant in the dendritic tree.
+This modification accounted for differences between dendritic sag, dendritic resting membrane potential relative 
+to the soma, and dendritic input resistance compared to what is seen in rat L5 somatosensory cortex \citep{Shai2015-ff}.  I$_h$ conductance
+in the denrites is 3.7x10$^{-6}$ S/cm$^2$.
 
 % simulations
 Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential

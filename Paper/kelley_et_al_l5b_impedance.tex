@@ -128,9 +128,9 @@ When $\Phi$ = 0, I$_{in}$ and membrane potential are synchronous, and otherwise 
 Leading phase is driven by the balance of capacitive and inductive reactances and is thought to provide a potential 
 mechanism by which subthreshold neuronal membrane oscillations might maintain phase relationships with ongoing
 local field potentials
-\citep{Mauro1961-ys, Sabah1969-at, Mauro1970-km, Hu2002-ga, Hu2009-qb, Ulrich2002-dd, Cook2007-cz, Narayanan2008-zw, Vaidya2013-sx, Das2017-nz}.  By determining the various properties of the impedance response 
-across the dendritic arbor, we can produce intraneuronal functional maps which characterize the neuron's intrinsic
-dynamics and excitability \citep{Narayanan2012-hn}.
+\citep{Mauro1961-ys, Sabah1969-at, Mauro1970-km, Hu2002-ga, Hu2009-qb, Ulrich2002-dd, Cook2007-cz, Narayanan2008-zw, Vaidya2013-sx, Das2017-nz}.  
+By determining the various properties of the impedance response across the dendritic arbor, we can produce intraneuronal 
+functional maps which characterize the neuron's intrinsic dynamics and excitability \citep{Narayanan2012-hn}.
 
 %% location dependence
 A fundamental property of the impedance profiles of PCs is location-dependence. Experimental
@@ -158,24 +158,31 @@ pathophysiology, with I$_h$ being significantly altered in temporal lobe epileps
 
 \section{Methods}
 % where you can find models and code used in this study
-The models studied in this paper have been previously published and are available for download on ModelDB (https://senselab.med.yale.edu/modeldb/).
+Four of the models studied in this paper \citep{Kole2008-aj, Acker2009-yj, Hay2011-if, Neymotin2017-dr} are
+are available for download on ModelDB (https://senselab.med.yale.edu/modeldb/).  The fifth is an "all-active"
+biophysically detailed model available from the Allen Brain Atlas Data Portal (https://portal.brain-map.org/) \citep{Reimann2013-mg, Markram2015-zg}.
 All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}.  The code 
 developed for simulation, data analysis, and visualization were written in Python and MATLAB (Natick, Ma), and it
 is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR\_Resonance).
 
 % overview of the models
-We focus our study on three models of rat neurons.  The first \citep{Kole2008-aj}, is based on data from
-somatosensory cortex of Wistar rats, postnatal-day (P) 14-28. Channel densities were adjusted primarily to 
-account for perisomatic spiking activity, particularly fast action potential repolarization and large amplitude 
-afterhyperpolarization in the axon initial segment.  I$_h$ channels were distributed throughout the dendritic
-arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}. The second model
-\citep{Acker2009-yj}, is based on data from frontal cortex of Sprague-Dawley rats, P21-33.  The model was fit
-using voltage-sensitive dye imaging data with a focus on backpropagating action potentials in the basal
-dendrites.  The third model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model
-was fit to perisomatic and backpropagating spiking activity.  In the model, all dendritic channels were 
-uniformly distributed with the exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites
-I$_h$ channels were distributed using a density function that increases exponentially with distance from the soma 
-\citep{Nevian2007-gw, Kole2006-bm}.
+We focus our study on three models of rat PCs and two models of mouse PCs.  The first of the rat PC models \citep{Kole2008-aj} 
+is based on data from somatosensory cortex of Wistar rats, postnatal-day (P) 14-28. Channel densities were adjusted 
+primarily to account for perisomatic spiking activity, particularly fast action potential repolarization and 
+large amplitude  afterhyperpolarization in the axon initial segment.  I$_h$ channels are distributed throughout 
+the dendritic arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}. Maximum
+I$_h$ conductance is 0.09 S/cm$^2$. The second model \citep{Acker2009-yj}, is based on data from frontal cortex of 
+Sprague-Dawley rats, P21-33.  The model was fit using voltage-sensitive dye imaging data with a focus on 
+backpropagating action potentials in the basal dendrites. Maximum I$_h$ conductance is 0.0025 S/cm$^2$ The third
+model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model was fit to perisomatic
+and backpropagating spiking activity.  In the model, all dendritic channels are uniformly distributed with the 
+exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites I$_h$ channels are
+distributed using a density function that increases exponentially with distance from the soma 
+\citep{Nevian2007-gw, Kole2006-bm}.  Maximum I$_h$ conductance is 0.015 S/cm$^2$.  The first mouse model \citep{Neymotin2017-dr},
+is based on data from  motor cortex of C57Bl/6J mice, P21.  The model was fit based on perisomatic spiking activity and
+validated by simulating subthrehold somatic resonance.  I$_h$ conductance is constant in the basal dendrites, increases
+exponentially with distance from the soma along the apical trunk until the nexus with apical dendrite tufts, where
+the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-s}.  
 
 % simulations
 Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential
@@ -193,8 +200,8 @@ To study the influence of morphology, we performed the same chirp stimulation on
 different morphologies but the same biophysical template \citep{Hay2011-if}.  Meanwhile, to study the roles of I$_h$ 
 and I$_m$, we took a two pronged approach.  First, either I$_h$ or I$_m$ conductance was changed by $\pm$15\% its original
 values across the dendritic arbor and generated impedance profiles as outlined above.  We then varied I$_h$ and I$_m$ in 5\%
-increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six complex
-impedance measures outlined above for an apical and a basal segment of the denritic arbor.
+increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six 
+complex impedance measures outlined above for an apical and a basal segment of the denritic arbor.
 
 
 \section{Article types}

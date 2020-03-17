@@ -109,7 +109,7 @@ frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) 
 * [2020-3-13 Fri] - further along with intro
 ** may want to consolidate explanation and importance of impedance while separating amplitude/resonance and phase
 
-* [2020-3-14 Sat] - finished with draft of intro, methods outline  (con't to [2020-3-15 Sun])
+* [2020-3-14 Sat] - finished with draft of intro, methods outline  (con't to [2020-3-16 Mon])
 ** General stuff:
 *** All models have perviously been published and are freely available on modelDB
 *** Simulations were performed using NEURON in Python Hines2009-qx
@@ -214,3 +214,5 @@ from the site of stimulation and at the soma.
 
 * [2020-3-15 Sun] - bimodal phase response
 ** L5PCtemplate[0].apic[91].mat 
+
+* [2020-3-16 Mon] - methods con't, added in sam's cell, going to add in allen institute

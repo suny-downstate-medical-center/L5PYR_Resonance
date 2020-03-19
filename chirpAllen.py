@@ -10,7 +10,7 @@ from getCells import AllenCell
 pt_cell = AllenCell(path='497233139')
 
 ## specify stimulated section and soma segment
-secList = [pt_cell.apic[30], pt_cell.apic[20], pt_cell.dend[10]]#, pt_cell.apic[65]]
+secList = [pt_cell.apical[30], pt_cell.apical[20], pt_cell.apical[10], pt_cell.apical[5], pt_cell.basal[10]]#, pt_cell.apic[65]]
 soma_seg = pt_cell.soma[0](0.5)
 
 # define current stimulus

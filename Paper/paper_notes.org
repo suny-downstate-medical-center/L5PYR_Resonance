@@ -220,7 +220,7 @@ from the site of stimulation and at the soma.
 
 * [2020-3-15 Sun] - bimodal phase response
 ** L5PCtemplate[0].apic[91].mat 
-
 * [2020-3-16 Mon] - methods con't, added in sam's cell, going to add in allen institute
 * [2020-3-17 Tue]
 ** bimodal phase response, a couple OK examples, not sure if it warrants figure / mentioning
+* [2020-3-19 Thu] - working on putting figures together properly

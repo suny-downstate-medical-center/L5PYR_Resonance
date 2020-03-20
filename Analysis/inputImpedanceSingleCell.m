@@ -11,9 +11,11 @@ ZinPeakPhaseFreq = [];
 ZinLeadPhaseMinFreq =[];
 ZinLeadPhaseBW = [];
 ZcResFreq = [];
+ZinLeadPhaseBool = [];
 
 % load in data from sim output files
 list = dir(path_name);
+count = 1;
 for i = 1:length(list)
     if ~list(i).isdir
         file = load(strcat(path_name,list(i).name));
@@ -23,6 +25,7 @@ for i = 1:length(list)
             QfactorIn = [QfactorIn file.QfactorIn(j)];
             ZinResAmp = [ZinResAmp file.ZinResAmp(j)];
             ZinResFreq = [ZinResFreq file.ZinResFreq(j)];
+            ZinLeadPhaseBool(count,:) = file.ZinLeadPhaseBool(j,:);
             if isstr(file.ZinSynchFreq(j))
                 ZinSynchFreq = [ZinSynchFreq NaN];    
             else
@@ -34,6 +37,7 @@ for i = 1:length(list)
                 ZinLeadPhaseBW  = [ZinLeadPhaseBW  file.ZinLeadPhaseBW(j)];
             end
             ZcResFreq =  [ZcResFreq file.ZcResFreq(j)];
+            count = count + 1;
         end
     end
 end

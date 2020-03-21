@@ -159,35 +159,73 @@ pathophysiology, with I$_h$ being significantly altered in temporal lobe epileps
 \section{Methods}
 % where you can find models and code used in this study
 Four of the models studied in this paper \citep{Kole2008-aj, Acker2009-yj, Hay2011-if, Neymotin2017-dr} are
-are available for download on ModelDB (https://senselab.med.yale.edu/modeldb/).  The fifth is an "all-active"
-biophysically detailed model available from the Allen Brain Atlas Data Portal (https://portal.brain-map.org/) \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}.
+are available for download on ModelDB (\url{https://senselab.med.yale.edu/modeldb/}).  The fifth is an "all-active"
+biophysically detailed model available from the Allen Brain Atlas Data Portal (\url{https://portal.brain-map.org/}) \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}.
 All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}.  The code 
 developed for simulation, data analysis, and visualization were written in Python and MATLAB (Natick, Ma), and it
 is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR\_Resonance).
 
 % overview of the models
-We focus our study on three models of rat PCs and two models of mouse PCs.  The first of the rat PC models \citep{Kole2008-aj} 
-is based on data from somatosensory cortex of Wistar rats, postnatal-day (P) 14-28. Channel densities were adjusted 
-primarily to account for perisomatic spiking activity, particularly fast action potential repolarization and 
-large amplitude  afterhyperpolarization in the axon initial segment.  I$_h$ channels are distributed throughout 
-the dendritic arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}. Maximum
-I$_h$ conductance is 0.09 S/cm$^2$. The second model \citep{Acker2009-yj}, is based on data from frontal cortex of 
-Sprague-Dawley rats, P21-33.  The model was fit using voltage-sensitive dye imaging data with a focus on 
-backpropagating action potentials in the basal dendrites. Maximum I$_h$ conductance is 0.0025 S/cm$^2$ The third
-model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model was fit to perisomatic
+We focus our study on three models of rat PCs and three models of mouse PCs. A summary of the basic
+model information is provided in \label{Table 1}.
+% Hay 2011
+The first model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model was fit to perisomatic
 and backpropagating spiking activity.  In the model, all dendritic channels are uniformly distributed with the 
 exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites I$_h$ channels are
 distributed using a density function that increases exponentially with distance from the soma 
-\citep{Nevian2007-gw, Kole2006-bm}.  Maximum I$_h$ conductance is 0.015 S/cm$^2$.  The first mouse model \citep{Neymotin2017-dr},
-is based on data from primary motor cortex (M1) of C57Bl/6J mice, P21.  The model was fit based on perisomatic spiking activity and
-validated by simulating subthrehold somatic resonance.  I$_h$ conductance is constant in the basal dendrites, increases
-exponentially with distance from the soma along the apical trunk until the nexus with apical dendrite tufts, where
-the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-s}.  The second mouse model \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}
-is based on data from primary visual cortex (V1) of C57BL/6 mice, P35-62. It is based largely on a previous model also 
-studied here \citep{Hay2011-if}.  The major modification to the original is that Ih conductance is constant in the dendritic tree.
+\citep{Nevian2007-gw, Kole2006-bm}.
+% Acker Antic 2009
+The second model \citep{Acker2009-yj}, is based on data from frontal cortex of 
+Sprague-Dawley rats, P21-33.  The model was fit using voltage-sensitive dye imaging data with a focus on 
+backpropagating action potentials in the basal dendrites.
+% Kole 2008
+The third rat PC models \citep{Kole2008-aj} is based on data from somatosensory cortex of Wistar rats. Channel 
+densities were adjusted  primarily to account for perisomatic spiking activity, particularly fast action potential repolarization and 
+large amplitude  afterhyperpolarization in the axon initial segment.  I$_h$ channels are distributed throughout 
+the dendritic arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}.
+It also has I$_m$ channels distributed evenly throughout the dendritic arbor.
+% Neymotin 2017
+The first mouse model \citep{Neymotin2017-dr}, is based on data from primary motor cortex (M1) of C57Bl/6J mice, P21.  
+The model was fit based on perisomatic spiking activity and validated by simulating subthrehold somatic resonance.  
+I$_h$ conductance is constant in the basal dendrites, increases exponentially with distance from the soma along the apical
+trunk until the nexus with apical dendrite tufts, where the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-sj}.  
+% Allen cells
+The last two mouse models \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}
+are based on data from primary visual cortex (V1) of C57BL/6 mice, P35-62. They based largely on a previous model also 
+studied here \citep{Hay2011-if}.  The major modification to the original is that Ih conductance is constant in the apical and basal arbors.
 This modification accounted for differences between dendritic sag, dendritic resting membrane potential relative 
-to the soma, and dendritic input resistance compared to what is seen in rat L5 somatosensory cortex \citep{Shai2015-ff}.  I$_h$ conductance
-in the denrites is 3.7x10$^{-6}$ S/cm$^2$.
+to the soma, and dendritic input resistance compared to what is seen in rat L5 somatosensory cortex \citep{Shai2015-ff}.
+
+\begin{table}[h!]
+\begin{center}
+    \begin{tabular}{m{2cm}|m{1.25cm}|m{2cm}|m{2.5cm}|m{1cm}|m{2cm}|m{3.75cm}}
+        \hline
+        \textbf{Model} & \textbf{Species} & \textbf{Strain} & \textbf{Region} & \textbf{Age} & \textbf{Max g$_{Ih}$ in dendrites (S/cm$^2$)} & \textbf{HCN Distribution}  \\
+        \hline
+        Hay et al. 2011 & Rat & Wistar & Neocortex & P36 & 0.015 & Constant in basal, exponential with distance in  apical\\
+        \hline
+        Acker \& Antic 2009 & Rat & Sprague Dawley & Frontal Cortex & P21-33 & 0.0025 & Constant in basal, exponential with distance in  apical\\
+        \hline
+        Kole et al. 2008 & Rat & Wistar & Somatosensory Cortex & P14-28 & 0.09 & Exponential with distance throughout dendritic arbor\\
+        \hline
+        Neymotin et al. 2017 & Mouse & C57Bl/6 & Primary Motor Cortex & P21 & 0.006 & Constant in basal, exponential with distance in  apical
+        below nexus, constant after the nexus\\
+        \hline
+        ABA: 497233139 & Mouse & C57Bl/6 & Primary Visual Cortex & P35-62 & 3.7x10$^{-6}$
+        & Constant in basal and constant in apical\\
+        \hline
+        ABA: 497232419 & Mouse & C57Bl/6 & Primary Visual Cortex & P35-62 & 2.8x10$^{-6}$
+        & Constant in basal and constant in apical\\
+        \hline
+    \end{tabular}
+\end{center}
+\caption{\emph{Basic Model Information}: Models are specified by either the publication in which they first occurred or their Allen Brain Atlas 
+(ABA) model identification number.  Ages are specified by postnatal day age. Under the comments on HCS distribution, "exponential with distance"
+is with  respect to the soma.  For the ABA models, HCN distribution is constant in both apical and basal arbors, but different between the two.
+In both models ABA, I$_h$ conductance is higher in the apical arbor than in the basal, but it is highest in the soma is 8.3x10$^{-6}$ S/cm$^2$ and 
+8.1x10$^{-6}$ S/cm$^2$, respectively.}
+\label{Table 1}
+\end{table}
 
 % simulations
 Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential
@@ -197,9 +235,9 @@ span of the chirp-waveform instantaneous frequency was increased to 0.5-100 Hz o
 most experimental studies of impedance limit the instantaneous frequency of the chirp stimulus to 20 Hz 
 \citep{Ulrich2002-dd, Dembrow2015-zb}.  We computed Z$_{in}$ and Z$_c$ and associated measures from each of the 
 recorded membrane potential waveforms via \emph{Eqs. 1-3}.  We focus our analysis on six measures of the complex 
-impedance response: 1) $|$Z$_{in}|$ resonance amplitude, 2) $|$Z$_{in}|$ resonance frequency,
-3) $|$Z$_{in}|$ Q-factor, 4) $|$Z$_{c}|$ transfer frequency, 5) $\Phi_{in}$ leading phase bandwidth, 
-and 6) $\Phi_{in}$ synchronous frequency (see \emph{Introduction}).
+impedance response: (1) $|$Z$_{in}|$ resonance amplitude, (2) $|$Z$_{in}|$ resonance frequency,
+(3) $|$Z$_{in}|$ Q-factor, (4) $|$Z$_{c}|$ transfer frequency, (5) $\Phi_{in}$ leading phase bandwidth, 
+and (6) $\Phi_{in}$ synchronous frequency (see \emph{Introduction}).
 
 To study the influence of morphology, we performed the same chirp stimulation on all segments of cell models with
 different morphologies but the same biophysical template \citep{Hay2011-if}.  Meanwhile, to study the roles of I$_h$ 
@@ -207,7 +245,6 @@ and I$_m$, we took a two pronged approach.  First, either I$_h$ or I$_m$ conduct
 values across the dendritic arbor and generated impedance profiles as outlined above.  We then varied I$_h$ and I$_m$ in 5\%
 increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six 
 complex impedance measures outlined above for an apical and a basal segment of the denritic arbor.
-
 
 \section{Article types}
 
@@ -288,20 +325,20 @@ The datasets [GENERATED/ANALYZED] for this study can be found in the [NAME OF RE
 %%% If using *.tif files convert them to .jpg or .png
 %%%  NB logo1.eps is required in the path in order to correctly compile front page header %%%
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=10cm]{logo1}% This is a *.eps file
-\end{center}
-\caption{ Enter the caption for your figure here.  Repeat as  necessary for each of your figures}\label{fig:1}
-\end{figure}
+%%%\begin{figure}[h!]
+%%%\begin{center}
+%%%\includegraphics[width=10cm]{logo1}% This is a *.eps file
+%%%\end{center}
+%%%\caption{ Enter the caption for your figure here.  Repeat as  necessary for each of your figures}\label{fig:1}
+%%%\end{figure}
 
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=15cm]{logos}
-\end{center}
-\caption{This is a figure with sub figures, \textbf{(A)} is one logo, \textbf{(B)} is a different logo.}\label{fig:2}
-\end{figure}
+%%%\begin{figure}[h!]
+%%%\begin{center}
+%%%\includegraphics[width=15cm]{logos}
+%%%\end{center}
+%%%\caption{This is a figure with sub figures, \textbf{(A)} is one logo, \textbf{(B)} is a different logo.}\label{fig:2}
+%%%\end{figure}
 
 %%% If you are submitting a figure with subfigures please combine these into one image file with part labels integrated.
 %%% If you don't add the figures in the LaTeX files, please upload them when submitting the article.

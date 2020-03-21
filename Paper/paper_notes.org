@@ -224,5 +224,7 @@ from the site of stimulation and at the soma.
 * [2020-3-17 Tue]
 ** bimodal phase response, a couple OK examples, not sure if it warrants figure / mentioning
 * [2020-3-19 Thu] - working on putting figures together properly
-* [2020-3-20 Fri] - hopefully finishing up figures
+* [2020-3-20 Fri] - finished up figures
 ** allen exmaple 1: 497233139, 2: 497232419
+* [2020-3-21 Sat] 
+** table of basic model info

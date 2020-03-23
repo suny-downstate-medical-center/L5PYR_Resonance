@@ -116,10 +116,10 @@ K-type K+ channels \citep{Das2017-nz}.  The resonance strength can be quantified
 Q-factor, the ratio of resonant $|Z|$ to the initial $|Z|$ \citep{Dewell2019-ra}. The 
 resonance frequency specifies the frequency at which $|Z_{in}|$ is maximized, while
 transfer frequency specifies the frequency at which $|Z_c|$ between the stimulation site and 
-the soma is maximized \cite{Dembrow2015-zb}.  Subthrehold resonance has been observed in a wide 
+the soma is maximized \citep{Dembrow2015-zb}.  Subthreshold resonance has been observed in a wide 
 variety of species and neuronal cell types \citep{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
 and is proposed to impart neurons with the ability to discriminate their inputs by their 
-frequency content \citep{Das2017-nz}. Furthermore, a direct correlation has been shown between subthreshold resonance and suprathrehold
+frequency \citep{Branco2010-nr, Das2017-nz}. Furthermore, a direct correlation has been shown between subthreshold resonance and suprathreshold
 resonance via spike-triggered averaging methods \citep{Das2015-mh}.
 Meanwhile, impedance phase ($\Phi$) defines the temporal relationship between I$_{in}$ and membrane potential:
 \begin{equation} \Phi = arctan(\frac{X}{R}) \label{eq:03}\end{equation}
@@ -158,122 +158,198 @@ pathophysiology, with I$_h$ being significantly altered in temporal lobe epileps
 
 \section{Methods}
 % where you can find models and code used in this study
-Four of the models studied in this paper \citep{Kole2008-aj, Acker2009-yj, Hay2011-if, Neymotin2017-dr} are
-are available for download on ModelDB (\url{https://senselab.med.yale.edu/modeldb/}).  The fifth is an "all-active"
-biophysically detailed model available from the Allen Brain Atlas Data Portal (\url{https://portal.brain-map.org/}) \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}.
-All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}.  The code 
-developed for simulation, data analysis, and visualization were written in Python and MATLAB (Natick, Ma), and it
-is available on GitHub (https://github.com/suny-downstate-medical-center/L5PYR\_Resonance).
+Four of the models studied here \citep{Kole2008-aj, Acker2009-yj, Hay2011-if, Neymotin2017-dr} 
+are available for download on ModelDB (\url{https://senselab.med.yale.edu/modeldb/}).  The other two are "all-active"
+biophysically detailed models available from the Allen Brain Atlas Data Portal (\url{https://portal.brain-map.org/}) \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}.
+All simulations presented here were performed using NEURON in Python \citep{Hines2009-qx}. 
+The code developed for simulation, data analysis, and visualization was written in Python and MATLAB (Natick, Ma), 
+and it is available on GitHub (\url{https://github.com/suny-downstate-medical-center/L5PYR\_Resonance}).
 
 % overview of the models
 We focus our study on three models of rat PCs and three models of mouse PCs. A summary of the basic
-model information is provided in \label{Table 1}.
-% Hay 2011
-The first model \citep{Hay2011-if}, is based on data from neocortex of Wistar rats, P36.  The model was fit to perisomatic
-and backpropagating spiking activity.  In the model, all dendritic channels are uniformly distributed with the 
-exception of I$_h$.  I$_h$ is uniform in the basal dendrites, while in the apical dendrites I$_h$ channels are
+model information is provided in \emph{Table 1}.
+%% Hay 2011
+The first rat PC model \citep{Hay2011-if} is based on data from neocortex of Wistar rats, postnatal day (P) 36.  The model was fit to perisomatic
+and backpropagating spiking activity.  I
+All dendritic channels are uniformly distributed with the exception of I$_h$.  
+I$_h$ is uniform in the basal dendrites, while in the apical dendrites I$_h$ channels are
 distributed using a density function that increases exponentially with distance from the soma 
 \citep{Nevian2007-gw, Kole2006-bm}.
-% Acker Antic 2009
+%% Acker Antic 2009
 The second model \citep{Acker2009-yj}, is based on data from frontal cortex of 
 Sprague-Dawley rats, P21-33.  The model was fit using voltage-sensitive dye imaging data with a focus on 
 backpropagating action potentials in the basal dendrites.
-% Kole 2008
-The third rat PC models \citep{Kole2008-aj} is based on data from somatosensory cortex of Wistar rats. Channel 
+%% Kole 2008
+The third rat PC model \citep{Kole2008-aj} is based on data from somatosensory cortex of Wistar rats. Channel 
 densities were adjusted  primarily to account for perisomatic spiking activity, particularly fast action potential repolarization and 
 large amplitude  afterhyperpolarization in the axon initial segment.  I$_h$ channels are distributed throughout 
 the dendritic arbor with an exponential increase in density with distance from the soma \citep{Kole2006-bm}.
 It also has I$_m$ channels distributed evenly throughout the dendritic arbor.
-% Neymotin 2017
+%% Neymotin 2017
 The first mouse model \citep{Neymotin2017-dr}, is based on data from primary motor cortex (M1) of C57Bl/6J mice, P21.  
-The model was fit based on perisomatic spiking activity and validated by simulating subthrehold somatic resonance.  
+The model was fit based on perisomatic spiking activity and validated by simulating subthreshold somatic resonance.  
 I$_h$ conductance is constant in the basal dendrites, increases exponentially with distance from the soma along the apical
-trunk until the nexus with apical dendrite tufts, where the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-sj}.  
-% Allen cells
+trunk until the nexus with apical dendrite tufts, beyond which the I$_h$ conductance plateaus at 0.006 S/cm$^2$ \citep{Harnett2015-sj}.  
+%% Allen cells
 The last two mouse models \citep{Reimann2013-mg, Shai2015-ff, Markram2015-zg}
-are based on data from primary visual cortex (V1) of C57BL/6 mice, P35-62. They based largely on a previous model also 
+are based on data from primary visual cortex (V1) of C57BL/6 mice, P35-62. They are based largely on a previous model also 
 studied here \citep{Hay2011-if}.  The major modification to the original is that Ih conductance is constant in the apical and basal arbors.
-This modification accounted for differences between dendritic sag, dendritic resting membrane potential relative 
+This modification accounted for differences between dendritic sag, dendritic resting membrane potential relative
 to the soma, and dendritic input resistance compared to what is seen in rat L5 somatosensory cortex \citep{Shai2015-ff}.
 
+% simulations
+\emph{Figure 1} outlines our approach to studying the impedance profiles of L5 PCs.
+Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection with linearly increasing 
+instantaneous frequency of 0.5 - 20 Hz over 20s (\emph{Fig. 1A}).
+Membrane potential was recorded from the stimulated compartment (\emph{Fig. 1C, E, G}) and at the soma (\emph{Fig. 1D, F, G}). 
+For all other simulations presented here, the chirp-waveform instantaneous frequency spanned 0.5-50 Hz over 50s.  By contrast,
+most experimental studies of impedance limit the instantaneous frequency of the chirp stimulus to 20 Hz \citep{Ulrich2002-dd, Dembrow2015-zb}. 
+We computed Z$_{in}$ and Z$_c$ and associated measures from each of the  recorded membrane potential waveforms via \emph{Eqs. 1-3} (\emph{Fig 1I-L}). 
+We focus our analysis on six measures of the complex impedance response: 
+(1) $|$Z$_{in}|$ resonance amplitude, 
+(2) $|$Z$_{in}|$ resonance frequency,
+(3) $|$Z$_{in}|$ Q-factor, 
+(4) $|$Z$_{c}|$ transfer frequency, 
+(5) $\Phi_{in}$ leading phase bandwidth, 
+and (6) $\Phi_{in}$ synchronous frequency (see \emph{Introduction}).
+
+To study the influence of morphology, we performed the same chirp stimulation on all segments of cell models with
+different morphologies but the same biophysical template \citep{Hay2011-if} (\emph{Fig. 7}).  
+To study the interplay of I$_h$ and I$_m$ in determining the impedance profile, we took a two pronged approach looking at the model from Kole and colleagues (2008),
+as it was the only of the rat models with HCN and M-type K$^+$ channels distributed throughout the dendritic arbor.
+First, we varied either I$_h$ or I$_m$ conductance by $\pm$15\% its original values across the dendritic arbor and generated impedance profiles as outlined above (\emph{Fig. 8}).  
+We then varied I$_h$ and I$_m$ in 5\% increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six 
+impedance measures outlined above for those same stimulated basal and apical compartments (\emph{Fig. 9}).
+
+\section{Results}
+\subsection{Location-dependence in model PCs}
+% rats
+All of the model PCs presented here display impedance profiles with some kind of location dependence with respect to the soma.
+\emph{Figures 2 \& 3} show the two models whose impedance profiles are the best qualitative match to what has been seen in experiments \citep{Ulrich2002-dd, Dembrow2015-zb, Das2017-nz}.
+%% Hay 2011
+In the first model \citep{Hay2011-if}, Input resonance frequencies linearly span the theta range (3 - 12 Hz) over the length of the denritic arbor (\emph{Fig. 2C}).
+Similarly, transfer frequencies between the denrites and soma are also relegated to the theta range. 
+For those dendritic compartments with leading phase response, synchronous frequencies spanned 0.5 - 9 Hz and leading phase bandwidths spanned 0 - 8 Hz.
+Basal dendrites did now show leading phase response.
+%% Acker & Antic
+Similarly, the second model \citep{Acker2009-yj} exhibits resonance and transfer frequencies in the theta range in a roughly linear fashion (\emph{Fig. 3C, E}).
+Synchronous frequencies and leading phase bandwidths are all below 5 Hz, and again the basal dendrites do not exhibit a leading phase response.
+
+%% Kole
+The third rat PC model \citep{Kole2008-aj}, however, exhibits starkly different impedance response characteristics.  
+Resonance frequencies span 10 - 50 Hz (\emph{Fig 4C}); transfer frequencies, 10 - 25 H (\emph{Fig 4E}); synchronous frequencies and leading phase bandwidths, 2 - 35 Hz (\emph{Fig 4F, G}); 
+all extending well beyond the theta range measures seen in experimental preparations and the previous two PC models.
+In contrast to the previous two models, all dendritic compartments show leading phase response to some degree.
+
+% mice
+%% neymotin
+The three mouse PC models diverge even further from the experimental data.
+In the first mouse PC model, we see input resonance frequencies between 4-20 Hz for dendrites
+less than 300 $\mu$m from the soma (\emph{Fig. 5C}).  Beyond 300 $\mu$m in the apical tufts, peak frequencies saturate at 50 Hz.  
+These are not true resonance frequencies, but are limited by the frequency span of the chirp stimulus.  
+Inspection of the input impedance profile of the apical tufts from this cell using NEURON's impedance tool
+shows that the impedance does not begin to fall until ~100 Hz (data not shown).
+Transfer frequencies span from ~6 - 8 Hz then drop beyond 400 $\mu$m to 0.5 Hz (\emph{Fig. 5E}).  
+The phase response in this model's dendrites is also very different.  Synchronous frequencies in the basal dendrites 
+decrease with distance from the soma from ~ 2.5 - 1.5 Hz.  Meanwhile, synchronous frequencies in the apical dendrites
+increase with distance from the soma until ~200 $\mu$m from the soma, after which the entire 0.5 - 50 Hz span of the 
+chirp frequency is encompassed in the leading phase bandwidth (\emph{Fig. 5F, G}).  
+Saturation seen in the leading phase bandwidth at 50 Hz is again limited by the span of the chirp stimulus.
+
+%% allen cells
+\emph{Figure 6} shows impedance profiles of two PC model neurons from the Allen Brain
+Atlas: 497233139 (\emph{Fig 6A}) and 497232419 (\emph{Fig 6H}).
+The input resonance frequencies for the apical dendrites in 497233139 are fairly close
+to what has been observed experimentally, increasing from 2 - 15 Hz with
+distance from the soma (\emph{Fig 6C}).
+However, with the maximum resonance strength being so small
+(with resonant $|Z_{in}|$ at it's highest only 0.15\% the initial $|Z_{in}|$, in contrast to $>$100\% in one of the rat PC models (\emph{Fig. 4D}), 
+this resonance effect would almost certainly be imperceptible in an experimental setting in the presence of ongoing subthreshold membrane oscillations and noise.
+There is a lack of location-dependence for transfer frequency, which is below 1 Hz across the entire dendritic arbor (\emph{Fig. 6E}).
+The phase response also lacks strong location-dependence (\emph{Fig. 6F-G}). For most dendritic compartments, the phase response remained less than zero until $\sim$40 Hz, 
+in stark contrast to what was seen in previous models and experiments. Rather than starting with leading phase and transitioning to phase lag like in
+other models, the reverse is true here.  As a consequence,the leading phase bandwidth is also limited by the frequency span of the chirp stimulus.
+Input resonance in the apical dendrites of 497232419 saturate at 50 Hz (\emph{Fig 6J}) in a manner similar to \cite{Neymotin2017-dr} (\emph{Fig. 5C}).  
+Conversely, transfer frequencies between the apical dendrites and soma spans $\sim$ 5 - 25 Hz roughly linearly with distance from the soma (\emph{Fig. 6L}).
+This model also exhibits unusual phase response.  For the basilar dendrites, synchronous frequencies are between $\sim$40 - 50 Hz for the same reasons as in model 497233139;
+however, most of the apical dendrites exhibit leading phase for the whole frequency span of the chirp stimulus (\emph{Fig. 6M-N}).
+
+\subsection{The influence of morphology}
+Due to their constant channel densities in the dendritic arbors, the PC models from the Allen Brain Atlas provide some insight into the role of morphology 
+in determining the impedance profile. 
+For instance, resonance frequency and strength, though very weak, show fairly systematic location-dependence in the apical dendrites of 497233139 (\emph{Fig 6C-D}). 
+Furthermore, resonance strength and transfer frequency show clear location-dependence in model 497232419.
+This demonstrates that gradients in active channel densities, like HCN, are not necessarily required to produce gradients in the impedance profile.
+
+We further investigate the influence of morphology over the impedance profile with more biophysically
+detailed channel distributions.
+\emph{Figure 7} shows impedance profiles from three different cell morphologies with the same biophysical template, so channels are
+distributed in the same fashion in all three.
+We see changes of varying degree to all six measures of the complex impedance response.
+Resonance $|Z_{in}|$ amplitude, resonance strength, and the phase response were especially impacted in \emph{Cell 3} (\emph{Fig. 7B, D, F, G}).
+One particularly interesting result is that a number of dendritic compartments in \emph{Cell 3} lack any leading phase response, 
+while the other two morphologies exhibit some degree of leading phase across their dendritic arbors (\emph{Fig. 7G}).
+It should be noted that while using the same biophysical template for these three morphologies did not produce
+good model transfer with regards to measures of somatic spiking \citep{Hay2011-if},
+their dendritic impedance profiles remain biologically plausible.
+
+\subsection{The interplay of I$_h$ and I$_m$}
+We also investigate the interplay of I$_h$ and I$_m$ in determining the impedance profiles of PCs.
+We chose the model from \cite{Kole2008-aj} for this task because it has HCN and M-type k$^+$ channels distributed
+throughout the entire dendritic arbor.
+Before looking at their interactions, however, we investigate their individual contributions to the impedance profile.
+\emph{Figure 8} gives some insight into the individual contributions of of I$_h$ and I$_m$ to the impedance profile.
+By varying the I$_h$ conductance or I$_m$ conductance in each dendritic compartment by $\pm$ 15\%, see systematic 
+changes to all 6 measures of the impedance profile on which we focus.  Increasing the conductance of either decreases
+$|Zin|$ resonance amplitude and increases resonance frequency, resonance strength, transfer frequency, synchronous
+frequency, and leading phase bandwidth.
+The reverse is true when decreasing the conductance of either.
+The magnitude of these changes is, however, greater from changing HCN conductance, which is necessary for the resonant response.
+
+To investigate the combined roles of I$_h$ and I$_m$ in determining the impedance response, we varied both HCN 
+conductance and/or M-type K$^+$ conductance by increments of 5\% up to $\pm$20 either in every dendritic compartment 
+across the arbor or in single branches.  
+We then performed the chirp stimulation paradigm on a basal and an apical branch and computed the impedance measures for that single point.  
+We see that local changes to I$_h$ and I$_m$ on a basal branch both influence resonance 
+amplitude and resonance frequency (\emph{Fig. 9A-B}), but that changes to I$_h$ 
+conductance dominate changes in resonance strength, synchronous frequency, and leading phase bandwidth (\emph{Fig. 9C, E, F})
+However, that local conductance changes on one basal branch have little influence over the transfer frequency between that branch and the soma.
+Meanwhile, in the apical tuft we see that changes to both channel's conductance influence resonance amplitude, resonance strength, synchronous frequency, and lead phase bandwidth (\emph{Fig. 9 G, I, K, L}).
+Similar to the basal branch, local conductance changes in the apical tuft have no influence on transfer frequency.
+Changes to HCN conductance in the tuft have very little influence over resonance frequency though.
+When changing HCN and M-type K$^+$ channel conductances across the whole basal dendritic arbor, changes to both conductances contribute to changes in resonance amplitude, resonance frequency, and transfer frequency for the basal branch (\emph{Fig. 9M, N, P}).
+Changes to resonance strength and the phase response, however, are dominated by changes in I$_h$ conductance.
+In the apical tuft, global conductance changes to for both HCN and M-type K$^+$ channels contribute to changes in all six measures of the impedance response (\emph{Fig. 9S-X}).
+
+\section{Figures}
+Frontiers requires figures to be submitted individually, in the same order as they are referred to in the manuscript. Figures will then be automatically embedded at the bottom of the submitted manuscript. Kindly ensure that each table and figure is mentioned in the text and in numerical order. Figures must be of sufficient resolution for publication \href{http://home.frontiersin.org/about/author-guidelines#ResolutionRequirements}{see here for examples and minimum requirements}. Figures which are not according to the guidelines will cause substantial delay during the production process. Please see \href{http://home.frontiersin.org/about/author-guidelines#GeneralStyleGuidelinesforFigures}{here} for full figure guidelines. Cite figures with subfigures as figure \ref{fig:2}B.
+
+%%Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
+
+\section{Tables}
 \begin{table}[h!]
 \begin{center}
     \begin{tabular}{m{2cm}|m{1.25cm}|m{2cm}|m{2.5cm}|m{1cm}|m{2cm}|m{3.75cm}}
         \hline
-        \textbf{Model} & \textbf{Species} & \textbf{Strain} & \textbf{Region} & \textbf{Age} & \textbf{Max g$_{Ih}$ in dendrites (S/cm$^2$)} & \textbf{HCN Distribution}  \\
-        \hline
-        Hay et al. 2011 & Rat & Wistar & Neocortex & P36 & 0.015 & Constant in basal, exponential with distance in  apical\\
-        \hline
-        Acker \& Antic 2009 & Rat & Sprague Dawley & Frontal Cortex & P21-33 & 0.0025 & Constant in basal, exponential with distance in  apical\\
-        \hline
-        Kole et al. 2008 & Rat & Wistar & Somatosensory Cortex & P14-28 & 0.09 & Exponential with distance throughout dendritic arbor\\
-        \hline
+        \textbf{Model} & \textbf{Species} & \textbf{Strain} & \textbf{Region} & \textbf{Age} & \textbf{Max g$_{Ih}$ in dendrites (S/cm$^2$)} & \textbf{HCN Distribution}  \\ \hline
+        Hay et al. 2011 & Rat & Wistar & Neocortex & P36 & 0.015 & Constant in basal, exponential with distance in  apical \\ \hline
+        Acker \& Antic 2009 & Rat & Sprague Dawley & Frontal Cortex & P21-33 & 0.0025 & Constant in basal, exponential with distance in  apical \\ \hline
+        Kole et al. 2008 & Rat & Wistar & Somatosensory Cortex & P14-28 & 0.09 & Exponential with distance throughout dendritic arbor \\ \hline
         Neymotin et al. 2017 & Mouse & C57Bl/6 & Primary Motor Cortex & P21 & 0.006 & Constant in basal, exponential with distance in  apical
-        below nexus, constant after the nexus\\
-        \hline
+        below nexus, constant after the nexus \\ \hline
         ABA: 497233139 & Mouse & C57Bl/6 & Primary Visual Cortex & P35-62 & 3.7x10$^{-6}$
-        & Constant in basal and constant in apical\\
-        \hline
+        & Constant in basal and constant in apical \\  \hline
         ABA: 497232419 & Mouse & C57Bl/6 & Primary Visual Cortex & P35-62 & 2.8x10$^{-6}$
-        & Constant in basal and constant in apical\\
-        \hline
+        & Constant in basal and constant in apical \\ \hline
     \end{tabular}
 \end{center}
-\caption{\emph{Basic Model Information}: Models are specified by either the publication in which they first occurred or their Allen Brain Atlas 
-(ABA) model identification number.  Ages are specified by postnatal day age. Under the comments on HCS distribution, "exponential with distance"
+\caption{\emph{Basic Model Information}: Models are specified by either the publication in which they first appeared or their Allen Brain Atlas 
+(ABA) model identification number.  Ages are specified by postnatal day age. Under the comments on HCN channel distribution, "exponential with distance"
 is with  respect to the soma.  For the ABA models, HCN distribution is constant in both apical and basal arbors, but different between the two.
 In both models ABA, I$_h$ conductance is higher in the apical arbor than in the basal, but it is highest in the soma is 8.3x10$^{-6}$ S/cm$^2$ and 
-8.1x10$^{-6}$ S/cm$^2$, respectively.}
+8.1x10$^{-6}$ S/cm$^2$, respectively.}   
 \label{Table 1}
 \end{table}
-
-% simulations
-Each dendritic segment was stimulated with a subthreshold chirp-waveform current injection, and membrane potential
-was recorded from the site of stimulation and at the soma. For generating impednace profiles, the chirp-waveform 
-instantaneous frequency changed linearly and spanned 0.5-50 Hz over 50s. To investigate bimodal phase responses, the
-span of the chirp-waveform instantaneous frequency was increased to 0.5-100 Hz over a 100s duration.  By contrast,
-most experimental studies of impedance limit the instantaneous frequency of the chirp stimulus to 20 Hz 
-\citep{Ulrich2002-dd, Dembrow2015-zb}.  We computed Z$_{in}$ and Z$_c$ and associated measures from each of the 
-recorded membrane potential waveforms via \emph{Eqs. 1-3}.  We focus our analysis on six measures of the complex 
-impedance response: (1) $|$Z$_{in}|$ resonance amplitude, (2) $|$Z$_{in}|$ resonance frequency,
-(3) $|$Z$_{in}|$ Q-factor, (4) $|$Z$_{c}|$ transfer frequency, (5) $\Phi_{in}$ leading phase bandwidth, 
-and (6) $\Phi_{in}$ synchronous frequency (see \emph{Introduction}).
-
-To study the influence of morphology, we performed the same chirp stimulation on all segments of cell models with
-different morphologies but the same biophysical template \citep{Hay2011-if}.  Meanwhile, to study the roles of I$_h$ 
-and I$_m$, we took a two pronged approach.  First, either I$_h$ or I$_m$ conductance was changed by $\pm$15\% its original
-values across the dendritic arbor and generated impedance profiles as outlined above.  We then varied I$_h$ and I$_m$ in 5\%
-increments up to $\pm$20\% at either the branch level (one apical and one basal) or whole-arbor level and computed the six 
-complex impedance measures outlined above for an apical and a basal segment of the denritic arbor.
-
-\section{Article types}
-
-For requirements for a specific article type please refer to the Article Types on any Frontiers journal page. Please also refer to  \href{http://home.frontiersin.org/about/author-guidelines#Sections}{Author Guidelines} for further information on how to organize your manuscript in the required sections or their equivalents for your field
-
-% For Original Research articles, please note that the Material and Methods section can be placed in any of the following ways: before Results, before Discussion or after Discussion.
-
-\section{Manuscript Formatting}
-
-\subsection{Heading Levels}
-
-%There are 5 heading levels
-
-\subsection{Level 2}
-\subsubsection{Level 3}
-\paragraph{Level 4}
-\subparagraph{Level 5}
-
-
-\subsection{Figures}
-Frontiers requires figures to be submitted individually, in the same order as they are referred to in the manuscript. Figures will then be automatically embedded at the bottom of the submitted manuscript. Kindly ensure that each table and figure is mentioned in the text and in numerical order. Figures must be of sufficient resolution for publication \href{http://home.frontiersin.org/about/author-guidelines#ResolutionRequirements}{see here for examples and minimum requirements}. Figures which are not according to the guidelines will cause substantial delay during the production process. Please see \href{http://home.frontiersin.org/about/author-guidelines#GeneralStyleGuidelinesforFigures}{here} for full figure guidelines. Cite figures with subfigures as figure \ref{fig:2}B.
-
-
-\subsubsection{Permission to Reuse and Copyright}
-Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
-%%Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
-
-\subsection{Tables}
-Tables should be inserted at the end of the manuscript. Please build your table directly in LaTeX.Tables provided as jpeg/tiff files will not be accepted. Please note that very large tables (covering several pages) cannot be included in the final PDF for reasons of space. These tables will be published as \href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{Supplementary Material} on the online article page at the time of acceptance. The author will be notified during the typesetting of the final article if this is the case. 
 
 \section{Nomenclature}
 

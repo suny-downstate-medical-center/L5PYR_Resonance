@@ -228,3 +228,5 @@ from the site of stimulation and at the soma.
 ** allen exmaple 1: 497233139, 2: 497232419
 * [2020-3-21 Sat] 
 ** table of basic model info
+* [2020-3-23 Mon] - methods done, on with results
+** done with results text, still need to do figure captions

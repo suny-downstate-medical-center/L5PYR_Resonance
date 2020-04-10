@@ -215,7 +215,7 @@ from the site of stimulation and at the soma.
 **** same parameters as above, used biophysics template and three morphologies from Hay2011-if
 *** Ih and Im 
 **** used cell model from Kole2008-aj, only one that had Ih and Im distributed throughout the dendritic arbor.
-**** varied Ih and Im conductance in 5% increments up to +/- 20% either at the branch level or across the whole dendritic arbor 
+**** varied Ih and Im conductance in 5* increments up to +/- 20* either at the branch level or across the whole dendritic arbor 
 
 
 * [2020-3-15 Sun] - bimodal phase response
@@ -233,3 +233,52 @@ from the site of stimulation and at the soma.
 * [2020-4-6 Mon] - moved and cleaned up paper
 ** moved paper to overleaf, removed paper code from this repo - now just code and these notes.
 *** 'moved paper to overleaf, removed paper code from this repo - now just code and notes'
+
+* [2020-4-10 Fri] - discussion notes
+
+** biological plausibility
+*** rat models all seem biologically plausible
+**** resonance frequency, transfer frequency, synchronous frequency, and leading phase bandwidth all increase
+ with distance from the soma along the dendritic arbor.
+**** Two models, Acker & Antic and Hay et al., 2011, conform well to experimental data in L5 PT and resemble hipp PT
+***** resonance and transfer frequencies in the theta range
+***** synchronous frequencies in delta/theta range
+***** roughly linear relationships with distance
+**** third model (Kole et al) is very different, but not necessarily implausible
+***** resonance frequencies from 10-50 Hz
+***** transfer frequencies from 10-25 Hz
+***** synchronous frequencies from 2-35 Hz
+***** farthest dendritic compartment of this neuron is 1500 microns from the soma, in experimental studies of L5 PT cells,
+farthest out is 700 microns (Dembrow2015-zb, Ulrich2002-dd)
+***** at these distances in this cell, resonance frequencies are from 10-18 Hz, transfer frequencies from 11-15 Hz, synch freq 4-12 Hz, 
+not too far off from experimental values!! (Dembrow2015-zb).
+
+*** Neymotin et al - may be biologically possible
+**** only model in which HCN channel density plateaus in the apical tufts
+**** resonance transfer and synchronous frequencies below the nexus of the apical tufts are similar to experimental values and model
+ was validated looking at somatic input resonance
+
+*** dendritic impedance profiles for the ABA cells more of a mixed bag
+**** 4927233139
+**** resonance frequencies between 2-15 Hz, but resonance strength is so low that it would be indistinguishable from noise in experimental preparations
+**** seemingly no relationship between input resonance frequency and transfer frequency to the soma
+**** synchronous frequencies are all >35 Hz, which is not seen experimentally
+**** 497232419
+**** like Neymotin cell, input resonance frequency also plateau, but resonance strength is comparable to other cells studied here
+and transfer frequency is not far offf from experimental observations
+**** phase response is, as in the other ABA model, is fairly unusual
+
+*** should be noted that these models were intended for use in large network simulations
+**** constraining these models focused mainly on measures of perisomatic firing characteristics
+**** ABA models deliberately simplified the channel distributions in the dendrites
+
+** morphology, channel distribution, and dendritic impedance 
+*** Although one of the ABA cells did not exhibit strong resonance, and neither may have biologically plausible impedance profiles 
+by its constant channel densities in the dendrites they demonstrate that gradients in voltage-gated ion channel density are not 
+necessary for gradients in the dendritic impedance profile.
+**** The channel distributions in these models do suggest that realistic phase responses may require realistic channel distributions
+*** The impedance profiles of the three cells with the same channel distributions (\emph{Fig. 7}) demonstrates that morphology has a
+direct impact on all location-dependent relationships in the denritic impedance profile.
+**** suggests that dendritic pruning seen during development \cite{Riccomagno2015-pq} and dendritic damage seen during traumatic 
+brain injury \cite{Gao2011-xo} have impacts on the impedance profile of the entire neuron.
+***** dendritic pruning during development may be one mechanism for tuning the impedance profile.

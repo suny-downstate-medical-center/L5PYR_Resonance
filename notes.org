@@ -235,6 +235,9 @@ from the site of stimulation and at the soma.
 *** 'moved paper to overleaf, removed paper code from this repo - now just code and notes'
 
 * [2020-4-10 Fri] - discussion notes
+** add to intro: Additionally, HCN plays an important role in
+regulating neuronal excitability by setting resting membrane
+potential (RMP) [5,6]
 
 ** biological plausibility
 *** rat models all seem biologically plausible
@@ -282,3 +285,129 @@ direct impact on all location-dependent relationships in the denritic impedance 
 **** suggests that dendritic pruning seen during development \cite{Riccomagno2015-pq} and dendritic damage seen during traumatic 
 brain injury \cite{Gao2011-xo} have impacts on the impedance profile of the entire neuron.
 ***** dendritic pruning during development may be one mechanism for tuning the impedance profile.
+
+** Tunability and degeneracy of the impedance profile 
+*** (from intro) Tunability
+**** dynamically tunable subthreshold resonance along the neuronal topograph (Magee2005-oq, Narayanan2007-gw, Narayanan2008-zw, Sjostrom2008-sz, 
+Hu2009-qb, Rathour2012-am, Rathour2012-bu) Das2017-nz
+**** LTP induces changes in impedance profile Narayanan2007-gw
+*** (from intro) Degeneracy:
+**** "With reference to sub- and supra-threshold frequency selectivity in neurons, several studies have demonstrated multi-channel regulation
+of somatodendritic spectral selectivity. Specifically, studies pertaining to sub-threshold resonance and phase dynamics have shown that impedance properties 
+mediated by HCN channel could be significantly modulated by the presenc eof other sub-threshold conductances and by morphological characteristics 
+(Hutcheon2000-gs, Hu2002-ga, 2009, Narayanan2008-zw, Zemankovics2010-zt, Rathour2012-bu, Dhupia2014-ad, Rathour2016-vv). While these studies
+elucidated the role of individual conductances in modulating sub-threshold impedance properties, computational
+frameworks have provided direct lines of evidence for degeneracy (Figures 2B,C) in active dendritic spectral tuning (Rathour2012-bu, Rathour2014-pl)." Das2017-nz
+***** mainly studied in hippocampal neurons
+*** (from intro) role in disease: Ih altered in temporal lobe epilepsy Shin2008-za, Marcelin2009-vy
+*** role in oscillations and cross-frequency coupling 
+We found that tuning Ih in different cell classes altered network rhythms, providing independent control for
+gamma and theta oscillations. Ih modulation also set the level of cross-frequency coupling and timing of gamma
+generation relative to the theta cycle. Ih modulation may therefore be an important control point with functional
+consequences, since these dynamics are hypothesized to contribute to learning and cognitive function [19–21]. - Neymotin2013-cm
+*** we looked at two paradigms for dynamically tuning the impedance response by changing the conductances of HCN and M-type K+ channels at the branch level and
+across the whole dendritic arbor in one PC model
+**** Changing either HCN or M-type K+ conductance across the whole arbor changed the location-dependent relationships of the impedance profile 
+**** We also found that both local and global changes to both HCN and M-type K+ conductance can have produce a wide array of impedance profiles
+while also allowing for degeneracy.
+***** For instance, changing HCN and M-type K+ conductance by $\pm20\%$ produces a range of impedance profiles, with resonance amplitude varying by over
+45M%$\Omega$, resonance frequency over 10 Hz, transfer frequency by 5 Hz, and synchronous frequency by over 6 Hz (\emph{Fig. 9S, T, V, W}). Many of the
+possible impedance responses in these ranges can, however, be achieved by multiple combinations of changes to HCN and M-type K+ conductance.
+*** While HCN channels are necessary for subthreshold resonance in PCs, M-type K+ channels are just one of the voltage-gated ion channels with
+inductive reactance capable of modulating the impedance response; therefore, we have only scratched the surface of possible mechanisms by which 
+neurons may dynamically tune their impedance response.  The degeneracy of the impedance response, however, implies that neurons may have multiple 
+ways to maintain their impedance profiles in response to Ih modulation, brought about through participation in network oscillations or through pathophysiology.
+
+* [2020-4-13 Mon] - srdjan comments 
+** This looks like an attack on strawman. In order to make this statement scientific, the abstract should:
+[1] Summarize/state very briefly the published impedance profiles that can be found in dendrites of neocortical L5 pyramidal neurons?;
+and [2] Specify in which aspect is your set of impedance profiles different from the “previously established set”.
+
+** Who published the map of impedance profiles in dendrites of pyramidal neurons? Which map is different from the map you hypothesize. 
+In which aspect is your hypothesis different from the “previously established impedance profile”?
+*** all fair questions, but does the "who" really belong in the abstract?
+
+** The balance of excitatory and inhibitory inputs . . . 
+Not true. Active dendritic conductances also play important role.
+*** will definitely add that
+
+** Distinguish PCs from IT cells? - I thought that IT cells are PC cells!
+Did you meant to say PT instead of PC?
+*** Does PT really make sense outside of motor cortex?  PC is pyramidal cell, need some way to distinguish from commissural/IT 
+
+** Ruth Empson does not recognize PT and IT cells. 
+Instead, she divides L5 projection pyramidal neurons of the M1 cortical region into 4 categories: 
+    1 corticospinal (CSp) neurons, 
+    2 corticothalamic (CTh) neurons, 
+    3 commissural projecting corticostriatal (CStr) neurons,
+    4 commissural projecting corticocortical (CC) neurons.
+*** very helpful, but how best to refer to the non-commissural neurons outside of M1 then?
+
+** In the year 2013, a separation based upon two broad projection neuron types (PT and IT) seems limiting and dated (Ruth Empson)
+*** seems commissural nuerons don't have location-dependent impedance profiles, but Csp and CTh are (or however we might choose to distinguish them)
+
+** Srdjan is totally confused. Nikolai Dembrow describes COM and CPn pyramidal neurons [ref 9]. 
+Craig Kelley somehow uses PC and IT nomenclature. What is the relation between Dembrow and Kelley nomenclatures?
+*** maybe subcortical project neurons . . . 
+
+** Unnecessary and Irritating repetition of the term “complex”. We get it -  it is complex. We just need to hear it once in one of the sentences.
+*** OK
+
+** (REF) for impedance equations
+*** can try to find references, but seems like citing Ohm or Fourier
+
+** It sounds very intellectual, but has no meaning to me. Could you please define “inductive reactances”, before you use it in explaining your point?
+*** fair, will add an explanation
+
+** In the context of dendritic integration or synaptic integration, the transfer frequency (what is symbol of Transfer Frequency – Zt#^&?) specifies the
+frequency of EPSP leading phase and/or dendritic spike leading phase, at which the efficacy of transfer between the initiation site and the soma is the 
+most optimal. For example, two EPSPs of identical amplitude, which propagate from dendrite to soma, will have different somatic amplitude depending on 
+the frequency of heir leading phases. 
+*** no symbol for transfer frequency, iTo join the video meeting, click this link: https://meet.google.com/xuw-bsyp-pgp
+Otherwise, to join by phone, dial +1 320-412-3603 and enter this PIN: 810 319 845#t's the peak frequency of the transfer impedance amplitude
+*** not entirely sure if we're talking about the same transfer frequency or using phase in the same manner here?
+
+** If my text above is correct, then we should include this explanation at this point of manuscript, 
+because there are readers who are interested in biology primarily, and not physics savvy.
+
+** This Introduction has left us hanging. What is this paper about? I believe, here it is necessary to state two things: 
+[1] What is the GAP in knowledge or interesting questions, which remains to be investigated? 
+and 
+[2] What have we done to address this interesting question - briefly in broad strokes?
+*** totally fair 
+
+** The FIRST model [ref 17] does not appear in Fig. 1.
+What is the point of calling it The FIRST?
+This mismatch between Methods and Figures is a mistake. Readers do not have time to play detective games.
+If you call something FIRST, it must be addressed first in the Results section, in Figure 1. I understand that you consider Fig 1 as a Methods figure, 
+and Fig. 2 as a Result figure, however I strongly advise that you address FIRST MODEL in the FIRST FIGURE. 
+Or change the ordering of models in your narrative, make Acker2008 the “first model”. Also, start the Results section with the Acker figure – Fig. 3.
+*** so you touched on why I have it ordered that way, but if confusing will reword/structure things 
+
+** What constitutes a "dendritic segment". Is this based on the, for example n=9 segment feature of NEURON?
+*** should change segment -> compartment (more universal term)
+
+** In Figure 1, the amplitude of the injected Chirp current was equal or less than 2 pA. Two picoAmps of current has little or no physiological meaning. 
+How can anyone believe that voltage-gated channels are activated with voltage swings of only 0.1 mV (one tenth of one millivolt)?
+*** I understand the skepticism, but impedance should be fairly independent of current amplitude as long as we're below spiking threshold, since it's a ratio 
+*** NEURON's built in impedance tool looks at much smaller excursions in membrane potential (I believe uV)
+*** if voltage-gated ion channels like HCN weren't activated, there wouldn't be any resonance 
+
+** The Figure1 Modeling data has no implications on neuronal physiology, unless the RANGE of current amplitudes were carefully investigated. 
+To account for this criticism, I would plot 3 complete Impedance Profiles for the same cell, where the Chirp current amplitude was set at 2 pA, 20 pA and 50 pA.
+Then I would publish a conclusion on whether the conclusions of this paper depend, or do not depend, on the Chirp current amplitude. 
+Alternatively, how exactly the conclusions of the current paper depend on the Chirp current amplitude, displayed right there in Figure-1. 
+*** can include if above argument is not convincing.  
+
+** Fig. 1. The color of the “basilar dendrite” line in the graphs I-L is plum-purple and the color of the dot on cell morphology is sky blue.
+ Could you please fix this? Fig. 1. The measurements that should describe OBLIQUE branch  have been made at the branch point between apical trunk 
+ and oblique branch.  Could you please move the stimulation and recording site to the middle of the oblique branch, and plot the middle-branch data? Thanks, Srdjan.
+*** for sure can move oblique example away from branch point 
+*** surprised at the color difference, can't see it on my machine.  I-L look different to C?
+
+morphology - systematic changes - length and radius
+voltage clamp 1 compartment each conductance
+EPSP frequency vs soma V 
+different current injections
+kruschavatz
+antic@uchc.edu 

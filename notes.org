@@ -405,9 +405,4 @@ Alternatively, how exactly the conclusions of the current paper depend on the Ch
 *** for sure can move oblique example away from branch point 
 *** surprised at the color difference, can't see it on my machine.  I-L look different to C?
 
-morphology - systematic changes - length and radius
-voltage clamp 1 compartment each conductance
-EPSP frequency vs soma V 
-different current injections
-kruschavatz
-antic@uchc.edu 
+

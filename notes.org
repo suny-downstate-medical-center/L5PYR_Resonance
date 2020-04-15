@@ -408,6 +408,6 @@ Alternatively, how exactly the conclusions of the current paper depend on the Ch
 morphology - systematic changes - length and radius
 voltage clamp 1 compartment each conductance
 EPSP frequency vs soma V 
-different current injections
+different amplitude current injections
 kruschavatz
 antic@uchc.edu 

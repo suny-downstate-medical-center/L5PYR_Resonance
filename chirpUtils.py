@@ -1,5 +1,6 @@
 from neuron import h, init
-h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
+#h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
+h.load_file("stdrun.hoc")
 import numpy as np 
 from scipy.signal import chirp
 from pylab import fft, convolve
@@ -56,6 +57,8 @@ def zMeasures(current, v,  delay, sampr, f1, bwinsz=1):
     fblur = np.array([1.0/bwinsz for i in range(bwinsz)])
     zAmp = convolve(zAmp,fblur,'same')
     zPhase = convolve(zPhase, fblur, 'same')
+	zRes = convolve(Zres, fblur, 'same')
+	zReact = convolve(zReact, fblur, 'same')
 
     ## trim
     mask = (Freq >= 0.5) & (Freq <= f1)
@@ -113,8 +116,8 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     samp_rate = (1 / (time[1] - time[0])) * Fs
     
     ## calculate impedance
-    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
-    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=10)
+    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=10)
 
     v_attenuation = Vattenuation(ZinAmp, ZcAmp)
     phase_lag = phaseLag(ZinPhase, ZcPhase)

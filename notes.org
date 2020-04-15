@@ -415,4 +415,8 @@ antic@uchc.edu
 
 * [2020-4-15 Wed] - working on srdjan's suggestions
 ** running examples of higher amplitude current injections on neurosim machine
+*** amp * 10: very much same results ("noisier" impedance measures, but think it's due to sampling rate (greater voltage excursion in less time))
+*** amp * 20: start getting into territory where excusions are asymmetric about resting membrane potenital 
+*** perfectly replace traces in Figure 1 w/ traces from amp*10, but impredance metrics remain virtually unchanged
 ** new branch called neurosim_machine 
+** seems like for changing morphology systematically, only need to deal with L, not pt3d

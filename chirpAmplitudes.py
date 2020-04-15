@@ -16,9 +16,10 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 amp = 0.0025
 amp = amp * 10 # as per srdjan's suggestion
+amp = amp * 2
 f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 5 # 12 # original for all cells
 I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
 loc = 0.5
 for sec in sec_list:
-    out = applyChirp(I, t, sec(loc), soma_seg, t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/amplitude_test/' + str(sec))
+    out = applyChirp(I, t, sec(loc), soma_seg, t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/amplitude_test_double/' + str(sec))

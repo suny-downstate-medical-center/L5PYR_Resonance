@@ -116,8 +116,8 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     samp_rate = (1 / (time[1] - time[0])) * Fs
     
     ## calculate impedance
-    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=10)
-    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=10)
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=20)
+    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=20)
 
     v_attenuation = Vattenuation(ZinAmp, ZcAmp)
     phase_lag = phaseLag(ZinPhase, ZcPhase)

@@ -57,8 +57,8 @@ def zMeasures(current, v,  delay, sampr, f1, bwinsz=1):
     fblur = np.array([1.0/bwinsz for i in range(bwinsz)])
     zAmp = convolve(zAmp,fblur,'same')
     zPhase = convolve(zPhase, fblur, 'same')
-	zRes = convolve(Zres, fblur, 'same')
-	zReact = convolve(zReact, fblur, 'same')
+    zRes = convolve(Zres, fblur, 'same')
+    zReact = convolve(zReact, fblur, 'same')
 
     ## trim
     mask = (Freq >= 0.5) & (Freq <= f1)

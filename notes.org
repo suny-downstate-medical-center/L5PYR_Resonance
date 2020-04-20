@@ -420,3 +420,5 @@ antic@uchc.edu
 *** perfectly replace traces in Figure 1 w/ traces from amp*10, but impredance metrics remain virtually unchanged
 ** new branch called neurosim_machine 
 ** seems like for changing morphology systematically, only need to deal with L, not pt3d
+
+* [2020-4-20 Mon] - finished draft of discussion 

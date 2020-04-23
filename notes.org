@@ -422,3 +422,66 @@ antic@uchc.edu
 ** seems like for changing morphology systematically, only need to deal with L, not pt3d
 
 * [2020-4-20 Mon] - finished draft of discussion 
+
+* [2020-4-23 Thu]
+** Bill's questions about dends to Arnd:
+Hi Bill,
+sorry for the late reply. Of course these are excellent questions, but they tend not to have easy answers. Here is an attempt:
+a couple of very basic questions:
+1. for passive properties:
+We typically assume that cable properties are uniform across the dendritic tree and differ in soma (and axon).
+We often assume that passive membrane properties are uniform across the dendritic tree and soma, and differ in the axon. 
+We then allow for differences between soma and dendrites, and sometimes between different dendritic regions, 
+to account for the membrane area in spines (whose density is inhomogeneous). 
+To do this, we scale up Cm and scale down Rm to ‘collapse’ the spine membrane into the dendritic shaft membrane, 
+effectively assuming that the spine membrane has the same passive properties as the dendritic shaft membrane.
+
+The main reasons for these choices are that we do not know better, at least not with much certainty.
+We tend to accept that axons, especially myelinated ones, should be treated differently. 
+And we use our knowledge about different spine densities. But there is no easy way to prove locally inhomogeneous Rm (or Ri) in dendrites. 
+In this paper https://www.ncbi.nlm.nih.gov/pubmed/11533136 we wrote:
+"A final potential source of error which is very difficult to assess quantitatively is the structure of the model itself.
+We constructed our compartmental models with the simplest possible assumption, namely that the passive parameters are homogeneously distributed. 
+While this assumption proved adequate to constrain our models within a reasonable margin of error, it is difficult in principle to rule out alternative models with more complex
+distributions of parameters. 
+The lower value of somatic vs. dendritic Rm assumed in the model of Purkinje cells constructed by Rapp et al. (1994) is not necessarily inconsistent with our models since it
+could be due to a shunt conductance associated with somatic microelectrode recording. 
+Although two-site recording can give an indication of inhomogeneities in the passive parameters, it cannot clearly distinguish between alternative inhomogeneous models, 
+e.g. between an inhomogeneity in Rm (Stuart & Spruston, 1998; London et al. 1999) and an inhomogeneity in Ri. 
+To exclude or confirm an inhomogeneous distribution of Ri in dendrites, simultaneous recording from at least three sites would be required (Kleinle, 1998). 
+We conclude that future refinements of passive models of neurons will depend primarily on improved acquisition of morphological data, 
+for example by combining high-resolution confocal microscopy, deconvolution, and novel image processing techniques allowing automated reconstruction of neuronal morphology, 
+as well as on multi-site recordings."
+
+What evidence do we have for this from dendritic recordings?
+Not much. It is impossible to prove precise uniformity of passive parameters, because even patch-clamp recordings are noisy and morphological reconstructions are imperfect. 
+What we do have are models with uniform parameters across soma and dendrites that fit data from multi-site patch-clamp recordings, suggesting that nonuniformity, 
+which must exist to some degree, is not severe in these cases.
+This (otherwise very good) paper https://www.ncbi.nlm.nih.gov/pubmed/9570781 claims to provide evidence for nonuniform Rm in dendrites. 
+However, with hindsight we now think that this is most likely due to their old-style pharmacological block of I_h with cesium, which is not as complete and specific as with ZD7288. 
+Thus, in this paper the well-known distance-dependent increase in I_h density 
+(https://www.ncbi.nlm.nih.gov/pubmed/9742133 https://www.ncbi.nlm.nih.gov/pubmed/10805715 https://www.ncbi.nlm.nih.gov/pubmed/11160518 https://www.ncbi.nlm.nih.gov/pubmed/16467515 ) 
+may show up incorrectly as a decrease in Rm with distance from the soma.
+
+Since most are done with patch how accurate are those assessments? Is rapid dialysis in small spaces a problem? Has this been done with voltage indicators?
+Patch at least means that there should be no shunt conductance associated with the electrode, which can happen with sharp recordings as discussed above in the context of Rapp et al. (1994). Rapid dialysis may be a problem for measurements of Ri, and indeed values of Ri vary quite a lot across studies. Larger organelles like mitochondria and ER, whose excluded volume and added tortuosity increase intracellular Ri above the values for bulk electrolytes, do not migrate en masse to the patch pipette, howerver, at least as long as the series resistance remains small (which it should for good recordings). The more likely reason for uncertainty in Ri are over- or underestimated dendritic diameters, however. Voltage indiators are noisy, and therefore measuring the small subthreshold voltage responses needed to infer passive parameters (to avoid activating voltage-gated channels) with voltage-sensitive dyes would be very difficult.
+Has it been shown in pyramidal cells that basilar dends vs apical oblique vs apical main vs tufts have same properties? (or differ in some systematic way?)
+For passive properties: no, to my knowledge.
+There are vastly differing estimates in spines -- think Rin 50Mohm vs 500Mohm (carnevale paper is one; forget other) -- any opinion on which to accept?
+Do you mean estimates of the spine neck resistance? My favourite paper is https://www.ncbi.nlm.nih.gov/pubmed/24657968 because it links morphology and function of individual spines (Fig. 3) and uses superresolution microscopy, yielding exquisite morphological data. It shows that there is a diversity/degeneracy of spine neck resistances. Some filopodia-like spines have spine neck resistances of 500 MOhm, but most do not, and the average spine neck resistance (Fig. 4) is consistent with the early estimates https://www.ncbi.nlm.nih.gov/pubmed/8614831
+
+2. for active properties:
+Parameter degeneracy (non-uniqueness of solution) is assumed in sims and can be demonstrated in models eg our jnphys 2017 paper --
+https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpaperpile.com%2Fshared%2FljIkpv&amp;data=02%7C01%7C%7Cdc8a3e9634324e2a2c5f08d7bd2e3fc1%7C1faf88fea9984c5b93c9210a11d9a5c2%7C0%7C0%7C637185878650424699&amp;sdata=WweMkFsqP9HxRbzjC3vEI80BxS9s4sF39FRu9XUZNTs%3D&amp;reserved=0
+Mostly this is simply because expts are only done in soma so all dend params are underconstrained.
+However, "real" degeneracy is also believed to exist but is mostly discussed by marder and colleagues in STG; they have
+experimental demonstrations and also have explanation (evolutionary advantages of not having everyone like everyone else so
+that everyone dies when env changes)
+
+Q: has anyone demonstrated mammalian dend or somatic channel degeneracy experimentally?
+Yes, in dissociated Purkinje cells https://www.ncbi.nlm.nih.gov/pubmed/15814781 , and there are indications in pyramidal neurons as well https://physoc.onlinelibrary.wiley.com/doi/full/10.1113/jphysiol.2007.146597
+Real degeneracy is believed to exist and to be exploited by the brain https://www.ncbi.nlm.nih.gov/pubmed/18982095 but yes, not many people have demonstrated it experimentally in mammalian neurons.
+Does this answer your questions? I know that some of the answers are not satisfactory. Do you have additional questions?
+
+Stay safe,
+Arnd

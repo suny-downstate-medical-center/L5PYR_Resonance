@@ -568,3 +568,7 @@ channel family (SKv3).  Also, only Ih in basal dends
 *** Neymotin: Ih and Ia, but no Im unless it's IKsin (slowly inactivating, Im is noninactivating, right?)
 *** Kole: Ih and Im, no Ia
 *** Allen cells: Ih and Im throughout 
+
+** trying  Ih and Im changes in apical branch of hay cell
+*** trying to parallelize with ParallelContext for neurosim_machine
+*** works with do nothing function, not with 

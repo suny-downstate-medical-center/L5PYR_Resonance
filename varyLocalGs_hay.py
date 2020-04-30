@@ -189,6 +189,9 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
 
     savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
 
+def doNothing():
+    x = 2 + 2
+
 from getCells import HayCell
 pt_cell = HayCell()
 sec = pt_cell.apic[65]
@@ -202,6 +205,7 @@ factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 
 for ih_factor in factors:
     for im_factor in factors:
-        pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
+        # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
+        pc.submit(doNothing)
 
 pc.done()

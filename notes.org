@@ -485,3 +485,86 @@ Does this answer your questions? I know that some of the answers are not satisfa
 
 Stay safe,
 Arnd
+
+* [2020-4-30 Thu] - Ia, Im, ted's comments
+** ted's email: 
+Hi, Craig. Yes, I'm interested. You sure have put a lot of work into
+this. I may have some other comments over the next couple of days, but
+here are two things I wanted to mention to you right now.
+
+First, I wouldn't put too much emphasis on results obtained from the
+Kole et al. model cell. That cell's morphology contains a lot of abrupt
+jumps parallel to the z axis. Those are artifacts caused by hysteresis
+and/or stiction in the z axis position control of the microscope that
+was used to obtain the morphometric data. They add spurious length to
+the cell's branches. GIGO. FYI, this is a problem that crops up in a lot
+of papers (e.g. Poirazi and Mel's "pyramidal neuron as a two layer
+network" is pretty bad). Yes, I know all experimental data is
+inaccurate, but why deliberately reuse data that are visibly corrupt?
+
+The morphologies used by Hay, Acker, and Neymotin are free of z axis
+artifact. I haven't checked the Allen Institute morphologies; they need
+a look, but I'd bet they're also free of this artifact.
+
+My other leading comment at this point is: if you want to make this
+paper stand out from all the "other" impeadance analysis papers, one way
+might be to bring it back to the time domain. A little phase shift, a
+low Q resonance--even if those things are location-dependent, a lot of
+neuroscientists may not have a clear idea of what those imply to
+neuronal function. But these properties can have a big impact on
+moment-to-moment interaction of signals. I'm wondering if it would be
+possible, without spending a lot of time on it, to construct an example
+simulation with one of these cells that illustrates how phase shift
+and/or low Q resonance shape integration of, say, a pair of synaptic
+inputs that are distributed in time and/or space.
+
+--Ted
+*** my response: 
+Hi Ted,
+
+Great, thanks.
+
+Definitely good to know that about the Kole cell's morphology.  I caught the discussion about that issue at your lab meeting last week, 
+have been meaning to go check the morphologies I've been using, but haven't had a chance yet.  Maybe this paper would be a good forum to address that issue.  
+
+In light of that, do you think it'd be worth revisiting the tunability/degeneracy stuff (Figs. 8 & 9) with a different cell model?  On the one hand, 
+Figure 9 at least doesn't deal much with the location dependence (could maybe ditch Fig. 8 which does).  But on the other, as you said, GIGO.
+
+Re bringing things back to the time domain, I think that'd be a great idea if we can come up with a good sim for it.  
+Bill and Srdjan's main qualms with the paper are how does this all relate to physiological function, and outside of some hand-wavy explanations and pointing some of 
+Dan Johnston & Co's papers, I haven't had a great retort for that.  I'll give it some thought, but please let me know if you think of anything.
+
+Best,
+Craig
+*** bill's comments 
+billl  10:01 AM
+this seems quite reasonable; what do you think;  i'm a big fan of timedomain illustrations as you recall
+
+Craig  10:02 AM
+yeah, i think it's a great idea, but I'm still at a bit of a loss for a good example sim right now (edited) 
+10:06
+also not sure whether this implies I ought to toss the Kole cell results.  as ted mentioned regarding the Poirzai and Mel paper w/ the same issue at gordon's lab meeting last week, their results at least are probably qualitatively still right.  on the other hand, since channels are distributed based on distance to the soma, might be problematic to draw any conclusions based on those channel distributions when we know they're spurious
+
+billl  10:36 AM
+you already have the sims ; show responses in time domain -- big vs little
+10:36
+if know it to be spurious i would leave it out; qual still but quant not
+
+Craig  10:39 AM
+sure,  but those are still continuous inputs, rather than synaptic.  and right on - will have to redo the m-type K+ and Ih density stuff (figs 8 & 9 I think) with another cell and I think maybe a-type rather than m-type (I think kole was the only one with m-type all over)
+
+billl  10:41 AM
+how much is our model of mtype diff from atype?
+10:42
+i think would be interesting to say about differences in properties they confer
+
+Craig  10:43 AM
+good question, will have to look, and I agree, would be cool to compare the two.
+
+** Ia and Im distributions:
+*** Acker and Antic: Ih and Ia but no Im, separated as proximal and distal, but both in all dends 
+*** Hay: Im, but K_Pst and K_Tst (not sure if that adds up to Ia), shaw related potassium
+channel family (SKv3).  Also, only Ih in basal dends 
+*** Neymotin: Ih and Ia, but no Im unless it's IKsin (slowly inactivating, Im is noninactivating, right?)
+*** Kole: Ih and Im, no Ia
+*** Allen cells: Ih and Im throughout 

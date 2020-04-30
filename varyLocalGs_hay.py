@@ -193,6 +193,7 @@ from getCells import HayCell
 pt_cell = HayCell()
 sec = pt_cell.apic[65]
 
+from neuron import h, gui
 pc = h.ParallelContext()
 pc.runworker()
 

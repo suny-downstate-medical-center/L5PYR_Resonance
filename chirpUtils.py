@@ -1,6 +1,6 @@
 from neuron import h, init
 #h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
-h.load_file("stdrun.hoc")
+# h.load_file("stdrun.hoc")
 import numpy as np 
 from scipy.signal import chirp
 from pylab import fft, convolve

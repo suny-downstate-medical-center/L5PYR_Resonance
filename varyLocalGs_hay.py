@@ -187,13 +187,14 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
                 'ZcSynchFreq' : ZcSynchFreq,
                 'ZcLeadPhaseBool' : ZcLeadPhaseBool}
 
-    savemat('/home/craig_kelley_downstate_edu/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
+    savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
 
 from getCells import HayCell
 pt_cell = HayCell()
 sec = pt_cell.apic[65]
 
-from neuron import h, gui
+from neuron import h#, gui
+#h.load_file('stdrun.hoc')
 pc = h.ParallelContext()
 pc.runworker()
 

@@ -6,7 +6,7 @@ from scipy.io import savemat
 from math import nan
 
 # def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
-def varyLocalGs():
+def varyLocalGs(x, y):
     # parse cmd line inputs, load PT cell template
     ## load cell
     
@@ -181,9 +181,9 @@ def varyLocalGs():
     #             'ZcLeadPhaseMinFreq' : ZcLeadPhaseMinFreq,
     #             'ZcSynchFreq' : ZcSynchFreq,
     #             'ZcLeadPhaseBool' : ZcLeadPhaseBool}
-    output = {'val' : 0.5}
+    output = {'val' : x + y}
     # savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
-    savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/test.mat', output)
+    savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/test_'+str(x)+'-'+str(y)+'.mat', output)
 
 def doNothing():
     x = 2 + 2

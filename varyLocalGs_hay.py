@@ -78,7 +78,7 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     ZcLeadPhaseBool = []
 
     # main loop
-    nseg = stim_sec.nseg
+    # nseg = stim_sec.nseg
     # if nseg == 1:
     loc = 0.5
     # out = applyChirp(I, t, stim_sec(loc), soma_seg, t0, delay, Fs, f1)
@@ -195,7 +195,7 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 
 from neuron import h#, gui
-# h.load_file('stdrun.hoc')
+h.load_file('stdrun.hoc')
 pc = h.ParallelContext()
 pc.runworker()
 somaR = 10

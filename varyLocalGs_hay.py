@@ -56,8 +56,9 @@ def varyLocalGs(x, y):
     f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
-    pt_cell = Neuron(0,0,0)
-    sec = pt_cell.soma
+    # pt_cell = Neuron(0,0,0)
+    pt_cell = HayCell()
+    # sec = pt_cell.soma
     # define output variables
     ZinResAmp = []
     ZinResFreq = []
@@ -190,7 +191,7 @@ def varyLocalGs(x, y):
 def doNothing():
     x = 2 + 2
 
-# from getCells import HayCell
+from getCells import HayCell
 # pt_cell = HayCell()
 # sec = pt_cell.apic[65]
 

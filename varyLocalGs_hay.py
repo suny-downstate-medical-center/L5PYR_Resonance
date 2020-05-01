@@ -198,17 +198,17 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 
 from neuron import h#, gui
-#h.load_file('stdrun.hoc')
-pc = h.ParallelContext()
-pc.runworker()
+h.load_file('stdrun.hoc')
+# pc = h.ParallelContext()
+# pc.runworker()
 
 factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 
 for ih_factor in factors:
     for im_factor in factors:
-        pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
+        # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
         # pc.submit(doNothing)
-        # print('yup')
-        # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
+        print('yup')
+        # # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 
-pc.done()
+# pc.done()

@@ -12,12 +12,6 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     
 
     ## specify stimulated section and soma segment
-    # section = sys.argv[-1]
-    # if section.split('.')[1][:4] == 'apic':
-    #     stim_sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
-    # else:
-    #     stim_sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
-    # soma_seg = pt_cell.soma[0](0.5)
     soma_seg = pt_cell.soma(0.5)
 
     ## specify factors to change gbar ih/im by, ih comes first
@@ -60,7 +54,7 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     amp = 0.0025
     # f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
     f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
-    I, t = getChirp(f0, f1, t0, amp, Fs, delay)
+    # I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
     # define output variables
     ZinResAmp = []
@@ -87,16 +81,17 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     nseg = stim_sec.nseg
     # if nseg == 1:
     loc = 0.5
-    out = applyChirp(I, t, stim_sec(loc), soma_seg, t0, delay, Fs, f1)
-    ZinResAmp.append(out['ZinResAmp'])
-    ZinResFreq.append(out['ZinResFreq'])
-    ZcResAmp.append(out['ZcResAmp'])
-    ZcResFreq.append(out['ZcResFreq'])
-    dist.append(out['dist'])
-    QfactorIn.append(out['QfactorIn'])
-    QfactorTrans.append(out['QfactorTrans'])
-    fVarIn.append(out['fVarIn'])
-    fVarTrans.append(out['fVarTrans'])
+    # out = applyChirp(I, t, stim_sec(loc), soma_seg, t0, delay, Fs, f1)
+    # ZinResAmp.append(out['ZinResAmp'])
+    # ZinResFreq.append(out['ZinResFreq'])
+    # ZcResAmp.append(out['ZcResAmp'])
+    # ZcResFreq.append(out['ZcResFreq'])
+    # dist.append(out['dist'])
+    # QfactorIn.append(out['QfactorIn'])
+    # QfactorTrans.append(out['QfactorTrans'])
+    # fVarIn.append(out['fVarIn'])
+    # fVarTrans.append(out['fVarTrans'])
+    out = {}
 
     freqs = out['Freq'][np.argwhere(out['ZinPhase'] > 0)]
     if len(freqs) > 0:

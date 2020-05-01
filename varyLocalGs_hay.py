@@ -209,6 +209,6 @@ for ih_factor in factors:
         # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
         # pc.submit(doNothing)
         print('yup')
-        # # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
+        varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 
 # pc.done()

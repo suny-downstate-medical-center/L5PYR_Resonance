@@ -54,7 +54,7 @@ def varyLocalGs(x, y):
     amp = 0.0025
     # f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
     f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
-    # I, t = getChirp(f0, f1, t0, amp, Fs, delay)
+    I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
     # define output variables
     ZinResAmp = []

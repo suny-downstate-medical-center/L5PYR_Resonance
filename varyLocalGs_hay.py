@@ -5,8 +5,8 @@ import sys
 from scipy.io import savemat
 from math import nan
 
-# def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
-def varyLocalGs(x, y):
+def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
+# def varyLocalGs(x, y):
     # parse cmd line inputs, load PT cell template
     ## load cell
     
@@ -181,7 +181,7 @@ def varyLocalGs(x, y):
     #             'ZcLeadPhaseMinFreq' : ZcLeadPhaseMinFreq,
     #             'ZcSynchFreq' : ZcSynchFreq,
     #             'ZcLeadPhaseBool' : ZcLeadPhaseBool}
-    output = {'val' : x + y}
+    output = {'val' : ih_factor + im_factor}
     # savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
     savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/test_'+str(x)+'-'+str(y)+'.mat', output)
 
@@ -225,9 +225,9 @@ factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 
 for ih_factor in factors:
     for im_factor in factors:
-        # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
+        pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
         # pc.submit(doNothing)
-        pc.submit(varyLocalGs, ih_factor, im_factor)
+        # pc.submit(varyLocalGs, ih_factor, im_factor)
         # print('yup')
         # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 

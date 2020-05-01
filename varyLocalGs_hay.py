@@ -5,8 +5,8 @@ import sys
 from scipy.io import savemat
 from math import nan
 
-def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
-
+# def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
+def varyLocalGs():
     # parse cmd line inputs, load PT cell template
     ## load cell
     
@@ -225,7 +225,8 @@ factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 for ih_factor in factors:
     for im_factor in factors:
         # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
-        pc.submit(doNothing)
+        # pc.submit(doNothing)
+        pc.submit(varyLocalGs)
         # print('yup')
         # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 

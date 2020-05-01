@@ -231,4 +231,5 @@ for ih_factor in factors:
         # print('yup')
         # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 
+while pc.working(): pass 
 pc.done()

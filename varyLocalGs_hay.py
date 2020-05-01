@@ -56,6 +56,8 @@ def varyLocalGs(x, y):
     f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
+    pt_cell = Neuron(0,0,0)
+    sec = pt_cell.soma
     # define output variables
     ZinResAmp = []
     ZinResFreq = []
@@ -217,9 +219,6 @@ class Neuron:
         if rec: # record membrane potential (shown in figure 1C)
             self.somaV = h.Vector()
             self.somaV.record(self.soma(0.5)._ref_v, rec)
-
-pt_cell = Neuron(0,0,0)
-sec = pt_cell.soma
 
 factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 

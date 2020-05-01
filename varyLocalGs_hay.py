@@ -213,8 +213,8 @@ class Neuron:
 
         self.soma = h.Section(name='soma', cell=self)
         # add 3D points to locate the neuron in the ECS  
-        self.soma.pt3dadd(x, y, z + somaR, 2.0*somaR)
-        self.soma.pt3dadd(x, y, z - somaR, 2.0*somaR)
+        self.soma.pt3dadd(x, y, z + 15, 2.0*15)
+        self.soma.pt3dadd(x, y, z - 15, 2.0*15)
     
         if rec: # record membrane potential (shown in figure 1C)
             self.somaV = h.Vector()

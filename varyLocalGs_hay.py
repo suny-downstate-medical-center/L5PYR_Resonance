@@ -17,7 +17,8 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     #     stim_sec = pt_cell.apic[int(section.split('.')[1].split('[')[1].split(']')[0])]
     # else:
     #     stim_sec = pt_cell.dend[int(section.split('.')[1].split('[')[1].split(']')[0])]
-    soma_seg = pt_cell.soma[0](0.5)
+    # soma_seg = pt_cell.soma[0](0.5)
+    soma_seg = pt_cell.soma(0.5)
 
     ## specify factors to change gbar ih/im by, ih comes first
     # if sys.argv[-3][0] == 'm':
@@ -31,33 +32,34 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
 
     # changes to Im/Ih
     ## determine original values
-    orig_km = []
-    orig_ih = []
-    for seg in stim_sec.allseg():
-        try:
-            orig_km.append(seg.Im.gImbar_Im)
-        except:
-            orig_km.append(0)
-        try:
-            orig_ih.append(seg.Ih.gIhbar_Ih)
-        except:
-            orig_ih.append(0)
-    ## change Ih/Im
-    count = 0
-    for seg in stim_sec.allseg():
-        try:
-            seg.Im.gImbar_Im = orig_km[count] + im_factor * orig_km[count]
-        except:
-            pass
-        try:
-            seg.ih.gIhbar_Ih = orig_ih[count] + ih_factor * orig_ih[count]
-        except:
-            pass
-        count = count + 1
+    # orig_km = []
+    # orig_ih = []
+    # for seg in stim_sec.allseg():
+    #     try:
+    #         orig_km.append(seg.Im.gImbar_Im)
+    #     except:
+    #         orig_km.append(0)
+    #     try:
+    #         orig_ih.append(seg.Ih.gIhbar_Ih)
+    #     except:
+    #         orig_ih.append(0)
+    # ## change Ih/Im
+    # count = 0
+    # for seg in stim_sec.allseg():
+    #     try:
+    #         seg.Im.gImbar_Im = orig_km[count] + im_factor * orig_km[count]
+    #     except:
+    #         pass
+    #     try:
+    #         seg.ih.gIhbar_Ih = orig_ih[count] + ih_factor * orig_ih[count]
+    #     except:
+    #         pass
+    #     count = count + 1
 
     # define current stimulus
     amp = 0.0025
-    f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
+    # f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
+    f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
     # define output variables
@@ -190,9 +192,9 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
 def doNothing():
     x = 2 + 2
 
-from getCells import HayCell
-pt_cell = HayCell()
-sec = pt_cell.apic[65]
+# from getCells import HayCell
+# pt_cell = HayCell()
+# sec = pt_cell.apic[65]
 
 from chirpUtils import applyChirp
 from chirpUtils import getChirp
@@ -201,14 +203,35 @@ from neuron import h#, gui
 h.load_file('stdrun.hoc')
 # pc = h.ParallelContext()
 # pc.runworker()
+somaR = 10
+class Neuron:
+    """ A neuron with soma and dendrite with; fast and persistent sodium
+    currents, potassium currents, passive leak and potassium leak and an
+    accumulation mechanism. """
+    def __init__(self, x, y, z, rec=False):
+        self.x = x
+        self.y = y
+        self.z = z
+
+        self.soma = h.Section(name='soma', cell=self)
+        # add 3D points to locate the neuron in the ECS  
+        self.soma.pt3dadd(x, y, z + somaR, 2.0*somaR)
+        self.soma.pt3dadd(x, y, z - somaR, 2.0*somaR)
+    
+        if rec: # record membrane potential (shown in figure 1C)
+            self.somaV = h.Vector()
+            self.somaV.record(self.soma(0.5)._ref_v, rec)
+
+pt_cell = Neuron(0,0,0)
+sec = pt_cell.soma
 
 factors = [-0.25, -0.2, -0.15, -0.10, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25]
 
 for ih_factor in factors:
     for im_factor in factors:
-        # pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
+        pc.submit(varyLocalGs, pt_cell, sec, ih_factor, im_factor)
         # pc.submit(doNothing)
-        print('yup')
-        varyLocalGs(pt_cell, sec, ih_factor, im_factor)
+        # print('yup')
+        # varyLocalGs(pt_cell, sec, ih_factor, im_factor)
 
-# pc.done()
+pc.done()

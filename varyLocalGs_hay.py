@@ -196,8 +196,7 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 
 from neuron import h#, gui
-# h.nrnmpi_init()
-# h.load_file('stdrun.hoc')
+h.load_file('stdrun.hoc')
 pc = h.ParallelContext()
 pc.runworker()
 somaR = 10

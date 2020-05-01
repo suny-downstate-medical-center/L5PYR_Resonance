@@ -1,5 +1,5 @@
 # Load in the goods
-from mpi4py import MPI
+# from mpi4py import MPI
 import numpy as np
 import sys
 from scipy.io import savemat
@@ -196,7 +196,8 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 
 from neuron import h#, gui
-h.load_file('stdrun.hoc')
+h.nrnmpi_init()
+# h.load_file('stdrun.hoc')
 pc = h.ParallelContext()
 pc.runworker()
 somaR = 10

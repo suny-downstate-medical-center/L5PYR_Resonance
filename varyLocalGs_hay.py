@@ -56,8 +56,6 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
         count = count + 1
 
     # define current stimulus
-    from chirpUtils import applyChirp
-    from chirpUtils import getChirp
     amp = 0.0025
     f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
@@ -195,6 +193,9 @@ def doNothing():
 from getCells import HayCell
 pt_cell = HayCell()
 sec = pt_cell.apic[65]
+
+from chirpUtils import applyChirp
+from chirpUtils import getChirp
 
 from neuron import h#, gui
 #h.load_file('stdrun.hoc')

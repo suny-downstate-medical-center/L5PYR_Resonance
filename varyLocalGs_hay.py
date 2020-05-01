@@ -200,9 +200,9 @@ from chirpUtils import applyChirp
 from chirpUtils import getChirp
 
 from neuron import h#, gui
-h.load_file('stdrun.hoc')
-# pc = h.ParallelContext()
-# pc.runworker()
+# h.load_file('stdrun.hoc')
+pc = h.ParallelContext()
+pc.runworker()
 somaR = 10
 class Neuron:
     """ A neuron with soma and dendrite with; fast and persistent sodium

@@ -182,7 +182,8 @@ def varyLocalGs():
                 'ZcSynchFreq' : ZcSynchFreq,
                 'ZcLeadPhaseBool' : ZcLeadPhaseBool}
 
-    savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
+    # savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/ih_' + sys.argv[-3] + '_im_' + sys.argv[-2] + '/' + stim_sec.name() + '.mat', output)
+    savemat('/u/craig/L5PYR_Resonance/Hay/Vary_Local_Gs/test.mat')
 
 def doNothing():
     x = 2 + 2

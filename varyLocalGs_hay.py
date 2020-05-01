@@ -12,7 +12,7 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     
 
     ## specify stimulated section and soma segment
-    soma_seg = pt_cell.soma(0.5)
+    # soma_seg = pt_cell.soma(0.5)
 
     ## specify factors to change gbar ih/im by, ih comes first
     # if sys.argv[-3][0] == 'm':

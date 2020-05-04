@@ -33,6 +33,7 @@ factors = ['m0.25', 'm0.20', 'm0.15', 'm0.10', 'm0.05', '0.0', '0.05', '0.10', '
 ## create bash file
 sh_file = open(out_path+'gcp_batch_files/chirp-batch.sh','w')
 sh_file.write('#!/bin/bash\n')
+i = 0
 ## loop for sbatch files
 ### loop through ih amd im factors
 for ih_factor in factors:

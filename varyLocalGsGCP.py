@@ -86,7 +86,6 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     QfactorTrans.append(out['QfactorTrans'])
     fVarIn.append(out['fVarIn'])
     fVarTrans.append(out['fVarTrans'])
-    out = {}
 
     freqs = out['Freq'][np.argwhere(out['ZinPhase'] > 0)]
     if len(freqs) > 0:

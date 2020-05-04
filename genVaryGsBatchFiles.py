@@ -60,7 +60,7 @@ for ih_factor in factors:
             file.write('#SBATCH --mail-type=end\n')
         file.write('source /home/craig_kelley_downstate_edu/.bashrc\n')
         file.write('cd /home/craig_kelley_downstate_edu/L5PYR_Resonance/\n')
-        run_line = 'ipython varyLocalGs_hay.py ' + ih_factor + ' ' + im_factor + ' ' + str(sec) + '\n'
+        run_line = 'ipython varyLocalGsGCP.py ' + ih_factor + ' ' + im_factor + ' ' + str(sec) + '\n'
         file.write(run_line)
         file.close()
         

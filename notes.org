@@ -572,3 +572,6 @@ channel family (SKv3).  Also, only Ih in basal dends
 ** trying  Ih and Im changes in apical branch of hay cell
 *** trying to parallelize with ParallelContext for neurosim_machine
 *** works with do nothing function, not with 
+
+* [2020-5-4 Mon] - more Im / Ia stuff 
+** running changes to Im on single branch for Hay cell

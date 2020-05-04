@@ -45,7 +45,7 @@ for ih_factor in factors:
         file = open(out_path+'gcp_batch_files/'+file_name,'w')
         
         file.write('#!/bin/bash\n')
-        job_name = '#SBATCH --job-name=' + str(sec)+ '\n'
+        job_name = '#SBATCH --job-name=' + str(sec)+ '_ih_' + ih_factor + '_im_' + im_factor + '\n'
         file.write(job_name)
         file.write('#SBATCH -A default\n')
         file.write('#SBATCH -t 12:00:00\n')

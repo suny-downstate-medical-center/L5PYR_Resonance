@@ -1,15 +1,15 @@
 function varyChannelsHeatMaps(sec_name)
 % sec_name: path to file + section name that starts the file name
 
-QfactorInMat = zeros(9,9);
-ZinResAmpMat = zeros(9,9);
-ZinResFreqMat = zeros(9,9);
-ZcResFreqMat = zeros(9,9);
-ZinLeadPhaseBW = zeros(9,9);
-ZinSynchFreq = zeros(9,9);
+QfactorInMat = zeros(11,11);
+ZinResAmpMat = zeros(11,11);
+ZinResFreqMat = zeros(11,11);
+ZcResFreqMat = zeros(11,11);
+ZinLeadPhaseBWMat = zeros(11,11);
+ZinSynchFreqMat = zeros(11,11);
 
 %factors = {'-0.2', '-0.15', '-0.1', '-0.05', '0', '0.05', '0.1', '0.15', '0.2'};
-factors = {'-0.2', '-0.15', '-0.1', '-0.05', '0.0', '0.05', '0.1', '0.15', '0.2'};
+factors = {'-0.25', '-0.2', '-0.15', '-0.1', '-0.05', '0.0', '0.05', '0.1', '0.15', '0.2', '0.25'};
 r_count = 1;
 c_count = 1;
 %file_part1 = 'KoleCell[0].apic[86]_km_';
@@ -17,7 +17,7 @@ c_count = 1;
 % file_part1 = '_km_';
 % file_part2 = '_ih_';
 file_part1 = 'ih_';
-file_part2 = '_im_'
+file_part2 = '_im_';
 file_part3 = '.mat';
 
 for km_factor = factors
@@ -28,8 +28,8 @@ for km_factor = factors
         ZinResAmpMat(r_count,c_count) = ZinResAmp;
         ZinResFreqMat(r_count,c_count) = ZinResFreq;
         ZcResFreqMat(r_count,c_count) = ZcResFreq;
-        ZinLeadPhaseBW(r_count,c_count) = Freq(find(ZinPhase > 0, 1, 'last')) - Freq(find(ZinPhase > 0, 1, 'first'));
-        ZinSynchFreq(r_count,c_count) = Freq(find(ZinPhase > 0, 1, 'last'));
+        ZinLeadPhaseBWMat(r_count,c_count) = ZinLeadPhaseBW; %Freq(find(ZinPhase > 0, 1, 'last')) - Freq(find(ZinPhase > 0, 1, 'first'));
+        ZinSynchFreqMat(r_count,c_count) = ZinSynchFreq; %Freq(find(ZinPhase > 0, 1, 'last'));
         c_count = c_count + 1;
     end
     r_count = r_count + 1;

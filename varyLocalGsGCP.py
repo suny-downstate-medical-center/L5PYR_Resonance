@@ -18,33 +18,36 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     ## determine original values
     orig_km = []
     orig_ih = []
-    for seg in stim_sec.allseg():
-        try:
-            orig_km.append(seg.Im.gImbar_Im)
-        except:
-            orig_km.append(0)
-        try:
-            orig_ih.append(seg.Ih.gIhbar_Ih)
-        except:
-            orig_ih.append(0)
+    # for seg in stim_sec.allseg():
+    for sec in pt_cell.apic:
+        for seg in sec.allseg():
+            try:
+                orig_km.append(seg.Im.gImbar_Im)
+            except:
+                orig_km.append(0)
+            try:
+                orig_ih.append(seg.Ih.gIhbar_Ih)
+            except:
+                orig_ih.append(0)
     ## change Ih/Im
     count = 0
-    for seg in stim_sec.allseg():
-        try:
-            seg.Im.gImbar_Im = orig_km[count] + im_factor * orig_km[count]
-        except:
-            pass
-        try:
-            seg.ih.gIhbar_Ih = orig_ih[count] + ih_factor * orig_ih[count]
-        except:
-            pass
-        count = count + 1
+    for sec in pt_cell.apic:
+        for seg in sec.allseg():
+            try:
+                seg.Im.gImbar_Im = orig_km[count] + im_factor * orig_km[count]
+            except:
+                pass
+            try:
+                seg.ih.gIhbar_Ih = orig_ih[count] + ih_factor * orig_ih[count]
+            except:
+                pass
+            count = count + 1
 
     # define current stimulus
     from chirpUtils import getChirp
     amp = 0.0025
     # f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12
-    f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 1
+    f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 2
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 
     # pt_cell = Neuron(0,0,0)

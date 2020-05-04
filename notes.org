@@ -575,3 +575,16 @@ channel family (SKv3).  Also, only Ih in basal dends
 
 * [2020-5-4 Mon] - more Im / Ia stuff 
 ** running changes to Im on single branch for Hay cell
+*** changing just apic 65 didn't do shit, trying whole apical arbor 
+** salva's suggestion re getting rid of Kole cell 
+I was finishing ysterday the Labarrera 2018 cell reports paper and it uses the kole ih model with some pyr cell morphology — I think Shai 2015 … maybe that’s an option
+3:57
+labarrera 2018:
+All simulations were done using the Neuron simulation environment (Hines and
+Carnevale, 1997). Ih was simulated using the deterministic model by Kole et al.
+(2006), with a positive shift of 14 mV (to accommodate our uncorrected liquid
+junction potential values). To explore the effect of shifting of Vhalf, we introduced
+a variable Vshift for both functions, alpha(V) and beta(V), which resulted in the
+correct shift in both activation curve and activation time constant. For Figure 6,
+we modified the published (Shai et al., 2015) L5PC model to fit experimental re-
+sults of Ih (Harnett et al., 2015; Supplemental Experimental Procedures).

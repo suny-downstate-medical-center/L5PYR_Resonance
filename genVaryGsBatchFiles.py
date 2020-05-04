@@ -4,8 +4,8 @@ import os
 
 # Handle command line arguments
 ## load cell
-from getCells import KoleCell
-pt_cell = KoleCell()
+from getCells import HayCell
+pt_cell = HayCell()
 
 ## create output directories
 out_path = '/home/craig_kelley_downstate_edu/L5PYR_Resonance/Hay/Vary_Local_Gs/'
@@ -40,7 +40,7 @@ for ih_factor in factors:
         os.mkdir(out_path + 'ih_' + ih_factor + '_im_' + im_factor)
         #### basal sections
         # for i, sec in enumerate(pt_cell.basal):
-        sec = pt_cell.apic[66]
+        sec = pt_cell.apic[65]
         file_name = str(sec) + '_ih_' + ih_factor + '_im_' + im_factor + '-batch.sbatch'
         file = open(out_path+'gcp_batch_files/'+file_name,'w')
         

@@ -6,7 +6,7 @@ from scipy.io import savemat
 from math import nan
 
 # def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
-def varyLocalGs(x, y):
+# def varyLocalGs(x, y):
     # parse cmd line inputs, load PT cell template
     ## load cell
     

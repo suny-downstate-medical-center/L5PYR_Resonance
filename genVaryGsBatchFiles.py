@@ -23,7 +23,8 @@ try:
 except:
     pass
 
-factors = ['m0.15', '0.0', '0.15']
+# factors = ['m0.15', '0.0', '0.15']
+factors = ['m0.25', 'm0.20', 'm0.15', 'm0.10', 'm0.05', '0.0', '0.05', '0.10', '0.15', '0.20', '0.25']
 
 # main code for generating sbatch files and bash file to submit them
 ## create bash file

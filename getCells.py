@@ -87,7 +87,7 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 	os.chdir('./Hay')
 	from neuron import h, init
 	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
-	h.load_file('import3d.hoc')
+	h.load_file('/usr/local/nrn//share/nrn/lib/hoc/import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')
 	cell = h.L5PCtemplate(morphology_file)

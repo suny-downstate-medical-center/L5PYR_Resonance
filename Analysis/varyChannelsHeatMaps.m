@@ -14,13 +14,16 @@ r_count = 1;
 c_count = 1;
 %file_part1 = 'KoleCell[0].apic[86]_km_';
 %file_part1 = 'KoleCell[0].dend[8]_km_';
-file_part1 = '_km_';
-file_part2 = '_ih_';
+% file_part1 = '_km_';
+% file_part2 = '_ih_';
+file_part1 = 'ih_';
+file_part2 = '_im_'
 file_part3 = '.mat';
 
 for km_factor = factors
     for ih_factor = factors
-        load(strcat(sec_name, file_part1, km_factor{1}, file_part2, ih_factor{1}, file_part3))
+        % load(strcat(sec_name, file_part1, km_factor{1}, file_part2, ih_factor{1}, file_part3))
+        load(strcat(file_part1, km_factor{1}, file_part2, ih_factor{1}, file_part3))
         QfactorInMat(r_count,c_count) = QfactorIn;
         ZinResAmpMat(r_count,c_count) = ZinResAmp;
         ZinResFreqMat(r_count,c_count) = ZinResFreq;

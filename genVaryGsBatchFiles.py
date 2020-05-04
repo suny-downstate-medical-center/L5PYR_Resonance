@@ -38,7 +38,6 @@ i = 0
 ### loop through ih amd im factors
 for ih_factor in factors:
     for im_factor in factors:
-        os.mkdir(out_path + 'ih_' + ih_factor + '_im_' + im_factor)
         #### basal sections
         # for i, sec in enumerate(pt_cell.basal):
         sec = pt_cell.apic[65]

@@ -22,11 +22,11 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     for sec in pt_cell.apic:
         for seg in sec.allseg():
             try:
-                orig_km.append(seg.Im.gImbar_Im)
+                orig_km.append(seg.Im.gImbar)
             except:
                 orig_km.append(0)
             try:
-                orig_ih.append(seg.Ih.gIhbar_Ih)
+                orig_ih.append(seg.Ih.gIhbar)
             except:
                 orig_ih.append(0)
     ## change Ih/Im
@@ -34,11 +34,11 @@ def varyLocalGs(pt_cell, stim_sec, ih_factor, im_factor):
     for sec in pt_cell.apic:
         for seg in sec.allseg():
             try:
-                seg.Im.gImbar_Im = orig_km[count] + im_factor * orig_km[count]
+                seg.Im.gImbar = orig_km[count] + im_factor * orig_km[count]
             except:
                 pass
             try:
-                seg.ih.gIhbar_Ih = orig_ih[count] + ih_factor * orig_ih[count]
+                seg.ih.gIhbar = orig_ih[count] + ih_factor * orig_ih[count]
             except:
                 pass
             count = count + 1

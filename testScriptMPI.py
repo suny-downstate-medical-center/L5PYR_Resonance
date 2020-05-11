@@ -1,4 +1,5 @@
 from getCells import AckerAnticCell
+cell = AckerAnticCell()
 from mpi4py import MPI
 from neuron import h, gui
 from chirpUtils import findSc, getTp, sweepLags
@@ -9,8 +10,6 @@ import numpy as np
 # pcid = pc.id()
 # pc.set_maxstep(100)
 pcid = 1
-
-cell = AckerAnticCell()
 
 def wholeShebang(loc, cell):
     stim_seg = cell.basal[34](loc)

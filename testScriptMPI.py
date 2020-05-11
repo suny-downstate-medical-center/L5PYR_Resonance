@@ -6,13 +6,13 @@ from chirpUtils import findSc, getTp, sweepLags
 import numpy as np
 # h.load_file('stdrun.hoc')
 
-# pc = h.ParallelContext()
-# pcid = pc.id()
-# pc.set_maxstep(100)
-pcid = 1
+pc = h.ParallelContext()
+pcid = pc.id()
+pc.set_maxstep(100)
+#pcid = 0
 
 def wholeShebang(loc, cell):
-    stim_seg = cell.basal[34](loc)
+    stim_seg = cell.basal[15](loc)
     soma_seg = cell.soma[0](0.5)
 
     v_stim = h.Vector()
@@ -23,8 +23,8 @@ def wholeShebang(loc, cell):
     t_vec.record(h._ref_t)
     start = 200
     factor = 4
-
-    SC = findSc(stim_seg, soma_seg, start, 0.75, 0.01)
+    firstShot = 0.75
+    SC = findSc(stim_seg, soma_seg, start, firstShot, 0.01)
     TP = getTp(stim_seg, start, SC / 2)
     
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')

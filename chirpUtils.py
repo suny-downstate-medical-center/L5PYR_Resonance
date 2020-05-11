@@ -4,6 +4,7 @@ import numpy as np
 from scipy.signal import chirp
 from pylab import fft, convolve
 from scipy.io import savemat
+import json
 
 # get chirp stim: based on sam's code form evoizhi/sim.py
 def getChirp(f0, f1, t0, amp, Fs, delay):
@@ -281,7 +282,7 @@ def getTp(stim_seg, start, sc):
 
     return Tp 
 
-def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag):
+def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag, outfile=None):
     lag = 0
     testWeights = []
     lags = []
@@ -290,4 +291,10 @@ def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag):
         S, _, _, _ = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
         lag = lag + dLag
         testWeights.append(S)
-    return lags, testWeights 
+
+    if outfile == None:
+        return lags, testWeights 
+    else:
+        out = {'lags' : lags, 'weights' : testWeights, 'stim_seg' : str(stim_seg), 'Sc0' : Sc0}
+        with open(outfile, 'w') as fileObj:
+            json.dump(out, fileObj)

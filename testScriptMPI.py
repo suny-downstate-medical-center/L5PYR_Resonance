@@ -9,8 +9,9 @@ pc = h.ParallelContext()
 pcid = pc.id()
 pc.set_maxstep(100)
 
-def wholeShebang(loc):
-    cell = AckerAnticCell()
+cell = AckerAnticCell()
+
+def wholeShebang(loc, cell):
     stim_seg = cell.basal[34](loc)
     soma_seg = cell.soma[0](0.5)
 
@@ -29,7 +30,7 @@ def wholeShebang(loc):
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')
 
 locs = [0.25, 0.5, 0.75]
-wholeShebang(locs[pcid])
+wholeShebang(locs[pcid, cell])
 
 # pc.runworker()
 # nseg = 11

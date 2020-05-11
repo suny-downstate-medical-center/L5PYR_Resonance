@@ -5,9 +5,10 @@ from chirpUtils import findSc, getTp, sweepLags
 import numpy as np
 # h.load_file('stdrun.hoc')
 
-pc = h.ParallelContext()
-pcid = pc.id()
-pc.set_maxstep(100)
+# pc = h.ParallelContext()
+# pcid = pc.id()
+# pc.set_maxstep(100)
+pcid = 1
 
 cell = AckerAnticCell()
 

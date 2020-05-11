@@ -30,7 +30,7 @@ def wholeShebang(loc, cell):
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')
 
 locs = [0.25, 0.5, 0.75]
-wholeShebang(locs[pcid, cell])
+wholeShebang(locs[pcid], cell)
 
 # pc.runworker()
 # nseg = 11

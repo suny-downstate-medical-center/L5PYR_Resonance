@@ -672,3 +672,5 @@ https://github.com/suny-downstate-medical-center/M1/blob/d5e5c240a40305dac2c23c2
 ** trying out procedure in testScript on an apical tuft 
 ** commit: 'initial code for time domain sims'
 ** another commit: 'trying to use parallel context to parallelize the time domain stuff'
+*** at least got it running on my in serial . . . 
+** one more: 'even simpler approach, just gonna try using pcid to index list'

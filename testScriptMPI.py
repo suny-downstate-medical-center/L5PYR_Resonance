@@ -1,10 +1,13 @@
 from getCells import AckerAnticCell
+from mpi4py import MPI
 from neuron import h
 from chirpUtils import findSc, getTp, sweepLags
 import numpy as np
+h.load_file('stdrun.hoc')
 
-h.nrnmpi_init()
 pc = h.ParallelContext()
+pcid = pc.id()
+pc.set_maxstep(100)
 
 def wholeShebang(loc):
     cell = AckerAnticCell()
@@ -25,10 +28,13 @@ def wholeShebang(loc):
     
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')
 
-pc.runworker()
-nseg = 11
-for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-    pc.submit(wholeShebang, loc)
+locs = [0.25, 0.5, 0.75]
+wholeShebang(locs[pcid])
 
-while pc.working(): pass
+# pc.runworker()
+# nseg = 11
+# for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
+#     pc.submit(wholeShebang, loc)
+
+# while pc.working(): pass
 

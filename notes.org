@@ -423,7 +423,7 @@ antic@uchc.edu
 
 * [2020-4-20 Mon] - finished draft of discussion 
 
-* [2020-4-23 Thu]
+* [2020-4-23 Thu] - fundamental dend notes
 ** Bill's questions about dends to Arnd:
 Hi Bill,
 sorry for the late reply. Of course these are excellent questions, but they tend not to have easy answers. Here is an attempt:
@@ -588,3 +588,86 @@ a variable Vshift for both functions, alpha(V) and beta(V), which resulted in th
 correct shift in both activation curve and activation time constant. For Figure 6,
 we modified the published (Shai et al., 2015) L5PC model to fit experimental re-
 sults of Ih (Harnett et al., 2015; Supplemental Experimental Procedures).
+
+* [2020-5-6 Wed] - implementing teds time-domain sim suggestion
+** added conditionAndTest() to chirpUtils.y
+from getCells import AckerAnticCell
+cell = AckerAnticCell()
+from neuron import h, gui
+from chirpUtils import conditionAndTest
+stim_seg = cell.apical[15](0.5)
+soma_seg = cell.soma[0](0.5)
+start = 200
+lag = 10
+Sc0 = 0.0025
+St0 = 0.001
+St, v_soma, v_stim, t_vec = conditionAndTest(stim_seg, soma_seg,  Sc0, St0, start, lag)
+** added getSc0 to chirpUtils.py 
+from getCells import AckerAnticCell
+cell = AckerAnticCell()
+from neuron import h, gui
+from chirpUtils import findSc
+# stim_seg = cell.apical[15](0.5)
+stim_seg = cell.basal[12](0.5)
+soma_seg = cell.soma[0](0.5)
+start = 200
+SC = findSc(stim_seg, soma_seg, start, 0.006, 0.0005)
+
+* [2020-5-7 Thu] - continued from yesterday
+** incorporated getTp and sweepLags
+from getCells import AckerAnticCell
+cell = AckerAnticCell()
+from neuron import h, gui
+from chirpUtils import findSc
+stim_seg = cell.basal[12](0.5)
+soma_seg = cell.soma[0](0.5)
+v_stim = h.Vector()
+v_soma = h.Vector()
+t_vec = h.Vector()
+v_stim.record(stim_seg._ref_v)    
+v_soma.record(soma_seg._ref_v)
+t_vec.record(h._ref_t)
+start = 200
+SC = findSc(stim_seg, soma_seg, start, 0.5, 0.01)
+from chirpUtils import getTp
+TP = getTp(stim_seg, start, SC / 2)
+from chirpUtils import sweepLags
+lags, testWeights = sweepLags(stim_seg, soma_seg, SC / 2, SC / 10, SC / 20, start, TP, 5)
+** results look reasonable/good 
+
+* [2020-5-8 Fri] - " "
+** looking at a few weights in basal section *testScript.py*
+** trying to figure out how to pick an initial weight to find Sc - lowest weight of single syn to get spike
+*** right now, something of a trial and error affair, trying to use |Z| for better guesses
+**** testSC.py
+from getCells import AckerAnticCell
+cell = AckerAnticCell()
+from neuron import h, gui
+
+from scipy.io import loadmat
+data = loadmat('AckerAntic/ackerantic_impedance_measures/apical[15].mat')
+
+from chirpUtils import findSc
+stim_sec = cell.apical[15]
+soma_seg = cell.soma[0](0.5)
+start = 200
+base = 2e-5
+count = 0
+weights = []
+inds = [0, 6, 12]
+# for stim_seg in stim_seg.allseg():
+for loc in [0.1, 0.5, 0.9]:
+    SC = findSc(stim_sec(loc), soma_seg, start, base * data['ZinResAmp'][0][inds[count]], base * data['ZinResAmp'][0][inds[count]] / 50)
+    weights.append(SC)
+    count = count + 1
+**** outputs:
+In [4]: weights
+Out[4]: [None, 0.004943106899110322, 0.0033753265030080875]
+*** not a great strategy,salva suggests weightnorm 
+https://github.com/NathanKlineInstitute/A1/blob/d1061a5861c303a5193f91c33a146447dbe9891d/analysis/wscale.py#L177
+https://github.com/NathanKlineInstitute/A1/blob/d1061a5861c303a5193f91c33a146447dbe9891d/analysis/wscale.py#L194
+https://github.com/suny-downstate-medical-center/M1/blob/d5e5c240a40305dac2c23c29d79b36d1f347d87a/analysis/wscale.py#L175
+
+* [2020-5-11 Mon] - more time domain
+** trying out procedure in testScript on an apical tuft 
+** commit: 'initial code for time domain sims'

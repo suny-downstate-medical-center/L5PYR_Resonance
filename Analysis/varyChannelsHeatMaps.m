@@ -36,7 +36,7 @@ for km_factor = factors
     c_count = 1;
 end
 
-keep QfactorInMat ZinResAmpMat  ZinResFreqMat ZcResFreqMat ZinLeadPhaseBW ZinSynchFreq
+% keep QfactorInMat ZinResAmpMat  ZinResFreqMat ZcResFreqMat ZinLeadPhaseBW ZinSynchFreq ZinLeadPhaseBWMt ZinSynchFreqMat
 
 labels = {'-20%', '0%', '20%'};
 x_ticks = [-0.2, 0, 0.2];
@@ -103,7 +103,7 @@ yticklabels(labels)
 set(gca, 'FontSize', 14)
 
 subplot(2,3,5)
-imagesc(-0.2:0.05:0.2, -0.2:0.05:0.2, ZinSynchFreq)
+imagesc(-0.2:0.05:0.2, -0.2:0.05:0.2, ZinSynchFreqMat)
 set(gca,'YDir','normal')
 axis square
 colorbar
@@ -117,7 +117,7 @@ yticklabels(labels)
 set(gca, 'FontSize', 14)
 
 subplot(2,3,6)
-imagesc(-0.2:0.05:0.2, -0.2:0.05:0.2, ZinLeadPhaseBW)
+imagesc(-0.2:0.05:0.2, -0.2:0.05:0.2, ZinLeadPhaseBWMat)
 set(gca,'YDir','normal')
 axis square
 colorbar

@@ -24,7 +24,7 @@ def wholeShebang(loc, cell):
     start = 200
     factor = 4
 
-    SC = findSc(stim_seg, soma_seg, start, 0.5, 0.01)
+    SC = findSc(stim_seg, soma_seg, start, 0.75, 0.01)
     TP = getTp(stim_seg, start, SC / 2)
     
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')

@@ -1,9 +1,9 @@
 from getCells import AckerAnticCell
 from mpi4py import MPI
-from neuron import h
+from neuron import h, gui
 from chirpUtils import findSc, getTp, sweepLags
 import numpy as np
-h.load_file('stdrun.hoc')
+# h.load_file('stdrun.hoc')
 
 pc = h.ParallelContext()
 pcid = pc.id()

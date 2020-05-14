@@ -209,6 +209,7 @@ def findSc(stim_seg, soma_seg, start, sc, dWeight):
     # condition stim 
     condSyn = h.ExpSyn(stim_seg)
     condSyn.tau = 2
+    condSyn.e = 100
     condStim = h.NetStim()
     condStim.start = start
     condStim.number = 1

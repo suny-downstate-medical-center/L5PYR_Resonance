@@ -34,7 +34,9 @@ def wholeShebang(loc, cell, SC):
 # locs = [0.25, 0.5, 0.75]
 locs = [0.1, 0.5, 0.9]
 SCs = [0.06, 0.65, 1100]
-wholeShebang(locs[pcid], cell, SCs[pcid])
+
+for loc, sc in zip(locs, SCs):
+    wholeShebang(loc, cell, sc)
 
 # pc.runworker()
 # nseg = 11

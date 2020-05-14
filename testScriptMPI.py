@@ -11,7 +11,7 @@ pcid = pc.id()
 pc.set_maxstep(100)
 #pcid = 0
 
-def wholeShebang(loc, cell):
+def wholeShebang(loc, cell, SC):
     stim_seg = cell.basal[15](loc)
     soma_seg = cell.soma[0](0.5)
 
@@ -23,14 +23,16 @@ def wholeShebang(loc, cell):
     t_vec.record(h._ref_t)
     start = 200
     factor = 4
-    firstShot = 0.75
-    SC = findSc(stim_seg, soma_seg, start, firstShot, 0.01)
-    TP = getTp(stim_seg, start, SC / 2)
+    # firstShot = 0.75
+    # SC = findSc(stim_seg, soma_seg, start, firstShot, 0.01)
+    TP = getTp(stim_seg, start, SC / factor)
     
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outfile='/u/craig/L5PYR_Resonance/timeDomainOutput/basal35_'+str(loc)+'.json')
 
-locs = [0.25, 0.5, 0.75]
-wholeShebang(locs[pcid], cell)
+# locs = [0.25, 0.5, 0.75]
+locs = [0.1, 0.5, 0.9]
+SCs = [0.06, 0.65, 1100]
+wholeShebang(locs[pcid], cell, SCs[pcid])
 
 # pc.runworker()
 # nseg = 11
@@ -38,4 +40,3 @@ wholeShebang(locs[pcid], cell)
 #     pc.submit(wholeShebang, loc)
 
 # while pc.working(): pass
-

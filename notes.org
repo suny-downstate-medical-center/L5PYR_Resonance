@@ -684,3 +684,5 @@ https://github.com/suny-downstate-medical-center/M1/blob/d5e5c240a40305dac2c23c2
 figure 4 phase response, something along those lines 
 ** obviously hash out synaptic sims 
 ** (bill) invite migliore to join in, then hopefully pow wow w/ everybody 
+
+* [2020-5-14 Thu] - revisiting some old data, working on time domain 

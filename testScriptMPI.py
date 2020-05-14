@@ -12,7 +12,7 @@ pc.set_maxstep(100)
 #pcid = 0
 
 def wholeShebang(loc, cell, SC):
-    stim_seg = cell.basal[15](loc)
+    stim_seg = cell.basal[33](loc)
     soma_seg = cell.soma[0](0.5)
 
     v_stim = h.Vector()

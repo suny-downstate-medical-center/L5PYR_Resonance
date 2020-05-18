@@ -243,8 +243,8 @@ def conditionAndTestMulti(data):
     trace_lists = {}
     for key in traces.keys():
         trace_lists[key] = traces[key].to_python()
+    trace_lists['S'] = S
     trace_file = outpath + str(stim_seg.sec) + '_lag' + str(np.round(lag,1)) + '_w' + str(np.round(S,3)) + '_traces.json'
-    trace_file['S'] = S
     with open(trace_file, 'w') as fileObj:
         json.dump(trace_lists, fileObj)
     print('DONE lag: ' + str(np.round(lag,1)))

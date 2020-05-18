@@ -722,3 +722,4 @@ plt.xlim(195,350)
 *** added some functions to *synUtils.py*
 *** new script *sweepLagsMulti.py*
 *** uses robert's suggestions re multiprocessing package
+** commit: 'code for parallelizing lag sweep'

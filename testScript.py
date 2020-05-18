@@ -1,27 +1,17 @@
-from getCells import AckerAnticCell
-cell = AckerAnticCell()
+from getCells import HayCell
+cell = HayCell()
 from neuron import h, gui
-from chirpUtils import findSc
-stim_seg = cell.basal[12](0.5)
-# stim_seg = cell.apical[15](0.5)
-# stim_seg = cell.apical[2](0.5)
+from synUtils import *
+
 soma_seg = cell.soma[0](0.5)
-v_stim = h.Vector()
-v_soma = h.Vector()
-t_vec = h.Vector()
-v_stim.record(stim_seg._ref_v)    
-v_soma.record(soma_seg._ref_v)
-t_vec.record(h._ref_t)
+stim_segs = [cell.apic[2](0.5), cell.apic[36](0.8)]
+ampa_weights = [0.125, 0.065]
+nmda_weights = [0.03, 0.05]
+
 start = 200
-SC = findSc(stim_seg, soma_seg, start, 0.5, 0.01)
-# SC = findSc(stim_seg, soma_seg, start, 0.006, 0.0001)
-from chirpUtils import getTp
-TP = getTp(stim_seg, start, SC / 2)
-from chirpUtils import sweepLags
-allLags = []
-allWeights = []
-factors = [2, 4, 8, 16]
-for factor in factors:
-    lags, testWeights = sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 5)#TP / 10)
-    allLags.append(lags)
-    allWeights.append(testWeights)
+factor = 2
+
+for i, stim_seg in enumerate(stim_segs):
+    SC = ampa_weights[i]
+    TP, TP_soma = getTp(stim_seg, start, SC / factor)
+    sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outpath='/u/craig/L5PYR_Resonance/timeDomainOutput/Hay/')

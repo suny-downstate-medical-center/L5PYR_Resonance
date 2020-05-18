@@ -685,4 +685,34 @@ figure 4 phase response, something along those lines
 ** obviously hash out synaptic sims 
 ** (bill) invite migliore to join in, then hopefully pow wow w/ everybody 
 
-* [2020-5-14 Thu] - revisiting some old data, working on time domain 
+* [2020-5-14 Thu] - revisiting some old data, working on time domain
+** got the color coding more or less down
+** still screwing around with time domain sims, takes a real long time to run 
+** plotting traces
+plt.figure()
+plt.subplot(2,1,1)
+plt.plot(t_vec, cond_i, label='Conditioning Synapse')
+plt.plot(t_vec, test_i, label='Test Synapse')
+plt.ylabel('Synaptic Current')
+plt.title('Apical Tuft: Lag = 3ms')
+plt.xlim(195,350)
+plt.subplot(2,1,2)
+plt.plot(t_vec, v_soma, label='Soma')
+plt.plot(t_vec, v_stim, label='Synapse')
+plt.xlabel('Time (ms)')
+plt.ylabel('Membrane Potential')
+plt.title('Test Synapse Weight: 0.0025')
+plt.xlim(195,350)
+
+* [2020-5-16 Sat] - synaptic stims for hay cell
+** making synapses more realistic, time constants based on AMPA and NMDA - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3545156/
+** focusing on hay's apical trunk - reasonably large change in Zc before start getting into dend spike territory 
+*** NMDA-type: apic[2](0.25): weight = 0.03; apic[36](0.8): weight = 0.05
+*** AMPA-type: apic[2](0.25): weight = 0.125; apic[36](0.8): weight = 0.065
+
+* [2020-5-17 Sun] - fleshing out stuff from yesterday
+** AMPA synaptic stim on farther segment - dendritic Vm has bump 8ms after initial stim 
+** separated code for chirp utils and synaptic utils 
+*** added in recording dendritic currents, saving traces
+*** modified testScript.py to sweep lags for two apical trunk segments mentioned [2020-5-16 Sat]
+** commit: 'cleaned up and augmented synaptic stim code, test script focuses on hay apical trunk'

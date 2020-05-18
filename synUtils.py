@@ -2,6 +2,7 @@ from neuron import h, init
 h.load_file("stdrun.hoc")
 import numpy as np 
 import json
+import multiprocessing
 
 #calculate path length between two sections
 def fromtodistance(origin_segment, to_segment):
@@ -230,3 +231,30 @@ def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag, synType='AMPA'
         out = {'lags' : lags, 'weights' : testWeights, 'stim_seg' : str(stim_seg), 'Sc0' : Sc0}
         with open(outfile, 'w') as fileObj:
             json.dump(out, fileObj)
+
+def conditionAndTestMulti(data):
+    Sc0, St0, dSt, start, lag, outpath = data
+    from getCells import HayCell
+    cell = HayCell()
+    stim_seg = cell.apic[2](0.5)
+    soma_seg = cell.soma[0](0.5)
+    print('starting lag: ' + str(np.round(lag,1)))
+    S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
+    trace_lists = {}
+    for key in traces.keys():
+        trace_lists[key] = traces[key].to_python()
+    trace_file = outpath + str(stim_seg.sec) + '_lag' + str(np.round(lag,1)) + '_w' + str(np.round(S,3)) + '_traces.json'
+    trace_file['S'] = S
+    with open(trace_file, 'w') as fileObj:
+        json.dump(trace_lists, fileObj)
+    print('DONE lag: ' + str(np.round(lag,1)))
+    return S
+
+def getLagData(Sc0, St0, dSt, start, tP, dLag, outpath):
+    data = []
+    lag = 0
+    while (start + lag) <= (start + tP):
+        data_list = [Sc0, St0, dSt, start, lag, outpath]
+        data.append(data_list)
+        lag = lag + dLag
+    return data

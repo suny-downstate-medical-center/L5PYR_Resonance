@@ -716,3 +716,9 @@ plt.xlim(195,350)
 *** added in recording dendritic currents, saving traces
 *** modified testScript.py to sweep lags for two apical trunk segments mentioned [2020-5-16 Sat]
 ** commit: 'cleaned up and augmented synaptic stim code, test script focuses on hay apical trunk'
+
+* [2020-5-18 Mon] - " "
+** since sweeping over lags is the bottleneck, worked out parallelizing it 
+*** added some functions to *synUtils.py*
+*** new script *sweepLagsMulti.py*
+*** uses robert's suggestions re multiprocessing package

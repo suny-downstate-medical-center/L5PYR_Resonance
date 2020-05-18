@@ -9,8 +9,8 @@ weight = 0.125
 start = 200
 factor = 4
 Sc0 = weight / factor
-St0 = weight / (factor*5)
-dSt = weight / (factor*10)
+St0 = weight / (factor*2)
+dSt = weight / (factor*5)
 Tp, _ = getTp(stim_seg, soma_seg, start, Sc0)
 
 data = getLagData(2, 0.5, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic2/')

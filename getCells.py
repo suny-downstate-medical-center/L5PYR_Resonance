@@ -85,7 +85,7 @@ def NeymotinCell(slope=14*2):
 def HayCell(morphology_file = './morphologies/cell1.asc'):
 	owd = os.getcwd()
 	os.chdir('./Hay')
-	from neuron import h, init
+	from neuron import h#, init
 	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	# h.load_file('/usr/local/nrn//share/nrn/lib/hoc/import3d.hoc')
 	h.load_file('stdrun.hoc')

@@ -233,10 +233,10 @@ def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag, synType='AMPA'
             json.dump(out, fileObj)
 
 def conditionAndTestMulti(data):
-    Sc0, St0, dSt, start, lag, outpath = data
+    sec_num, sec_loc, Sc0, St0, dSt, start, lag, outpath = data
     from getCells import HayCell
     cell = HayCell()
-    stim_seg = cell.apic[2](0.5)
+    stim_seg = cell.apic[sec_num](sec_loc)
     soma_seg = cell.soma[0](0.5)
     print('starting lag: ' + str(np.round(lag,1)))
     S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
@@ -250,11 +250,11 @@ def conditionAndTestMulti(data):
     print('DONE lag: ' + str(np.round(lag,1)))
     return S
 
-def getLagData(Sc0, St0, dSt, start, tP, dLag, outpath):
+def getLagData(sec_num, sec_loc, Sc0, St0, dSt, start, tP, dLag, outpath):
     data = []
     lag = 0
     while (start + lag) <= (start + tP):
-        data_list = [Sc0, St0, dSt, start, lag, outpath]
+        data_list = [sec_num, sec_loc, Sc0, St0, dSt, start, lag, outpath]
         data.append(data_list)
         lag = lag + dLag
     return data

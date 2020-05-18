@@ -81,10 +81,10 @@ def conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag, synType='AMP
     
     # condition stim 
     if synType == 'AMPA':
-        cond_i, condCon, condSyn, condStim = createAMPAsyn(stim_seg, start + lag, Sc0)
+        cond_i, condCon, condSyn, condStim = createAMPAsyn(stim_seg, start, Sc0)
         test_i, testCon, testSyn, testStim = createAMPAsyn(stim_seg, start + lag, St0)
     else:
-        cond_i, condCon, condSyn, condStim = createNMDAsyn(stim_seg, start + lag, Sc0)
+        cond_i, condCon, condSyn, condStim = createNMDAsyn(stim_seg, start, Sc0)
         test_i, testCon, testSyn, testStim = createNMDAsyn(stim_seg, start + lag, St0)
 
     out_vecs = setupCurrentRecordings_hay(stim_seg)

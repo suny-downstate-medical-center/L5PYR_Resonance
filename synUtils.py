@@ -211,15 +211,16 @@ def sweepLags(stim_seg, soma_seg, Sc0, St0, dSt, start, tP, dLag, synType='AMPA'
             S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
         else:
             S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag, synType='NMDA')
-        lag = lag + dLag
-        testWeights.append(S)
         trace_lists = {}
         for key in traces.keys():
             trace_lists[key] = traces[key].to_python()
         ## save output traces
-        trace_file = outpath + str(stim_seg.sec) + '_lag' + str(np.round(lag,1)) + '_traces.json'
+        trace_file = outpath + str(stim_seg.sec) + '_lag' + str(np.round(lag,1)) + '_w' + str(np.round(S,3)) + '_traces.json'
         with open(trace_file, 'w') as fileObj:
             json.dump(trace_lists, fileObj)
+        lag = lag + dLag
+        testWeights.append(S)
+        
 
     # output
     if outpath == None:

@@ -723,3 +723,4 @@ plt.xlim(195,350)
 *** new script *sweepLagsMulti.py*
 *** uses robert's suggestions re multiprocessing package
 ** commit: 'code for parallelizing lag sweep'
+*** basic tests worked added code for higher res and both segments with amplitude stim

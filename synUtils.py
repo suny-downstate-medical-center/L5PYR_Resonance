@@ -238,6 +238,7 @@ def conditionAndTestMulti(data):
     cell = HayCell()
     stim_seg = cell.apic[sec_num](sec_loc)
     soma_seg = cell.soma[0](0.5)
+    print(str(stim_seg))
     print('starting lag: ' + str(np.round(lag,1)))
     S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
     trace_lists = {}

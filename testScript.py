@@ -13,5 +13,5 @@ factor = 2
 
 for i, stim_seg in enumerate(stim_segs):
     SC = ampa_weights[i]
-    TP, TP_soma = getTp(stim_seg, start, SC / factor)
+    TP, TP_soma = getTp(stim_seg, soma_seg, start, SC / factor)
     sweepLags(stim_seg, soma_seg, SC / factor, SC / (factor*5), SC / (factor*10), start, TP, 1, outpath='/u/craig/L5PYR_Resonance/timeDomainOutput/Hay/')

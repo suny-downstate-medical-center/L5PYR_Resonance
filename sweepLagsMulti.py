@@ -41,7 +41,7 @@ St0 = weight / (factor*5)
 dSt = weight / (factor*10)
 Tp, _ = getTp(stim_seg, soma_seg, start, Sc0)
 
-data = getLagData(14, 0.5, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic36/')
+data = getLagData(14, 0.5, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic14/')
 data = tuple(data)
 
 def mp_handler():

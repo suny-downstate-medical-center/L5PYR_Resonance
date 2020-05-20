@@ -724,3 +724,91 @@ plt.xlim(195,350)
 *** uses robert's suggestions re multiprocessing package
 ** commit: 'code for parallelizing lag sweep'
 *** basic tests worked added code for higher res and both segments with amplitude stim
+
+* [2020-5-19 Tue] 
+** plotting yesterday's output
+from matplotlib import pyplot as plt
+import json 
+from os import listdir
+from os.path import isdir
+import numpy as np 
+path_name = 'L5PYR_Resonance/timeDomainOutput/HayApic2/'
+file_list = listdir(path_name)
+
+lags = []
+weights = []
+start = 200
+for filename in file_list:
+    if not isdir(path_name + filename):
+        lag = int(filename.split('_')[1][3:])
+        weight = float(filename.split('_')[2][1:])
+        lags.append(lag)
+        weights.append(weight)
+        with open(path_name+filename, 'rb') as fileObj:
+            data = json.load(fileObj)
+
+        dt = 0.025
+        restVm = data['v_soma'][int(start*(1/dt) - 25*(1/dt))]
+        a = np.array(data['v_soma'])
+        b = a[a > restVm - 0.1]
+        c = b[b < restVm + 0.1]
+        t = np.array(data['t_vec'])
+        t1 = t[a > restVm - 0.1]
+        t2 = t1[b < restVm + 0.1]
+
+        diff = 0.02
+        ind = -2
+        while diff < 0.026:
+            diff = t2[ind+1] - t2[ind]
+            ind = ind - 1
+
+        Tp = t2[ind+2] - start
+        
+        plt.figure(figsize=(8,10))  
+        plt.subplot(3,1,1)  
+        plt.plot(data['t_vec'], data['v_soma'], label='Soma')  
+        plt.plot(data['t_vec'], data['v_stim'], label='Dendrite')  
+        plt.ylabel('Membrane Potential (mV)')
+        plt.title('Lag: ' + str(lag) + ' Weight: ' + str(weight))
+        plt.legend(loc='lower right')  
+        plt.xlim(195, start+Tp+5)  
+        # plt.subplot(2,2,4)  
+        plt.subplot(3,1,2)  
+        plt.plot(data['t_vec'], data['cond_i'], label='Conditioning Synapse')  
+        plt.plot(data['t_vec'], data['test_i'], label='Test Synapse')  
+        plt.ylabel('Current (nA)')
+        plt.title('Synaptic Currents')
+        plt.legend(loc='lower right')  
+        plt.xlim(195, start+Tp+5)  
+        plt.subplot(3,1,3)  
+        plt.plot(data['t_vec'], data['i_hcn'], label='Ih')  
+        plt.plot(data['t_vec'], data['i_im'], label='Im')  
+        plt.plot(data['t_vec'], data['i_ca_lvast'], label='Ica lvast')  
+        plt.plot(data['t_vec'], data['i_ca_hva'], label='Ica hva')  
+        # plt.plot(data['t_vec'], data['i_nata'], label='Ina')  
+        plt.plot(data['t_vec'], data['i_ske2'], label='Iske2')  
+        plt.plot(data['t_vec'], data['i_skv3'], label='Iskv3')
+        plt.xlim(195, start+Tp+5)  
+        plt.legend(loc='lower right') 
+        plt.title('Dendritic Currents')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Current (nA)')
+        plt.savefig(path_name + 'Figures/' + filename[:-4] + 'png')
+        plt.close()
+    
+lasgs_sort = np.sort(np.array(lags))
+inds = np.argsort(np.array(lags))
+weights_sort = np.array(weights)[inds]
+
+plt.figure(figsize=(8,10))
+plt.plot(lasgs_sort, weights_sort, '*-')
+plt.ylabel('Test Weight')
+plt.xlabel('Interstimulus interval (ms)')
+plt.title('Base of Apical Trunk - AMPA Synapses')
+plt.savefig(path_name+'Figures/base_apicalTrunk_weightsLags.png')
+plt.close()
+
+* [2020-5-20 Wed]
+** running a midway synapse/segment
+*** adding Apic[14](0.5):  AMPA weight = 0.14
+*** updating *sweepLagsMulti.py* for it

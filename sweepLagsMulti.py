@@ -4,7 +4,7 @@ cell = HayCell()
 from synUtils import getLagData, getTp, conditionAndTestMulti
 import sys
 
-if sys.argv[0] == '2':
+if sys.argv[-1] == '2':
     stim_seg = cell.apic[2](0.5)
     soma_seg = cell.soma[0](0.5)
     weight = 0.125
@@ -18,7 +18,7 @@ if sys.argv[0] == '2':
     data = getLagData(2, 0.5, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic2/')
     data = tuple(data)
 
-elif sys.argv[0] == '36':
+elif sys.argv[-1] == '36':
     stim_seg = cell.apic[36](0.8)
     soma_seg = cell.soma[0](0.5)
     weight = 0.065
@@ -32,7 +32,7 @@ elif sys.argv[0] == '36':
     data = getLagData(36, 0.8, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic36/')
     data = tuple(data)
 
-elif sys.argv[0] == '14':
+elif sys.argv[-1] == '14':
     stim_seg = cell.apic[14](0.5)
     soma_seg = cell.soma[0](0.5)
     weight = 0.14

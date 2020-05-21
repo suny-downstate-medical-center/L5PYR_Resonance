@@ -732,7 +732,7 @@ import json
 from os import listdir
 from os.path import isdir
 import numpy as np 
-path_name = 'L5PYR_Resonance/timeDomainOutput/HayApic2/'
+path_name = 'L5PYR_Resonance/timeDomainOutput/HayApic14/'
 file_list = listdir(path_name)
 
 lags = []
@@ -812,3 +812,55 @@ plt.close()
 ** running a midway synapse/segment
 *** adding Apic[14](0.5):  AMPA weight = 0.14
 *** updating *sweepLagsMulti.py* for it
+
+* [2020-5-21 Thu] - hopefully three points is enough for a trend 
+** everything has a delay of 1 ms, might as well rerun
+** nice plotting of "critical" weight stims 
+from matplotlib import pyplot as plt
+plt.ion()
+import json
+from os import listdir
+path = './HayApic2/'
+filenames = listdir(path)
+dt = 0.025
+for filename in filenames:
+    # if '_lag0_' in filename:
+    # if '_lag4_' in filename:
+    if '_lag11_' in filename:
+        with open(path + filename, 'rb') as fileObj: data = json.load(fileObj)
+        lag = int(filename.split('_')[1][3:])
+        weight = float(filename.split('_')[2][1:])
+
+time = [t - data['t_vec'][int(1/dt*198)] - 2 for t in data['t_vec'][int(1/dt*198):]]
+
+plt.figure(figsize=(8,10))  
+plt.subplot(3,1,1)  
+plt.plot(time, data['v_soma'][int(1/dt*198):], label='Soma')  
+plt.plot(time, data['v_stim'][int(1/dt*198):], label='Dendrite')  
+plt.ylabel('Membrane Potential (mV)')
+plt.title('Lag: ' + str(lag) + ' Weight: ' + str(weight))
+plt.legend(loc='lower right')  
+plt.xlim(-2,18)
+
+plt.subplot(3,1,2)  
+plt.plot(time, data['cond_i'][int(1/dt*198):], label='Conditioning Synapse')  
+plt.plot(time, data['test_i'][int(1/dt*198):], label='Test Synapse')  
+plt.ylabel('Current (nA)')
+plt.title('Synaptic Currents')
+plt.ylim(-5,0.2)
+plt.legend(loc='lower right')  
+plt.xlim(-2,18)
+
+plt.subplot(3,1,3)  
+plt.plot(time, data['i_hcn'][int(1/dt*198):], label='Ih')  
+plt.plot(time, data['i_im'][int(1/dt*198):], label='Im')  
+plt.plot(time, data['i_ca_lvast'][int(1/dt*198):], label='Ica lvast')  
+plt.plot(time, data['i_ca_hva'][int(1/dt*198):], label='Ica hva')  
+# plt.plot(time, data['i_nata'][int(1/dt*198):], label='Ina')  
+plt.plot(time, data['i_ske2'][int(1/dt*198):], label='Iske2')  
+plt.plot(time, data['i_skv3'][int(1/dt*198):], label='Iskv3')
+plt.legend(loc='lower right') 
+plt.title('Dendritic Currents')
+plt.xlabel('Time (s)')
+plt.ylabel('Current (nA)')
+plt.xlim(-2,18)

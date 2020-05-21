@@ -22,6 +22,7 @@ def createNMDAsyn(stim_seg, start, weight):
     
     con = h.NetCon(stim, syn)
     con.weight[0] = weight
+    con.delay = 0
 
     i_vec = h.Vector()
     i_vec.record(syn._ref_i)
@@ -41,6 +42,7 @@ def createAMPAsyn(stim_seg, start, weight):
     
     con = h.NetCon(stim, syn)
     con.weight[0] = weight
+    con.delay = 0
 
     i_vec = h.Vector()
     i_vec.record(syn._ref_i)

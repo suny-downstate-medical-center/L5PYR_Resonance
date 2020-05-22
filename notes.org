@@ -889,3 +889,40 @@ plt.xlim(-1,50)
 # plt.savefig(path + 'Figures/' + current_file[:-4] + 'png')
 
 * [2020-5-22 Fri] - more teasing a trend out
+** filling things out with one more segment at 400 um from soma, running on el
+*** plotting impedance data from the four segments:
+from scipy.io import loadmat
+from matplotlib import pyplot as plt 
+plt.ion()
+data1 = loadmat('../Hay/hay_impedance_measures/L5PCtemplate[0].apic[2].mat')
+data2 = loadmat('../Hay/hay_impedance_measures/L5PCtemplate[0].apic[14].mat')
+data3 = loadmat('../Hay/hay_impedance_measures/L5PCtemplate[0].apic[36].mat')
+ZinResAmp = [data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][1], data3['ZinResAmp'][0][1], data3['ZinResAmp'][0][-3]]
+ZinResFreq = [data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][1], data3['ZinResFreq'][0][1], data3['ZinResFreq'][0][-3]]
+ZinQ = [data1['QfactorIn'][0][0], data2['QfactorIn'][0][1], data3['QfactorIn'][0][1], data3['QfactorIn'][0][-3]]
+ZcResAmp = [data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][1], data3['ZcResAmp'][0][1], data3['ZcResAmp'][0][-3]]
+ZcResFreq = [data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][1], data3['ZcResFreq'][0][1], data3['ZcResFreq'][0][-3]]
+ZcQ = [data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][1], data3['QfactorTrans'][0][1], data3['QfactorTrans'][0][-3]]
+dist = [data1['dist'][0][0], data2['dist'][0][1], data3['dist'][0][1], data3['dist'][0][-3]]
+plt.figure()
+plt.subplot(2,3,1)
+plt.plot(dist, ZinResAmp, '*-')
+plt.ylabel('Resonance Amplitude')
+plt.subplot(2,3,2)
+plt.plot(dist, ZinResFreq, '*-')
+plt.ylabel('Resonance Frequency')
+plt.title('Input Impedance')
+plt.subplot(2,3,3)
+plt.plot(dist, ZinQ, '*-')
+plt.ylabel('Q-factor')
+plt.subplot(2,3,4)
+plt.plot(dist, ZcResAmp, '*-')
+plt.ylabel('Resonance Amplitude')
+plt.subplot(2,3,5)
+plt.plot(dist, ZcResFreq, '*-')
+plt.ylabel('Transfer Frequency')
+plt.title('Transfer Impedance (syn->soma)')
+plt.xlabel('Distnace to Soma (um)')
+plt.subplot(2,3,6)
+plt.plot(dist, ZcQ, '*-')
+plt.ylabel('Q-factor')

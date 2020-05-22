@@ -46,10 +46,24 @@ elif sys.argv[-1] == '14':
     data = getLagData(14, 0.5, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic14/')
     data = tuple(data)
 
+elif sys.argv[-1] == '409':
+    stim_seg = cell.apic[36](0.14)
+    soma_seg = cell.soma[0](0.5)
+    weight = 0.075
+    start = 200
+    factor = 4
+    Sc0 = weight / factor
+    St0 = weight / (factor*5)
+    dSt = weight / (factor*10)
+    Tp, _ = getTp(stim_seg, soma_seg, start, Sc0)
+
+    data = getLagData(36, 0.14, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/HayApic409/')
+    data = tuple(data)
+
 # data = (data1 + data2 + data3)
 
 def mp_handler():
-    p = multiprocessing.Pool(6)
+    p = multiprocessing.Pool(8)
     p.map(conditionAndTestMulti, data)
 
 if __name__ == '__main__':

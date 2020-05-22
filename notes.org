@@ -820,16 +820,29 @@ from matplotlib import pyplot as plt
 plt.ion()
 import json
 from os import listdir
-path = './HayApic2/'
+from os.path import isdir
+# path = './HayApic2/'
+# path = './HayApic14/'
+path = './HayApic36/'
 filenames = listdir(path)
 dt = 0.025
+lags = []
+weights = []
 for filename in filenames:
-    # if '_lag0_' in filename:
-    # if '_lag4_' in filename:
-    if '_lag11_' in filename:
-        with open(path + filename, 'rb') as fileObj: data = json.load(fileObj)
+    if not isdir(path+filename):
         lag = int(filename.split('_')[1][3:])
         weight = float(filename.split('_')[2][1:])
+        lags.append(lag)
+        weights.append(weight)
+        # if '_lag0_' in filename:
+        # if '_lag4_' in filename:
+        # if '_lag3_' in filename:
+        if '_lag15_' in filename:
+        # if '_lag20_' in filename:
+            current_file = filename
+            with open(path + filename, 'rb') as fileObj: data = json.load(fileObj)
+            stim_lag = lag
+            stim_weight = weight
 
 time = [t - data['t_vec'][int(1/dt*198)] - 2 for t in data['t_vec'][int(1/dt*198):]]
 
@@ -838,18 +851,22 @@ plt.subplot(3,1,1)
 plt.plot(time, data['v_soma'][int(1/dt*198):], label='Soma')  
 plt.plot(time, data['v_stim'][int(1/dt*198):], label='Dendrite')  
 plt.ylabel('Membrane Potential (mV)')
-plt.title('Lag: ' + str(lag) + ' Weight: ' + str(weight))
+plt.title('Lag: ' + str(stim_lag) + ' Weight: ' + str(stim_weight))
 plt.legend(loc='lower right')  
-plt.xlim(-2,18)
+plt.xlim(-1,50)
+# plt.xlim(-1,18)
+# plt.xlim(-1,30)
 
 plt.subplot(3,1,2)  
 plt.plot(time, data['cond_i'][int(1/dt*198):], label='Conditioning Synapse')  
 plt.plot(time, data['test_i'][int(1/dt*198):], label='Test Synapse')  
 plt.ylabel('Current (nA)')
 plt.title('Synaptic Currents')
-plt.ylim(-5,0.2)
+plt.ylim(-5.5,0.2)
 plt.legend(loc='lower right')  
-plt.xlim(-2,18)
+plt.xlim(-1,50)
+# plt.xlim(-1,18)
+# plt.xlim(-1,30)
 
 plt.subplot(3,1,3)  
 plt.plot(time, data['i_hcn'][int(1/dt*198):], label='Ih')  
@@ -863,4 +880,12 @@ plt.legend(loc='lower right')
 plt.title('Dendritic Currents')
 plt.xlabel('Time (s)')
 plt.ylabel('Current (nA)')
-plt.xlim(-2,18)
+plt.xlim(-1,50)
+# plt.xlim(-1,18)
+# plt.xlim(-1,30)
+# plt.ylim(-0.00043,0.00026)
+# plt.ylim(-0.00026, 0.00026)
+# plt.ylim(-0.0004,0.00026)
+# plt.savefig(path + 'Figures/' + current_file[:-4] + 'png')
+
+* [2020-5-22 Fri] - more teasing a trend out

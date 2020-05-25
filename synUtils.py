@@ -257,12 +257,12 @@ def conditionAndTestMultiNoSK(data):
     sec_num, sec_loc, Sc0, St0, dSt, start, lag, outpath = data
     from getCells import HayCell
     cell = HayCell()
+    stim_seg = cell.apic[sec_num](sec_loc)
+    soma_seg = cell.soma[0](0.5)
     ## remove SK_E2 channels
     for sec in h.allsec():
         try: sec.uninsert('SK_E2')
         except: pass
-    stim_seg = cell.apic[sec_num](sec_loc)
-    soma_seg = cell.soma[0](0.5)
     print(str(stim_seg))
     print('starting lag: ' + str(np.round(lag,1)))
     S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)

@@ -100,7 +100,7 @@ if sys.argv[-1] == 'removeSK':
         St0 = weight / (factor*5)
         dSt = weight / (factor*10)
         Tp, _ = getTp(stim_seg, soma_seg, start, Sc0)
-        os.mkdir('/u/craig/L5PYR_Resonance/timeDomainOutput/NoSK/HayApic36/')
+        #os.mkdir('/u/craig/L5PYR_Resonance/timeDomainOutput/NoSK/HayApic36/')
         data = getLagData(36, 0.8, Sc0, St0, dSt, start, Tp, 1, '/u/craig/L5PYR_Resonance/timeDomainOutput/NoSK/HayApic36/')
         data = tuple(data)
 

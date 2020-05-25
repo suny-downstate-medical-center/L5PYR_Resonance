@@ -896,16 +896,17 @@ plt.xlim(-1,18)
 from scipy.io import loadmat
 from matplotlib import pyplot as plt 
 plt.ion()
+data0 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[0].mat')
 data1 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[2].mat')
 data2 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[14].mat')
 data3 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[36].mat')
-ZinResAmp = [data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][1], data3['ZinResAmp'][0][1], data3['ZinResAmp'][0][-3]]
-ZinResFreq = [data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][1], data3['ZinResFreq'][0][1], data3['ZinResFreq'][0][-3]]
-ZinQ = [data1['QfactorIn'][0][0], data2['QfactorIn'][0][1], data3['QfactorIn'][0][1], data3['QfactorIn'][0][-3]]
-ZcResAmp = [data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][1], data3['ZcResAmp'][0][1], data3['ZcResAmp'][0][-3]]
-ZcResFreq = [data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][1], data3['ZcResFreq'][0][1], data3['ZcResFreq'][0][-3]]
-ZcQ = [data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][1], data3['QfactorTrans'][0][1], data3['QfactorTrans'][0][-3]]
-dist = [data1['dist'][0][0], data2['dist'][0][1], data3['dist'][0][1], data3['dist'][0][-3]]
+ZinResAmp = [data0['ZinResAmp'][0][0],data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][1], data3['ZinResAmp'][0][1], data3['ZinResAmp'][0][-3]]
+ZinResFreq = [data0['ZinResFreq'][0][0],data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][1], data3['ZinResFreq'][0][1], data3['ZinResFreq'][0][-3]]
+ZinQ = [data0['QfactorIn'][0][0],data1['QfactorIn'][0][0], data2['QfactorIn'][0][1], data3['QfactorIn'][0][1], data3['QfactorIn'][0][-3]]
+ZcResAmp = [data0['ZcResAmp'][0][0],data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][1], data3['ZcResAmp'][0][1], data3['ZcResAmp'][0][-3]]
+ZcResFreq = [data0['ZcResFreq'][0][0],data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][1], data3['ZcResFreq'][0][1], data3['ZcResFreq'][0][-3]]
+ZcQ = [data0['QfactorTrans'][0][0],data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][1], data3['QfactorTrans'][0][1], data3['QfactorTrans'][0][-3]]
+dist = [data0['dist'][0][0],data1['dist'][0][0], data2['dist'][0][1], data3['dist'][0][1], data3['dist'][0][-3]]
 plt.figure()
 plt.subplot(3,2,1)
 plt.plot(dist, ZinResAmp, '*-')
@@ -916,16 +917,17 @@ plt.title('Input Impedance')
 plt.subplot(3,2,3)
 plt.plot(dist, ZinResFreq, '*-')
 plt.ylabel('Resonance Frequency')
-plt.ylim(4.6,6.5)
+plt.ylim(4,6.5)
 
 plt.subplot(3,2,5)
 plt.plot(dist, ZinQ, '*-')
 plt.ylabel('Q-factor')
-plt.ylim(1.18,1.5)
+plt.ylim(1,1.5)
 plt.xlabel('Distnace to Soma (um)')
 
 plt.subplot(3,2,2)
-plt.plot(dist, ZcResAmp, '*-')
+plt.plot(dist, ZcResAmp, '*-', label='Control')
+plt.legend()
 plt.ylabel('Resonance Amplitude')
 plt.ylim(15,55)
 plt.title('Transfer Impedance')
@@ -933,13 +935,13 @@ plt.title('Transfer Impedance')
 plt.subplot(3,2,4)
 plt.plot(dist, ZcResFreq, '*-')
 plt.ylabel('Transfer Frequency')
-plt.ylim(4.6,6.5)
+plt.ylim(4,6.5)
 
 plt.subplot(3,2,6)
 plt.plot(dist, ZcQ, '*-')
 plt.ylabel('Q-factor')
 plt.xlabel('Distnace to Soma (um)')
-plt.ylim(1.18,1.5)
+plt.ylim(1,1.5)
 
 * [2020-5-23 Sat] - " "
 ** finished running segment from yesterday, only kind of fleshes things out 
@@ -948,3 +950,33 @@ plt.ylim(1.18,1.5)
 ** Ih and SK_E2 seem to be only dendritic currents affecting paired-pulse effects
 ** how does SK_E2 impact chirp?
 *** new file: chirpSKE2.py
+
+* [2020-5-25 Mon] -results from chirp sans SK_E2
+** plotting with code from [2020-5-22 Fri]
+modData1 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic0_0.5.mat')
+modData2 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic2_2.5.mat')
+modData3 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic14_0.5.mat')
+modData4 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic36_0.14.mat')
+modData5 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic36_0.8.mat')
+
+ZinResAmpSK = [modData1['ZinResAmp'][0][0], modData2['ZinResAmp'][0][0], modData3['ZinResAmp'][0][0], modData4['ZinResAmp'][0][0], modData5['ZinResAmp'][0][0]]
+ZinResFreqSK = [modData1['ZinResFreq'][0][0], modData2['ZinResFreq'][0][0], modData3['ZinResFreq'][0][0], modData4['ZinResFreq'][0][0], modData5['ZinResFreq'][0][0]]
+ZinQSK = [modData1['QfactorIn'][0][0], modData2['QfactorIn'][0][0], modData3['QfactorIn'][0][0], modData4['QfactorIn'][0][0], modData5['QfactorIn'][0][0]]
+ZcResAmpSK = [modData1['ZcResAmp'][0][0], modData2['ZcResAmp'][0][0], modData3['ZcResAmp'][0][0], modData4['ZcResAmp'][0][0], modData5['ZcResAmp'][0][0]]
+ZcResFreqSK = [modData1['ZcResFreq'][0][0], modData2['ZcResFreq'][0][0], modData3['ZcResFreq'][0][0], modData4['ZcResFreq'][0][0], modData5['ZcResFreq'][0][0]]
+ZcQSK = [modData1['QfactorTrans'][0][0], modData2['QfactorTrans'][0][0], modData3['QfactorTrans'][0][0], modData4['QfactorTrans'][0][0], modData5['QfactorTrans'][0][0]]
+
+plt.subplot(3,2,1)
+plt.plot(dist, ZinResAmpSK, '*-')
+plt.subplot(3,2,3)
+plt.plot(dist, ZinResFreqSK, '*-')
+plt.subplot(3,2,5)
+plt.plot(dist, ZinQSK, '*-')
+plt.subplot(3,2,2)
+plt.plot(dist, ZcResAmpSK, '*-', label='Block SK E2')
+plt.legend()
+plt.subplot(3,2,4)
+plt.plot(dist, ZcResFreqSK, '*-')
+plt.subplot(3,2,6)
+plt.plot(dist, ZcQSK, '*-')
+** trying synaptic sims without SK_E2

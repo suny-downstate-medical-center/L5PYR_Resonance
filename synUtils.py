@@ -253,6 +253,29 @@ def conditionAndTestMulti(data):
     print('DONE lag: ' + str(np.round(lag,1)))
     return S
 
+def conditionAndTestMultiNoSK(data):
+    sec_num, sec_loc, Sc0, St0, dSt, start, lag, outpath = data
+    from getCells import HayCell
+    cell = HayCell()
+    ## remove SK_E2 channels
+    for sec in h.allsec():
+        try: sec.uninsert('SK_E2')
+        except: pass
+    stim_seg = cell.apic[sec_num](sec_loc)
+    soma_seg = cell.soma[0](0.5)
+    print(str(stim_seg))
+    print('starting lag: ' + str(np.round(lag,1)))
+    S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
+    trace_lists = {}
+    for key in traces.keys():
+        trace_lists[key] = traces[key].to_python()
+    trace_lists['S'] = S
+    trace_file = outpath + str(stim_seg.sec) + '_lag' + str(np.round(lag,1)) + '_w' + str(np.round(S,3)) + '_traces.json'
+    with open(trace_file, 'w') as fileObj:
+        json.dump(trace_lists, fileObj)
+    print('DONE lag: ' + str(np.round(lag,1)))
+    return S
+
 def getLagData(sec_num, sec_loc, Sc0, St0, dSt, start, tP, dLag, outpath):
     data = []
     lag = 0

@@ -15,7 +15,7 @@ def chirpForMulti(invar):
     amp = 0.0025
     f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 5 # for looking at bimodal leading phase response in Hay cell
     I, t = getChirp(f0, f1, t0, amp, Fs, delay)
-    print('running chirp on ' + str(sec))
+    print('running chirp on ' + str(seg))
     applyChirp(I, t, seg, pt_cell.soma[0](0.5), t0, delay, Fs, f1, out_file_name=filename)
 
 data = [[0, 0.5, '/u/craig/L5PYR_Resonance/timeDomainOutput/chirpSKE2/apic0_0.5'],

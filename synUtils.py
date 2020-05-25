@@ -78,6 +78,25 @@ def setupCurrentRecordings_hay(seg):
     currents['i_skv3'].record(seg.SKv3_1._ref_ik)
     return currents
 
+def setupCurrentRecordingsNoSK(seg):
+    # currents found in apical segments of hay cell
+    currents = {}
+    currents['i_hcn'] = h.Vector()
+    currents['i_hcn'].record(seg.Ih._ref_ihcn)
+    currents['i_ca_lvast'] = h.Vector()
+    currents['i_ca_lvast'].record(seg.Ca_LVAst._ref_ica)
+    currents['i_im'] = h.Vector()
+    currents['i_im'].record(seg.Im._ref_ik)
+    currents['i_ca_hva'] = h.Vector()
+    currents['i_ca_hva'].record(seg.Ca_HVA._ref_ica)
+    currents['i_nata'] = h.Vector()
+    currents['i_nata'].record(seg.NaTa_t._ref_ina)
+    # currents['i_ske2'] = h.Vector()
+    # currents['i_ske2'].record(seg.SK_E2._ref_ik)
+    currents['i_skv3'] = h.Vector()
+    currents['i_skv3'].record(seg.SKv3_1._ref_ik)
+    return currents
+
 def conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag, synType='AMPA'):
     # setup recordings
     t_vec, v_stim, v_soma = setupRecordings(stim_seg, soma_seg)
@@ -91,6 +110,45 @@ def conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag, synType='AMP
         test_i, testCon, testSyn, testStim = createNMDAsyn(stim_seg, start + lag, St0)
 
     out_vecs = setupCurrentRecordings_hay(stim_seg)
+
+    # time
+    h.tstop = start + 300
+
+    # find first St that generates spike
+    didSpike = False 
+    while not didSpike:
+        testCon.weight[0] = St0
+        print(str(St0))
+        h.run()
+        ## check for spike
+        if np.max(v_soma.as_numpy()) > 10:
+            didSpike = True
+        else:
+            ## increment weight by 10%
+            St0 = St0 + dSt
+
+    # fill out output structure with traces
+    out_vecs['t_vec'] = t_vec
+    out_vecs['v_stim'] = v_stim
+    out_vecs['v_soma'] = v_soma
+    out_vecs['cond_i'] = cond_i
+    out_vecs['test_i'] = test_i
+
+    return St0, out_vecs
+
+def conditionAndTestNoSK(stim_seg, soma_seg, Sc0, St0, dSt, start, lag, synType='AMPA'):
+    # setup recordings
+    t_vec, v_stim, v_soma = setupRecordings(stim_seg, soma_seg)
+    
+    # condition stim 
+    if synType == 'AMPA':
+        cond_i, condCon, condSyn, condStim = createAMPAsyn(stim_seg, start, Sc0)
+        test_i, testCon, testSyn, testStim = createAMPAsyn(stim_seg, start + lag, St0)
+    else:
+        cond_i, condCon, condSyn, condStim = createNMDAsyn(stim_seg, start, Sc0)
+        test_i, testCon, testSyn, testStim = createNMDAsyn(stim_seg, start + lag, St0)
+
+    out_vecs = setupCurrentRecordingsNoSK(stim_seg)
 
     # time
     h.tstop = start + 300
@@ -265,7 +323,7 @@ def conditionAndTestMultiNoSK(data):
         except: pass
     print(str(stim_seg))
     print('starting lag: ' + str(np.round(lag,1)))
-    S, traces = conditionAndTest(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
+    S, traces = conditionAndTestMultiNoSK(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
     trace_lists = {}
     for key in traces.keys():
         trace_lists[key] = traces[key].to_python()

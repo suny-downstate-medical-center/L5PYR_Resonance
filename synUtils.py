@@ -323,7 +323,7 @@ def conditionAndTestMultiNoSK(data):
         except: pass
     print(str(stim_seg))
     print('starting lag: ' + str(np.round(lag,1)))
-    S, traces = conditionAndTestMultiNoSK(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
+    S, traces = conditionAndTestNoSK(stim_seg, soma_seg, Sc0, St0, dSt, start, lag)
     trace_lists = {}
     for key in traces.keys():
         trace_lists[key] = traces[key].to_python()

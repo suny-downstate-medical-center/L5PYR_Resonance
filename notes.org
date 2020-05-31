@@ -824,7 +824,8 @@ from os.path import isdir
 # path = './HayApic2/'
 # path = './HayApic14/'
 # path = './HayApic36/'
-path = './HayApic409/'
+# path = './HayApic409/'
+path = './ChirpSKE2/HayApic409/'
 filenames = listdir(path)
 dt = 0.025
 lags = []
@@ -980,3 +981,174 @@ plt.plot(dist, ZcResFreqSK, '*-')
 plt.subplot(3,2,6)
 plt.plot(dist, ZcQSK, '*-')
 ** trying synaptic sims without SK_E2
+*** has an effect at least for apic36(0.14)
+** SK channels and resonance in lit:
+*** Xue2012-dh: rat substantia nigra pars compacta dopaminergic neurons - blocking SK w/ 
+apamin eliminated resonance 
+*** Ge2016-sq: Electrical resonance mediated by other channels:
+Electrical resonance could also arise from Ca2+ channels, which underlies autonomous
+rhythmicity of certain excitable cells. The resonant frequency is in the same range 
+as the central frequency revealed by spectral analysis of the spontaneous rhythm, 
+and both the resonant and rhythmic behaviors disappear after blocking Ca2+ current66. 
+L-type Ca2+ channels (Cav1.3) act as the main generator of spontaneous oscillations in 
+substantia nigra pars compacta (SNc) neurons59. Later, T-type Ca2+ channels (Cav3) were 
+found to mediate the subthreshold resonance phenomenon in GABAergic interneurons, with 
+possible aid from persistent Na+ currents67. Electrical resonance contributes to the 
+network oscillation in the immature neocortex and temporally tunes the integration of 
+synaptic inputs within a specific range of frequencies in developing cortical neurons68. 
+In addition, persistent Na+ currents could amplify the electrical resonance in neurons1,7,16 
+and may play an important role in the nervous system69,70,71,72.
+*** Matsumoto-Makidono2016-rd: Bath-applied UCL1684, a blocker of SK-type Ca2+-activated
+K+ channels, or intracellular loading of BAPTA did not block resonance in WT mice (Figure S5), 
+suggesting that Ca2+-activated K+ channel activation plays a negligible role, if any, in resonance
+
+* [2020-5-27 Wed]
+** plotting: just get Tp and Tp_soma for each of the segments: 
+from getCells import HayCell
+cell = HayCell()
+from synUtils import getTp
+
+start = 200
+factor = 4
+durDend = []
+durSoma = []
+secs = [0, 2, 14, 36, 36]
+locs = [0.5, 0.5, 0.5, 0.14, 0.8]
+weights = [0.065, 0.125, 0.14, 0.075, 0.065]
+
+soma_seg = cell.soma[0](0.5)
+
+for i in range(len(secs)):
+    stim_seg = cell.apic[secs[i]](locs[i])
+    Sc0 = weights[i] #/ factor 
+    Tp, TpSoma = getTp(stim_seg, soma_seg, start, Sc0)
+    durDend.append(Tp)
+    durSoma.append(TpSoma)
+
+# without SK
+from neuron import h
+for sec in h.allsec():
+    try: sec.uninsert('SK_E2')
+    except: pass
+
+durDendNoSK = []
+durSomaNoSK = []
+for i in range(len(secs)):
+    stim_seg = cell.apic[secs[i]](locs[i])
+    Sc0 = weights[i] #/ factor 
+    Tp, TpSoma = getTp(stim_seg, soma_seg, start, Sc0)
+    durDendNoSK.append(Tp)
+    durSomaNoSK.append(TpSoma)
+
+from scipy.io import loadmat
+data0 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[0].mat')
+data1 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[2].mat')
+data2 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[14].mat')
+data3 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[36].mat')
+ZinResAmp = [data0['ZinResAmp'][0][0],data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][1], data3['ZinResAmp'][0][1], data3['ZinResAmp'][0][-3]]
+ZinResFreq = [data0['ZinResFreq'][0][0],data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][1], data3['ZinResFreq'][0][1], data3['ZinResFreq'][0][-3]]
+ZinQ = [data0['QfactorIn'][0][0],data1['QfactorIn'][0][0], data2['QfactorIn'][0][1], data3['QfactorIn'][0][1], data3['QfactorIn'][0][-3]]
+ZcResAmp = [data0['ZcResAmp'][0][0],data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][1], data3['ZcResAmp'][0][1], data3['ZcResAmp'][0][-3]]
+ZcResFreq = [data0['ZcResFreq'][0][0],data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][1], data3['ZcResFreq'][0][1], data3['ZcResFreq'][0][-3]]
+ZcQ = [data0['QfactorTrans'][0][0],data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][1], data3['QfactorTrans'][0][1], data3['QfactorTrans'][0][-3]]
+dist = [data0['dist'][0][0],data1['dist'][0][0], data2['dist'][0][1], data3['dist'][0][1], data3['dist'][0][-3]]
+
+from matplotlib import pyplot as plt 
+plt.ion()
+plt.figure()
+plt.subplot(1,2,1)
+plt.plot(dist, durDend, label='Control')
+# plt.plot(dist, durDendNoSK, label='Block SK')
+plt.title('Dendrite')
+plt.xlabel('Distance to Soma (microns)')
+plt.ylabel('PSP Duration (ms)')
+plt.ylim(40,240)
+# plt.ylim(90,140)
+plt.subplot(1,2,2)
+plt.plot(dist, durSoma, label='Control')
+# plt.plot(dist, durSomaNoSK, label='Block SK')
+plt.title('Soma')
+plt.xlabel('Distance to Soma (microns)')
+plt.ylim(40,240)
+# plt.ylim(90,140)
+# plt.legend()
+
+modData1 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic0_0.5.mat')
+modData2 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic2_2.5.mat')
+modData3 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic14_0.5.mat')
+modData4 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic36_0.14.mat')
+modData5 = loadmat('timeDomainOutput/ChirpSKE2/analysis/apic36_0.8.mat')
+ZinResAmpSK = [modData1['ZinResAmp'][0][0], modData2['ZinResAmp'][0][0], modData3['ZinResAmp'][0][0], modData4['ZinResAmp'][0][0], modData5['ZinResAmp'][0][0]]
+ZinResFreqSK = [modData1['ZinResFreq'][0][0], modData2['ZinResFreq'][0][0], modData3['ZinResFreq'][0][0], modData4['ZinResFreq'][0][0], modData5['ZinResFreq'][0][0]]
+ZinQSK = [modData1['QfactorIn'][0][0], modData2['QfactorIn'][0][0], modData3['QfactorIn'][0][0], modData4['QfactorIn'][0][0], modData5['QfactorIn'][0][0]]
+ZcResAmpSK = [modData1['ZcResAmp'][0][0], modData2['ZcResAmp'][0][0], modData3['ZcResAmp'][0][0], modData4['ZcResAmp'][0][0], modData5['ZcResAmp'][0][0]]
+ZcResFreqSK = [modData1['ZcResFreq'][0][0], modData2['ZcResFreq'][0][0], modData3['ZcResFreq'][0][0], modData4['ZcResFreq'][0][0], modData5['ZcResFreq'][0][0]]
+ZcQSK = [modData1['QfactorTrans'][0][0], modData2['QfactorTrans'][0][0], modData3['QfactorTrans'][0][0], modData4['QfactorTrans'][0][0], modData5['QfactorTrans'][0][0]]
+
+** look at time to minimum rather than return to rest 
+from getCells import HayCell
+cell = HayCell()
+from synUtils import getT2min
+
+start = 200
+factor = 4
+durDend = []
+durSoma = []
+secs = [0, 2, 14, 36, 36]
+locs = [0.5, 0.5, 0.5, 0.14, 0.8]
+weights = [0.065, 0.125, 0.14, 0.075, 0.065]
+
+soma_seg = cell.soma[0](0.5)
+
+for i in range(len(secs)):
+    stim_seg = cell.apic[secs[i]](locs[i])
+    Sc0 = weights[i] / factor 
+    Tp, TpSoma = getT2min(stim_seg, soma_seg, start, Sc0)
+    durDend.append(Tp)
+    durSoma.append(TpSoma)
+
+# without SK
+from neuron import h
+for sec in h.allsec():
+    try: sec.uninsert('SK_E2')
+    except: pass
+
+durDendNoSK = []
+durSomaNoSK = []
+for i in range(len(secs)):
+    stim_seg = cell.apic[secs[i]](locs[i])
+    Sc0 = weights[i] / factor 
+    Tp, TpSoma = getT2min(stim_seg, soma_seg, start, Sc0)
+    durDendNoSK.append(Tp)
+    durSomaNoSK.append(TpSoma)
+
+from scipy.io import loadmat
+data0 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[0].mat')
+data1 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[2].mat')
+data2 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[14].mat')
+data3 = loadmat('Hay/hay_impedance_measures/L5PCtemplate[0].apic[36].mat')
+ZinResAmp = [data0['ZinResAmp'][0][0],data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][1], data3['ZinResAmp'][0][1], data3['ZinResAmp'][0][-3]]
+ZinResFreq = [data0['ZinResFreq'][0][0],data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][1], data3['ZinResFreq'][0][1], data3['ZinResFreq'][0][-3]]
+ZinQ = [data0['QfactorIn'][0][0],data1['QfactorIn'][0][0], data2['QfactorIn'][0][1], data3['QfactorIn'][0][1], data3['QfactorIn'][0][-3]]
+ZcResAmp = [data0['ZcResAmp'][0][0],data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][1], data3['ZcResAmp'][0][1], data3['ZcResAmp'][0][-3]]
+ZcResFreq = [data0['ZcResFreq'][0][0],data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][1], data3['ZcResFreq'][0][1], data3['ZcResFreq'][0][-3]]
+ZcQ = [data0['QfactorTrans'][0][0],data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][1], data3['QfactorTrans'][0][1], data3['QfactorTrans'][0][-3]]
+dist = [data0['dist'][0][0],data1['dist'][0][0], data2['dist'][0][1], data3['dist'][0][1], data3['dist'][0][-3]]
+
+from matplotlib import pyplot as plt 
+plt.ion()
+plt.figure()
+plt.subplot(1,2,1)
+plt.plot(dist, durDend, label='Control')
+plt.plot(dist, durDendNoSK, label='Block SK')
+plt.title('Dendrite')
+plt.xlabel('Distance to Soma (microns)')
+plt.ylabel('PSP Duration (ms)')
+plt.ylim(90,140)
+plt.subplot(1,2,2)
+plt.plot(dist, durSoma, label='Control')
+plt.plot(dist, durSomaNoSK, label='Block SK')
+plt.title('Soma')
+plt.xlabel('Distance to Soma (microns)')
+plt.ylim(90,140)
+plt.legend()

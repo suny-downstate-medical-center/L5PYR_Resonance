@@ -208,6 +208,28 @@ def findSc(stim_seg, soma_seg, start, sc, dWeight, synType='AMPA'):
     else:
         print("Error: started with a subthreshold weight")
 
+def getT2min(stim_seg, soma_seg, start, sc, synType='AMPA'):
+    # setup recordings
+    t_vec, v_stim, v_soma = setupRecordings(stim_seg, soma_seg)
+
+    # condition stim 
+    if synType == 'AMPA':
+        i_vec, condCon, condSyn, condStim = createAMPAsyn(stim_seg, start, sc)
+    else:
+        i_vec, condCon, condSyn, condStim = createNMDAsyn(stim_seg, start, sc)
+    
+    # run sim
+    h.tstop = start + 300
+    h.run()
+
+    indDend = np.argmin(v_stim.as_numpy()[int(h.dt*start):])
+    indSoma = np.argmin(v_soma.as_numpy()[int(h.dt*start):])
+    Tdend = t_vec[indDend+int(h.dt*start)] - start
+    Tsoma = t_vec[indSoma+int(h.dt*start)] - start
+
+    # return Tdend, Tsoma
+    return indDend, indSoma
+
 def getTp(stim_seg, soma_seg, start, sc, synType='AMPA'):
     # setup recordings
     t_vec, v_stim, v_soma = setupRecordings(stim_seg, soma_seg)

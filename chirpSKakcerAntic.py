@@ -6,7 +6,7 @@ def chirpForMulti(invar):
     sec_num, loc, filename = invar
     from getCells import AckerAnticCell
     pt_cell = AckerAnticCell()
-    seg = pt_cell.apic[sec_num](loc)
+    seg = pt_cell.apical[sec_num](loc)
     from neuron import h
     for sec in h.allsec():
         try: sec.uninsert('SK_E2')

@@ -1152,3 +1152,407 @@ plt.title('Soma')
 plt.xlabel('Distance to Soma (microns)')
 plt.ylim(90,140)
 plt.legend()
+
+
+
+* [2020-5-31 Sun] - quick look at blocking SK in other models
+** plotting removal of SK for allen cell
+from scipy.io import loadmat
+from matplotlib import pyplot as plt 
+plt.ion()
+
+modData0 = loadmat('timeDomainOutput/allenSK/analysis/apic0.mat')
+modData1 = loadmat('timeDomainOutput/allenSK/analysis/apic2.mat')
+modData2 = loadmat('timeDomainOutput/allenSK/analysis/apic4.mat')
+modData3 = loadmat('timeDomainOutput/allenSK/analysis/apic6.mat')
+modData4 = loadmat('timeDomainOutput/allenSK/analysis/apic8.mat')
+modData5 = loadmat('timeDomainOutput/allenSK/analysis/apic10.mat')
+
+ZinResAmpSK = [modData0['ZinResAmp'][0][0], modData1['ZinResAmp'][0][0], modData2['ZinResAmp'][0][0], modData3['ZinResAmp'][0][0], modData4['ZinResAmp'][0][0], modData5['ZinResAmp'][0][0]]
+ZinResFreqSK = [modData0['ZinResFreq'][0][0], modData1['ZinResFreq'][0][0], modData2['ZinResFreq'][0][0], modData3['ZinResFreq'][0][0], modData4['ZinResFreq'][0][0], modData5['ZinResFreq'][0][0]]
+ZinQSK = [modData0['QfactorIn'][0][0], modData1['QfactorIn'][0][0], modData2['QfactorIn'][0][0], modData3['QfactorIn'][0][0], modData4['QfactorIn'][0][0], modData5['QfactorIn'][0][0]]
+ZcResAmpSK = [modData0['ZcResAmp'][0][0], modData1['ZcResAmp'][0][0], modData2['ZcResAmp'][0][0], modData3['ZcResAmp'][0][0], modData4['ZcResAmp'][0][0], modData5['ZcResAmp'][0][0]]
+ZcResFreqSK = [modData0['ZcResFreq'][0][0], modData1['ZcResFreq'][0][0], modData2['ZcResFreq'][0][0], modData3['ZcResFreq'][0][0], modData4['ZcResFreq'][0][0], modData5['ZcResFreq'][0][0]]
+ZcQSK = [modData0['QfactorTrans'][0][0], modData1['QfactorTrans'][0][0], modData2['QfactorTrans'][0][0], modData3['QfactorTrans'][0][0], modData4['QfactorTrans'][0][0], modData5['QfactorTrans'][0][0]]
+
+data0 = loadmat('497232419/497232419_impedance_measures/apic/apic[0].mat')
+data1 = loadmat('497232419/497232419_impedance_measures/apic/apic[2].mat')
+data2 = loadmat('497232419/497232419_impedance_measures/apic/apic[4].mat')
+data3 = loadmat('497232419/497232419_impedance_measures/apic/apic[6].mat')
+data4 = loadmat('497232419/497232419_impedance_measures/apic/apic[8].mat')
+data5 = loadmat('497232419/497232419_impedance_measures/apic/apic[10].mat')
+
+ZinResAmp = [data0['ZinResAmp'][0][0],data1['ZinResAmp'][0][0], data2['ZinResAmp'][0][0], data3['ZinResAmp'][0][12], data4['ZinResAmp'][0][0], data5['ZinResAmp'][0][2]]
+ZinResFreq = [data0['ZinResFreq'][0][0],data1['ZinResFreq'][0][0], data2['ZinResFreq'][0][0], data3['ZinResFreq'][0][12], data4['ZinResFreq'][0][0], data5['ZinResFreq'][0][2]]
+ZinQ = [data0['QfactorIn'][0][0],data1['QfactorIn'][0][0], data2['QfactorIn'][0][0], data3['QfactorIn'][0][12], data4['QfactorIn'][0][0], data5['QfactorIn'][0][2]]
+ZcResAmp = [data0['ZcResAmp'][0][0],data1['ZcResAmp'][0][0], data2['ZcResAmp'][0][0], data3['ZcResAmp'][0][12], data4['ZcResAmp'][0][0], data5['ZcResAmp'][0][2]]
+ZcResFreq = [data0['ZcResFreq'][0][0],data1['ZcResFreq'][0][0], data2['ZcResFreq'][0][0], data3['ZcResFreq'][0][12], data4['ZcResFreq'][0][0], data5['ZcResFreq'][0][2]]
+ZcQ = [data0['QfactorTrans'][0][0],data1['QfactorTrans'][0][0], data2['QfactorTrans'][0][0], data3['QfactorTrans'][0][12], data4['QfactorTrans'][0][0], data5['QfactorTrans'][0][2]]
+dist = [data0['dist'][0][0],data1['dist'][0][0], data2['dist'][0][0], data3['dist'][0][12], data4['dist'][0][0], data5['dist'][0][2]]
+
+plt.figure()
+plt.subplot(3,2,1)
+plt.plot(dist, ZinResAmp, '*-')
+plt.ylabel('Resonance Amplitude')
+# plt.ylim(15,55)
+plt.title('Input Impedance')
+
+plt.subplot(3,2,3)
+plt.plot(dist, ZinResFreq, '*-')
+plt.ylabel('Resonance Frequency')
+# plt.ylim(4,6.5)
+
+plt.subplot(3,2,5)
+plt.plot(dist, ZinQ, '*-')
+plt.ylabel('Q-factor')
+# plt.ylim(1,1.5)
+plt.xlabel('Distnace to Soma (um)')
+
+plt.subplot(3,2,2)
+plt.plot(dist, ZcResAmp, '*-', label='Control')
+plt.legend()
+plt.ylabel('Resonance Amplitude')
+# plt.ylim(15,55)
+plt.title('Transfer Impedance')
+
+plt.subplot(3,2,4)
+plt.plot(dist, ZcResFreq, '*-')
+plt.ylabel('Transfer Frequency')
+# plt.ylim(4,6.5)
+
+plt.subplot(3,2,6)
+plt.plot(dist, ZcQ, '*-')
+plt.ylabel('Q-factor')
+plt.xlabel('Distnace to Soma (um)')
+# plt.ylim(1,1.5)
+
+plt.subplot(3,2,1)
+plt.plot(dist, ZinResAmpSK, '*-')
+plt.subplot(3,2,3)
+plt.plot(dist, ZinResFreqSK, '*-')
+plt.subplot(3,2,5)
+plt.plot(dist, ZinQSK, '*-')
+plt.subplot(3,2,2)
+plt.plot(dist, ZcResAmpSK, '*-', label='Block SK E2')
+plt.legend()
+plt.subplot(3,2,4)
+plt.plot(dist, ZcResFreqSK, '*-')
+plt.subplot(3,2,6)
+plt.plot(dist, ZcQSK, '*-')
+
+** EEE cell
+from scipy.io import loadmat
+from matplotlib import pyplot as plt 
+plt.ion()
+
+modData0 = loadmat('timeDomainOutput/ackerSK/analysis/apic0.mat')
+modData1 = loadmat('timeDomainOutput/ackerSK/analysis/apic2.mat')
+modData2 = loadmat('timeDomainOutput/ackerSK/analysis/apic4.mat')
+modData3 = loadmat('timeDomainOutput/ackerSK/analysis/apic6.mat')
+modData4 = loadmat('timeDomainOutput/ackerSK/analysis/apic10.mat')
+modData5 = loadmat('timeDomainOutput/ackerSK/analysis/apic13.mat')
+
+ZinResAmpSK = [modData0['ZinResAmp'][0][0], modData1['ZinResAmp'][0][0], modData2['ZinResAmp'][0][0], modData3['ZinResAmp'][0][0], modData4['ZinResAmp'][0][0], modData5['ZinResAmp'][0][0]]
+ZinResFreqSK = [modData0['ZinResFreq'][0][0], modData1['ZinResFreq'][0][0], modData2['ZinResFreq'][0][0], modData3['ZinResFreq'][0][0], modData4['ZinResFreq'][0][0], modData5['ZinResFreq'][0][0]]
+ZinQSK = [modData0['QfactorIn'][0][0], modData1['QfactorIn'][0][0], modData2['QfactorIn'][0][0], modData3['QfactorIn'][0][0], modData4['QfactorIn'][0][0], modData5['QfactorIn'][0][0]]
+ZcResAmpSK = [modData0['ZcResAmp'][0][0], modData1['ZcResAmp'][0][0], modData2['ZcResAmp'][0][0], modData3['ZcResAmp'][0][0], modData4['ZcResAmp'][0][0], modData5['ZcResAmp'][0][0]]
+ZcResFreqSK = [modData0['ZcResFreq'][0][0], modData1['ZcResFreq'][0][0], modData2['ZcResFreq'][0][0], modData3['ZcResFreq'][0][0], modData4['ZcResFreq'][0][0], modData5['ZcResFreq'][0][0]]
+ZcQSK = [modData0['QfactorTrans'][0][0], modData1['QfactorTrans'][0][0], modData2['QfactorTrans'][0][0], modData3['QfactorTrans'][0][0], modData4['QfactorTrans'][0][0], modData5['QfactorTrans'][0][0]]
+
+data0 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[0].mat')
+data1 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[2].mat')
+data2 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[4].mat')
+data3 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[6].mat')
+data4 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[10].mat')
+data5 = loadmat('AckerAntic/ackerantic_impedance_measures/apic/apical[13].mat')
+
+ZinResAmp = [data0['ZinResAmp'][0][1],data1['ZinResAmp'][0][1], data2['ZinResAmp'][0][0], data3['ZinResAmp'][0][1], data4['ZinResAmp'][0][1], data5['ZinResAmp'][0][3]]
+ZinResFreq = [data0['ZinResFreq'][0][1],data1['ZinResFreq'][0][1], data2['ZinResFreq'][0][0], data3['ZinResFreq'][0][1], data4['ZinResFreq'][0][1], data5['ZinResFreq'][0][3]]
+ZinQ = [data0['QfactorIn'][0][1],data1['QfactorIn'][0][1], data2['QfactorIn'][0][0], data3['QfactorIn'][0][1], data4['QfactorIn'][0][1], data5['QfactorIn'][0][3]]
+ZcResAmp = [data0['ZcResAmp'][0][1],data1['ZcResAmp'][0][1], data2['ZcResAmp'][0][0], data3['ZcResAmp'][0][1], data4['ZcResAmp'][0][1], data5['ZcResAmp'][0][3]]
+ZcResFreq = [data0['ZcResFreq'][0][1],data1['ZcResFreq'][0][1], data2['ZcResFreq'][0][0], data3['ZcResFreq'][0][1], data4['ZcResFreq'][0][1], data5['ZcResFreq'][0][3]]
+ZcQ = [data0['QfactorTrans'][0][1],data1['QfactorTrans'][0][1], data2['QfactorTrans'][0][0], data3['QfactorTrans'][0][1], data4['QfactorTrans'][0][1], data5['QfactorTrans'][0][3]]
+dist = [data0['dist'][0][1],data1['dist'][0][1], data2['dist'][0][0], data3['dist'][0][1], data4['dist'][0][1], data5['dist'][0][3]]
+
+plt.figure()
+plt.subplot(3,2,1)
+plt.plot(dist, ZinResAmp, '*-')
+plt.ylabel('Resonance Amplitude')
+# plt.ylim(15,55)
+plt.title('Input Impedance')
+
+plt.subplot(3,2,3)
+plt.plot(dist, ZinResFreq, '*-')
+plt.ylabel('Resonance Frequency')
+# plt.ylim(4,6.5)
+
+plt.subplot(3,2,5)
+plt.plot(dist, ZinQ, '*-')
+plt.ylabel('Q-factor')
+# plt.ylim(1,1.5)
+plt.xlabel('Distnace to Soma (um)')
+
+plt.subplot(3,2,2)
+plt.plot(dist, ZcResAmp, '*-', label='Control')
+plt.legend()
+plt.ylabel('Resonance Amplitude')
+# plt.ylim(15,55)
+plt.title('Transfer Impedance')
+
+plt.subplot(3,2,4)
+plt.plot(dist, ZcResFreq, '*-')
+plt.ylabel('Transfer Frequency')
+# plt.ylim(4,6.5)
+
+plt.subplot(3,2,6)
+plt.plot(dist, ZcQ, '*-')
+plt.ylabel('Q-factor')
+plt.xlabel('Distnace to Soma (um)')
+# plt.ylim(1,1.5)
+
+plt.subplot(3,2,1)
+plt.plot(dist, ZinResAmpSK, '*-')
+plt.subplot(3,2,3)
+plt.plot(dist, ZinResFreqSK, '*-')
+plt.subplot(3,2,5)
+plt.plot(dist, ZinQSK, '*-')
+plt.subplot(3,2,2)
+plt.plot(dist, ZcResAmpSK, '*-', label='Block SK E2')
+plt.legend()
+plt.subplot(3,2,4)
+plt.plot(dist, ZcResFreqSK, '*-')
+plt.subplot(3,2,6)
+plt.plot(dist, ZcQSK, '*-')
+** neat results blocking SK 
+
+* [2020-6-1 Mon]
+** data from figures
+*** dembrow 
+dist = [318.1987014295793,
+    307.52076704913554,
+    342.74197031427707,
+    354.50252659765914,
+    366.82166971394025,
+    379.9067102402788,
+    383.3172571658917,
+    411.5042973755057,
+    425.9008652337284,
+    456.65481349246346,
+    443.4099710628987,
+    428.29501446855073,
+    452.4049466607161,
+    475.1860756395676,
+    491.63847338794426,
+    486.4269158232678,
+    480.3587624710269,
+    547.2121046342552,
+    568.8415081844489,
+    604.1706857085271,
+    568.3779386994141,
+    626.7704179323649,
+    698.2608946027268,
+    585.4954578828408,
+    555.8745195145478,
+    540.9539165862858,
+    504.9538590000144,
+    495.8120384100431,
+    470.7677689638791,
+    429.6166193979356,
+    423.9069405853645,
+    433.152416463915,
+    407.80437943594256,
+    399.5321115446078,
+    369.9385266552455,
+    371.69202862037696,
+    386.09723441931453,
+    385.5429665567729,
+    383.62534371805765]
+transfer = [3.447920415772879,
+    4.459639222009471,
+    4.794316235009575,
+    4.813362894286001,
+    5.268495990555852,
+    5.20815997466204,
+    4.553749586098673,
+    4.175235023970284,
+    4.094988554728552,
+    3.934366047134363,
+    4.728192798836757,
+    5.105843566893652,
+    5.441254804854523,
+    5.875872791926403,
+    5.3593671268769505,
+    5.28041634874246,
+    6.133240235527849,
+    5.2763997063100145,
+    4.997437410921236,
+    4.836512575402022,
+    4.125221347230818,
+    6.10374166798635,
+    7.962453751025753,
+    9.555808295302398,
+    7.515915405767263,
+    7.001482846489395,
+    7.241747167475273,
+    7.202703675443773,
+    8.15590043333669,
+    8.039676941017259,
+    7.247102690718532,
+    6.810368408171492,
+    6.15785836656541,
+    5.127567987791711,
+    5.962122629965016,
+    6.9135486100113726,
+    6.793653992888094,
+    6.3377434819539005,
+    6.1396323116569]
+syncDist = [319.6391290360118,
+    306.8443641292072,
+    365.4776817189286,
+    378.92409525569684,
+    380.1466209417418,
+    374.98819229110626,
+    356.4805497943063,
+    341.8020275034055,
+    358.29996372124225,
+    369.19454312722894,
+    376.73094167334057,
+    396.50218014799,
+    413.131541299601,
+    427.17210505780645,
+    421.5002977596156,
+    424.1014162405624,
+    433.71323353252427,
+    402.46969354717265,
+    408.30852003203483,
+    401.3087732988343,
+    449.80046683231683,
+    548.0036415658733,
+    566.490748916771,
+    605.2994366524974,
+    549.795675298273,
+    568.8646117830667,
+    591.1644112231417,
+    623.6729161960697,
+    556.6393549226167,
+    696.9094605417172,
+    507.5767843330527,
+    499.1491604547851,
+    426.36712733843973,
+    443.1936258907119,
+    475.79111649588276,
+    494.929872476744,
+    470.6367948744276,
+    452.8027051632202,
+    487.95476791862615,
+    445.8549807996386,
+    388.9835787283269,
+    404.9749813472425]
+synchFreq = [4.236051502145923,
+    4.738197424892704,
+    5.568669527896995,
+    4.8733905579399135,
+    5.626609442060085,
+    6.399141630901287,
+    6.495708154506437,
+    6.572961373390558,
+    7.82832618025751,
+    7.133047210300429,
+    8.813304721030041,
+    8.890557939914162,
+    8.291845493562231,
+    8.214592274678111,
+    7.229613733905579,
+    6.534334763948497,
+    5.9356223175965654,
+    5.703862660944205,
+    4.3326180257510725,
+    4.081545064377682,
+    3.9849785407725324,
+    4.583690987124463,
+    4.776824034334762,
+    6.283261802575107,
+    6.3025751072961365,
+    7.287553648068668,
+    7.6931330472103,
+    8.079399141630901,
+    8.75536480686695,
+    9.894849785407724,
+    7.905579399141629,
+    9.798283261802574,
+    10.570815450643774,
+    7.190987124463518,
+    6.321888412017167,
+    6.321888412017167,
+    7.0364806866952785,
+    6.630901287553647,
+    5.723175965665236,
+    5.645922746781116,
+    6.959227467811158,
+    6.360515021459227]
+*** ulrich 
+distUlrich = [124.96170813873078,
+    154.66628208399433,
+    167.2835520647282,
+    158.03049296842354,
+    145.54102276803377,
+    148.26741808204184,
+    145.07834022993603,
+    175.5432045351172,
+    180.47000440051326,
+    200.32689527148207,
+    201.02801906642554,
+    198.64419816361774,
+    241.7582823946188,
+    267.5549047233409,
+    258.79470311327066]
+resFreq= [3.87548673744467,
+    3.882223405553522,
+    4.297444189288633,
+    4.689161055087769,
+    5.501217536969858,
+    5.433132536803452,
+    6.308019288300182,
+    6.615919318992837,
+    6.6785942763744215,
+    6.616799421646828,
+    6.34977886496341,
+    6.207648757687031,
+    5.487588888519098,
+    4.715777689027931,
+    6.340466602323028]
+distQ = [124.72035635199708,
+    145.02991867237844,
+    146.4082527211068,
+    147.93372125746546,
+    167.25814200069928,
+    179.99494012001583,
+    175.05126681770503,
+    153.87890968114226,
+    158.26429060766884,
+    200.68291324011406,
+    200.30495726106994,
+    202.26500695022838,
+    266.5418562937232,
+    241.89284993476167,
+    258.22500547206124];
+Q = [1.038395961192426,
+    1.097792129896784,
+    1.1206389093400269,
+    1.1380710486743397,
+    1.0946174816010825,
+    1.1390329943971778,
+    1.20102505209118,
+    1.2005827389869437,
+    1.4002490143183233,
+    1.2988774457271017,
+    1.19903066344123,
+    1.1911963773533416,
+    1.1973296341251949,
+    1.3990187243985706,
+    1.3982944224772376];
+** comparing to experimental values
+*** experimental data focuses entirely on apical dendrites 
+** some nice new figures 
+*** if going this direction, have to rework Ih/Im figure(s)
+*** need to flesh out SK figures 

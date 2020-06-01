@@ -17,9 +17,9 @@ dendType = []; % 0 - basal, 1 - trunk, 2 - obl, 3 - tuft
 % trunks = [0, 2, 3, 4, 5, 6, 7];
 % tufts = 8:32;
 % obls = [1, 33:44];
-trunks = 0:5;
-obls = 6:78;
-tufts = 79:108;
+% trunks = 0:5;
+% obls = 6:78;
+% tufts = 79:108;
 
 
 % load in data from sim output files
@@ -28,29 +28,7 @@ count = 1;
 
 for i = 1:length(list)
     if ~list(i).isdir
-        file = load(strcat(path_name,list(i).name));
-        
-%         if strcmp(list(i).name(1:5), 'basal')
-        str1 = strsplit(list(i).name,'.');
-        str2 = char(str1(2));
-        if strcmp(str2(1:4), 'dend')
-            type = 0;
-        else
-%             spl1 = strsplit(list(i).name,'[');
-            spl1 = str1;
-            spl2 = strsplit(spl1{2}, '[');
-            spl3 = strsplit(spl2{2},']');
-%             dendInd = str2num(char(spl2(1)));
-            dendInd = str2num(char(spl3));
-            
-            if any(trunks == dendInd)
-                type = 1;
-            elseif any(obls == dendInd)
-                type = 2;
-            else
-                type = 3;
-            end
-        end            
+        file = load(strcat(path_name,list(i).name));     
         
         for j = 1:length(file.dist)
             dist = [dist file.dist(j)];

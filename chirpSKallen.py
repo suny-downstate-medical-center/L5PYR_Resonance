@@ -110,7 +110,7 @@ def chirpForMulti(invar):
 data = []
 from getCells import AllenCell
 pt_cell = AllenCell('./497232419')
-for ind, sec in pt_cell.apical:
+for ind, sec in enumerate(pt_cell.apical):
     nseg = sec.nseg
     if nseg == 1:
         data.append([ind, 0.5, '/u/craig/L5PYR_Resonance/497232419/noSK/apic'+str(ind)+'_0.5'])

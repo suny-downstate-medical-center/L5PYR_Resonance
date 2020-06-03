@@ -1,3 +1,5 @@
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "6"
 import numpy as np
 import sys
 import multiprocessing

@@ -1558,3 +1558,7 @@ Q = [1.038395961192426,
 *** need to flesh out SK figures 
 
 * [2020-6-3 Wed]
+** important fix to get numpy working on multiple threads:
+import os
+os.environ["OPENBLAS_NUM_THREADS"] = "6"
+** running all apical segments without SK for allen cell on *my*

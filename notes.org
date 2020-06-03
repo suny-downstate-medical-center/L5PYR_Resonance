@@ -1325,7 +1325,7 @@ plt.subplot(3,2,6)
 plt.plot(dist, ZcQSK, '*-')
 ** neat results blocking SK 
 
-* [2020-6-1 Mon]
+* [2020-6-1 Mon] - revisiting figures 
 ** data from figures
 *** dembrow 
 dist = [318.1987014295793,
@@ -1556,3 +1556,5 @@ Q = [1.038395961192426,
 ** some nice new figures 
 *** if going this direction, have to rework Ih/Im figure(s)
 *** need to flesh out SK figures 
+
+* [2020-6-3 Wed]

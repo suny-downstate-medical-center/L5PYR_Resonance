@@ -116,7 +116,7 @@ for ind, sec in enumerate(pt_cell.apical):
         data.append([ind, 0.5, '/u/craig/L5PYR_Resonance/497232419/noSK/apic'+str(ind)+'_0.5'])
     else:
         for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-            data.append([ind, 0.5, '/u/craig/L5PYR_Resonance/497232419/noSK/apic'+str(ind)+'_'+str(loc)])
+            data.append([ind, loc, '/u/craig/L5PYR_Resonance/497232419/noSK/apic'+str(ind)+'_'+str(loc)])
 
 data = tuple(data)
 

@@ -1606,16 +1606,16 @@ end
 end
 end
 figure()
-subplot(1,4,1)
+subplot(3,4,1)
 hold on
 contAmp = scatter(dist, ZinResAmp, 'bo');
-subplot(1,4,2)
+subplot(3,4,2)
 hold on
 contFreq =scatter(dist, ZinResFreq, 'bo');
-subplot(1,4,3)
+subplot(3,4,3)
 hold on
 contQ = scatter(dist, QfactorIn, 'bo');
-subplot(1,4,4)
+subplot(3,4,4)
 hold on
 contSync = scatter(dist, ZinSynchFreq, 'bo');
 path_name = './497232419/noSK/';
@@ -1658,15 +1658,132 @@ count = count + 1;
 end
 end
 end
-subplot(1,4,1)
+subplot(3,4,1)
 koAmp = scatter(dist, ZinResAmp, 'ro');
-subplot(1,4,2)
+legend([contAmp, koAmp], {'Control', 'Block SK'})
+subplot(3,4,2)
 koFreq =scatter(dist, ZinResFreq, 'ro');
-subplot(1,4,3)
+subplot(3,4,3)
 koQ = scatter(dist, QfactorIn, 'ro');
-subplot(1,4,4)
+subplot(3,4,4)
 koSync = scatter(dist, ZinSynchFreq, 'ro');
 
-* [2020-6-4 Thu] 
+path_name = './Hay/hay_impedance_measures/apic/';
+dist = [];
+fVarIn = [];
+QfactorIn = [];
+ZinResAmp = [];
+ZinResFreq = [];
+ZinSynchFreq = [];
+ZinPeakPhaseFreq = [];
+ZinLeadPhaseMinFreq =[];
+ZinLeadPhaseBW = [];
+ZcResFreq = [];
+ZinLeadPhaseBool = [];
+list = dir(path_name);
+count = 1;
+for i = 1:length(list)
+if ~list(i).isdir
+file = load(strcat(path_name,list(i).name));
+for j = 1:length(file.dist)
+dist = [dist file.dist(j)];
+fVarIn = [fVarIn file.fVarIn(j)];
+QfactorIn = [QfactorIn file.QfactorTrans(j)];
+ZinResAmp = [ZinResAmp file.ZcResAmp(j)];
+ZinResFreq = [ZinResFreq file.ZcResFreq(j)];
+ZinLeadPhaseBool(count,:) = file.ZinLeadPhaseBool(j,:);
+if isstr(file.ZinSynchFreq(j))
+ZinSynchFreq = [ZinSynchFreq NaN];
+else
+ZinSynchFreq = [ZinSynchFreq file.ZinSynchFreq(j)];
+end
+if isstr(ZinLeadPhaseBW)
+ZinLeadPhaseBW  = [ZinLeadPhaseBW  NaN];
+else
+ZinLeadPhaseBW  = [ZinLeadPhaseBW  file.ZinLeadPhaseBW(j)];
+end
+ZcResFreq =  [ZcResFreq file.ZcResFreq(j)];
+% dendType = [dendType type];
+count = count + 1;
+end
+end
+end
+synchFreq = [];
+distSynch = [];
+for i = 1:length(ZinSynchFreq)
+if ~isnan(ZinSynchFreq{i})
+distSynch = [distSynch, dist(i)];
+synchFreq = [synchFreq, ZinSynchFreq{i}];
+end
+subplot(3,4,5)
+hold on
+contAmp = scatter(dist, ZinResAmp, 'bo');
+subplot(3,4,6)
+hold on
+contFreq =scatter(dist, ZinResFreq, 'bo');
+subplot(3,4,7)
+hold on
+contQ = scatter(dist, QfactorIn, 'bo');
+subplot(3,4,8)
+hold on
+contSync = scatter(distSynch, synchFreq, 'bo');
+path_name = './Hay/noSK/';
+dist = [];
+fVarIn = [];
+QfactorIn = [];
+ZinResAmp = [];
+ZinResFreq = [];
+ZinSynchFreq = [];
+ZinPeakPhaseFreq = [];
+ZinLeadPhaseMinFreq =[];
+ZinLeadPhaseBW = [];
+ZcResFreq = [];
+ZinLeadPhaseBool = [];
+list = dir(path_name);
+count = 1;
+for i = 1:length(list)
+if ~list(i).isdir
+file = load(strcat(path_name,list(i).name));
+for j = 1:length(file.dist)
+dist = [dist file.dist(j)];
+fVarIn = [fVarIn file.fVarIn(j)];
+QfactorIn = [QfactorIn file.QfactorTrans(j)];
+ZinResAmp = [ZinResAmp file.ZcResAmp(j)];
+ZinResFreq = [ZinResFreq file.ZcResFreq(j)];
+ZinLeadPhaseBool(count,:) = file.ZinLeadPhaseBool(j,:);
+if isstr(file.ZinSynchFreq(j))
+ZinSynchFreq = [ZinSynchFreq NaN];
+else
+ZinSynchFreq = [ZinSynchFreq file.ZinSynchFreq(j)];
+end
+if isstr(ZinLeadPhaseBW)
+ZinLeadPhaseBW  = [ZinLeadPhaseBW  NaN];
+else
+ZinLeadPhaseBW  = [ZinLeadPhaseBW  file.ZinLeadPhaseBW(j)];
+end
+ZcResFreq =  [ZcResFreq file.ZcResFreq(j)];
+% dendType = [dendType type];
+count = count + 1;
+end
+end
+end
+synchFreq = [];
+distSynch = [];
+for i = 1:length(ZinSynchFreq)
+if ~isnan(ZinSynchFreq{i})
+distSynch = [distSynch, dist(i)];
+synchFreq = [synchFreq, ZinSynchFreq{i}];
+end
+subplot(3,4,9)
+koAmp = scatter(dist, ZinResAmp, 'ro');
+subplot(3,4,10)
+koFreq =scatter(dist, ZinResFreq, 'ro');
+subplot(3,4,11)
+koQ = scatter(dist, QfactorIn, 'ro');
+subplot(3,4,12)
+koSync = scatter(dist, ZinSynchFreq, 'ro');
 ** allen institute cell w/out SK looks a bit like M1 cell, which also doesn't have SK
 ** hay cell still running on *zn*
+
+* [2020-6-5 Fri]
+** continuing plotting code for SK stuff on [2020-6-4 Thu] in Analysis/plotSK.mat

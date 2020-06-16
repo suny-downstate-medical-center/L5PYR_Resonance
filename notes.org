@@ -1787,3 +1787,28 @@ koSync = scatter(dist, ZinSynchFreq, 'ro');
 
 * [2020-6-5 Fri]
 ** continuing plotting code for SK stuff on [2020-6-4 Thu] in Analysis/plotSK.mat
+
+* [2020-6-16 Tue] - outline of TODOs
+** Focus on one or two cells:  BBP vs ABA
+*** heavier on BBP because of more realistic channel distributions
+*** BBP makes a bit more sense than EEE cell: closer to experimental data (I think) and better looking tufts 
+*** TODO: look at traces for ABA cell(s) more closely 
+
+** Passive properties
+*** TODO: Summarize channel dists and passive properties 
+*** TODO: Changing passive properties by +/- 
+
+** Morphology
+*** TODO: impedance profiles for BBP and ABA cells with multiple morphologies
+*** maybe TODO: Srdjan's suggestion of systematically changing morphology
+**** going to do dendrite diameter as passive property
+**** option 1 - could characterize existing morphologies based on branching
+**** option 2 - could systematically alter a single morphology (e.g. increase length of apical tufts, basal branches, add/remove branches)
+
+** Synaptic integreation
+*** Focus just along apical trunk
+*** TODO: Flesh out for BBP cell (all segments, save all params)
+*** TODO: repeat for ABA channel distribution for comparison
+*** TODO: Plot impedance measures for just main trunk of both models
+
+** TODO: ask Joao about his modified PT cell

@@ -69,4 +69,4 @@ f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12 # for looking at bimodal leading p
 I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 seg = cell.apic[26](0.5)
 print('running chirp on ' + str(seg))
-out = applyChirp(I, t, seg, cell.soma[0](0.5), t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/Neymotin/testPTadjust')
+out = applyChirp(I, t, seg, cell.soma(0.5), t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/Neymotin/testPTadjust')

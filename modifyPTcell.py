@@ -20,7 +20,7 @@ from neuron import h
 for sec in h.allsec():
     for seg in sec.allseg():
         if 'hd' in dir(seg):
-            seg.hd.gbar = seg.hd.gbar * cfg['IhGbar']
+            seg.hd.gbar = seg.hd.gbar * cfg['ihGbar']
             seg.hd.clk = cfg['ihlkc']
             seg.hd.elk = cfg['ihlkc']
             print('changed Ih in ' + str(seg))

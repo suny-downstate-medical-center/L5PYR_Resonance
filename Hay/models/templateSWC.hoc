@@ -5,7 +5,7 @@
 //
 // Template for models of L5 Pyramidal Cell
 
-begintemplate L5PCtemplate
+begintemplate templateSWC
   public init
   public locateSites, getLongestBranch
   public soma, dend, apic, axon, getAbsSecIndex
@@ -244,4 +244,4 @@ func getAbsSecIndex(){ local nAbsInd, index  localobj str,strObj
 }
 
 
-endtemplate L5PCtemplate
+endtemplate templateSWC

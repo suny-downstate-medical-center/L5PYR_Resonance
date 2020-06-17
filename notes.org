@@ -1814,4 +1814,4 @@ koSync = scatter(dist, ZinSynchFreq, 'ro');
 ** DONE: ask Joao about his modified PT cell
 
 * [2020-6-17 Wed] - working way through todo from [2020-6-16 Tue]
-** running chirp on modified PT cell from Joao 
+** running chirp on modified PT cell from Joao on *pt*

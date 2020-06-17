@@ -33,25 +33,33 @@ for sec in cell.dend:
                 print('changed Ih in ' + str(seg))
 
 for seg in cell.soma.allseg():
-    seg.hd.clk = seg.hd.clk * cfg['ihlkcBelowSoma']
+    if 'hd' in dir(seg):
+        seg.hd.clk = seg.hd.clk * cfg['ihlkcBelowSoma']
+        print('changed Ih in ' + str(seg))
 
 for sec in cell.dend:
     for seg in cell.allseg():
-        seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
-        seg.pas.e = seg.pas.e * cfg['epas']
-        seg.pas.g = seg.pas.g * cfg['gpas']
+        if 'nax' in dir(seg):
+            seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
+        if 'pas' in dir(seg):
+            seg.pas.e = seg.pas.e * cfg['epas']
+            seg.pas.g = seg.pas.g * cfg['gpas']
 
 for sec in cell.apic:
     for seg in cell.allseg():
-        seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
-        seg.pas.e = seg.pas.e * cfg['epas']
-        seg.pas.g = seg.pas.g * cfg['gpas']
+        if 'nax' in dir(seg):
+            seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
+        if 'pas' in dir(seg):
+            seg.pas.e = seg.pas.e * cfg['epas']
+            seg.pas.g = seg.pas.g * cfg['gpas']
 
 for seg in cell.soma.allseg():
-    seg.nax.gbar = 0.0153130368342  * cfg['somaNa']
+    if 'nax' in dir(seg):
+        seg.nax.gbar = 0.0153130368342  * cfg['somaNa']
 
 for seg in cell.axon.allseg():
-    seg.nax.gbar = 0.0153130368342  * cfg['axonNa']
+    if 'nax' in dir(seg):
+        seg.nax.gbar = 0.0153130368342  * cfg['axonNa']
     seg.geom.Ra = 137.494564931 * cfg['axonRa'] #0.005 
 
 from chirpUtils import applyChirp, getChirp

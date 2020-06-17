@@ -19,17 +19,18 @@ from neuron import h
 
 for sec in h.allsec():
     for seg in sec.allseg():
-        try:
+        if 'hd' in dir(seg):
             seg.hd.gbar = seg.hd.gbar * cfg['IhGbar']
             seg.hd.clk = cfg['ihlkc']
             seg.hd.elk = cfg['ihlkc']
-        except:
-            pass
+            print('changed Ih in ' + str(seg))
 
 for sec in cell.dend:
     for seg in sec.allseg():
-        seg.hd.gbar = seg.hd.gbar * cfg['ihGbarBasal']
-        seg.hd.clk = seg.hd.clk * cfg['ihlkcBelowSoma']
+            if 'hd' in dir(seg):
+                seg.hd.gbar = seg.hd.gbar * cfg['ihGbarBasal']
+                seg.hd.clk = seg.hd.clk * cfg['ihlkcBelowSoma']
+                print('changed Ih in ' + str(seg))
 
 for seg in cell.soma.allseg():
     seg.hd.clk = seg.hd.clk * cfg['ihlkcBelowSoma']

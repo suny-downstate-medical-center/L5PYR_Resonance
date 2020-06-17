@@ -106,6 +106,6 @@ def HayCellSWC(morphology_file = '../../suter_shepherd/BS0284.swc'):
 	h.load_file('import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')
-	cell = h.L5PCtemplate(morphology_file)
+	cell = h.templateSWC(morphology_file)
 	os.chdir(owd)
 	return cell

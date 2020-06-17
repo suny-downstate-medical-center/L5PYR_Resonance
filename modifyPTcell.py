@@ -38,7 +38,7 @@ for seg in cell.soma.allseg():
         print('changed Ih in ' + str(seg))
 
 for sec in cell.dend:
-    for seg in cell.allseg():
+    for seg in sec.allseg():
         if 'nax' in dir(seg):
             seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
         if 'pas' in dir(seg):
@@ -46,7 +46,7 @@ for sec in cell.dend:
             seg.pas.g = seg.pas.g * cfg['gpas']
 
 for sec in cell.apic:
-    for seg in cell.allseg():
+    for seg in sec.allseg():
         if 'nax' in dir(seg):
             seg.nax.gbar = 0.0153130368342 * cfg['dendNa']
         if 'pas' in dir(seg):

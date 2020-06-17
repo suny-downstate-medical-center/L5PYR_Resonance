@@ -60,7 +60,8 @@ for seg in cell.soma.allseg():
 for seg in cell.axon.allseg():
     if 'nax' in dir(seg):
         seg.nax.gbar = 0.0153130368342  * cfg['axonNa']
-    seg.geom.Ra = 137.494564931 * cfg['axonRa'] #0.005 
+    if 'geom' in dir(seg):
+        seg.geom.Ra = 137.494564931 * cfg['axonRa'] #0.005 
 
 from chirpUtils import applyChirp, getChirp
 amp = 0.0025

@@ -1815,3 +1815,5 @@ koSync = scatter(dist, ZinSynchFreq, 'ro');
 
 * [2020-6-17 Wed] - working way through todo from [2020-6-16 Tue]
 ** running chirp on modified PT cell from Joao on *pt*
+*** kind of bizarre results, have to dig into a bit
+** working on computing number of branch points 

@@ -64,7 +64,7 @@ for seg in cell.axon.allseg():
         seg.geom.Ra = 137.494564931 * cfg['axonRa'] #0.005 
 
 from chirpUtils import applyChirp, getChirp
-amp = 0.0025
+amp = 0.001
 f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12 # for looking at bimodal leading phase response in Hay cell
 I, t = getChirp(f0, f1, t0, amp, Fs, delay)
 seg = cell.apic[26](0.5)

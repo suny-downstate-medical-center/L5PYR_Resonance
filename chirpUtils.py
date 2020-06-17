@@ -155,3 +155,9 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
         savemat(out_file_name + '_traces.mat', out2)
     else:
         return out
+
+# def computeBranchPoints(beyond):
+#     children = beyond.children()
+#     N = len(children)
+#     while len(children) > 0:
+

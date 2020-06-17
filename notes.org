@@ -1816,9 +1816,10 @@ koSync = scatter(dist, ZinSynchFreq, 'ro');
 * [2020-6-17 Wed] - working way through todo from [2020-6-16 Tue]
 ** running chirp on modified PT cell from Joao on *pt*
 *** kind of bizarre results, have to dig into a bit
+*** fucked something up when modifying cell params - consistently fires sans input 
 ** working on computing number of branch points 
 N = 0
 for sec in h.allsec():
     if len(sec.children()) == 2:
         N = N + 1
-        
+** modified Hay cell template to load in SWC cells and added all Suter/Shepherd morphos to repo

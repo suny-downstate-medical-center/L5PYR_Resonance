@@ -63,10 +63,10 @@ for seg in cell.axon.allseg():
     if 'geom' in dir(seg):
         seg.geom.Ra = 137.494564931 * cfg['axonRa'] #0.005 
 
-from chirpUtils import applyChirp, getChirp
-amp = 0.001
-f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12 # for looking at bimodal leading phase response in Hay cell
-I, t = getChirp(f0, f1, t0, amp, Fs, delay)
-seg = cell.apic[26](0.5)
-print('running chirp on ' + str(seg))
-out = applyChirp(I, t, seg, cell.soma(0.5), t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/Neymotin/testPTadjust')
+# from chirpUtils import applyChirp, getChirp
+# amp = 0.001
+# f0, f1, t0, Fs, delay = 0.5, 50, 50, 1000, 12 # for looking at bimodal leading phase response in Hay cell
+# I, t = getChirp(f0, f1, t0, amp, Fs, delay)
+# seg = cell.apic[26](0.5)
+# print('running chirp on ' + str(seg))
+# out = applyChirp(I, t, seg, cell.soma(0.5), t0, delay, Fs, f1, out_file_name='/u/craig/L5PYR_Resonance/Neymotin/testPTadjust')

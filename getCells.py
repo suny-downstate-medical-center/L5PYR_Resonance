@@ -96,7 +96,7 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 	os.chdir(owd)
 	return cell
 
-def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.swc'):
+def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	owd = os.getcwd()
 	os.chdir('./Hay')
 	from neuron import h#, init

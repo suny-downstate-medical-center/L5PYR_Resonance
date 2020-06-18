@@ -115,7 +115,7 @@ elif sys.argv[-1] == 'zn':
     N = 32
     data = data[35:225]
 elif sys.argv[-1] == 'my':
-    N = 16
+    N = 10
     data = data[226:319]
 elif sys.argv[-1] == 'el':
     N = 12

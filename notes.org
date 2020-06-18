@@ -1823,3 +1823,10 @@ for sec in h.allsec():
     if len(sec.children()) == 2:
         N = N + 1
 ** modified Hay cell template to load in SWC cells and added all Suter/Shepherd morphos to repo
+** ways to quantify morphology:
+*** distance of center of mass of bifurcation points to soma 
+*** bifurcation "torque" on soma 
+
+* [2020-6-18 Thu] - same as yesterday 
+** set up Suter morphologies + Hay biophys to run on neurosim machines - *chirpSuterMorphs.py*
+** Added code for finding number and positions of bifurcation points 

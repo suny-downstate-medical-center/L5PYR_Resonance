@@ -67,7 +67,7 @@ def zMeasures(current, v,  delay, sampr, f1, bwinsz=1):
     zResAmp    = np.max(zAmp)
     zResFreq   = Freq[np.argmax(zAmp)]
     Qfactor    = zResAmp / zAmp[0]
-    fVar      = np.std(zAmp) / np.mean(zAmp)
+    fVar       = np.std(zAmp) / np.mean(zAmp)
 
     return Freq, zAmp, zPhase, zRes, zReact, zResAmp, zResFreq, Qfactor, fVar
 
@@ -156,8 +156,22 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     else:
         return out
 
-# def computeBranchPoints(beyond):
-#     children = beyond.children()
-#     N = len(children)
-#     while len(children) > 0:
-
+# compute number of bifurcations in cell morph or in section list
+def computeBranchPoints(secList = None):
+    N = 0
+    pos = []
+    if not secList:
+        for sec in h.allsec():
+            if len(sec.children()) == 2:
+                N = N + 1
+                x, y, z = sec.x3d(sec.n3d()-1), sec.y3d(sec.n3d()-1), sec.y3d(sec.n3d()-1)
+                pos.append((x,y,z))
+            else:
+                print(str(sec) + ' ' + str(len(sec.children())))
+    else:
+        for sec in secList:
+            if len(sec.children()) == 2:
+                N = N + 1
+                x, y, z = sec.x3d(sec.n3d()-1), sec.y3d(sec.n3d()-1), sec.y3d(sec.n3d()-1)
+                pos.append((x,y,z))
+    return N, pos

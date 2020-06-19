@@ -87,7 +87,27 @@ def chirpForMulti(invar):
 
 moprh_path = '/u/craig/L5PYR_Resonance/suter_shepherd/'
 # morph_files = listdir(moprh_path)
-morph_files = ['BS0284.CNG.swc', 'BS0430.CNG.swc', 'BS0483.CNG.swc', 'BS0613.CNG.swc']
+
+if sys.argv[-1] == 'pt':
+    N = 6
+    # data = data[:34]
+    morph_files = ['BS0416.CNG.swc']
+elif sys.argv[-1] == 'zn':
+    N = 32
+    morph_files = ['BS0284.CNG.swc', 'BS0430.CNG.swc', 'BS0483.CNG.swc', 'BS0613.CNG.swc']
+    # data = data[35:225]
+elif sys.argv[-1] == 'my':
+    N = 12
+    morph_files = ['BS0475.CNG.swc', 'BS0477.CNG.swc']
+    # data = data[226:319]
+elif sys.argv[-1] == 'el':
+    N = 12
+    morph_files = ['BS0412.CNG.swc', 'BS0413.CNG.swc']
+    # data = data[320:389]
+elif sys.argv[-1] == 'au':
+    N = 16
+    morph_files = ['BS0478.CNG.swc', 'BS0480.CNG.swc', 'BS0582.CNG.swc']
+    # data = data[390:]
 
 data = []
 for morph_file in morph_files:
@@ -109,21 +129,7 @@ for morph_file in morph_files:
 
 data = tuple(data)
 
-if sys.argv[-1] == 'pt':
-    N = 6
-    # data = data[:34]
-elif sys.argv[-1] == 'zn':
-    N = 32
-    # data = data[35:225]
-elif sys.argv[-1] == 'my':
-    N = 10
-    # data = data[226:319]
-elif sys.argv[-1] == 'el':
-    N = 12
-    # data = data[320:389]
-elif sys.argv[-1] == 'au':
-    N = 16
-    # data = data[390:]
+
 
 def mp_handler():
     p = multiprocessing.Pool(N)

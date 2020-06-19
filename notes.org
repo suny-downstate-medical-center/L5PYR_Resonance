@@ -1830,3 +1830,16 @@ for sec in h.allsec():
 * [2020-6-18 Thu] - same as yesterday 
 ** set up Suter morphologies + Hay biophys to run on neurosim machines - *chirpSuterMorphs.py*
 ** Added code for finding number and positions of bifurcation points 
+
+* [2020-6-19 Fri] - " "
+** only ran chirp on one morph last night - gotta run more but its a lot of segments
+** code for putting all allen morphologies in same place 
+import os
+model_ids = [497229117, 491766131, 497232312, 485591806,
+		497232419, 497232429, 496930324, 497232564, 497232839, 497232946,
+		497233049, 497233139, 497233307, 497229124]
+for id in model_ids:
+    files = os.listdir(str(id))
+    for filename in files:
+        if filename[-3:] == 'swc':
+            os.system('cp %s/%s ./allen_morphs' % (str(id),filename))

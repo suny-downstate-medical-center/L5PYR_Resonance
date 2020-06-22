@@ -1843,3 +1843,8 @@ for id in model_ids:
     for filename in files:
         if filename[-3:] == 'swc':
             os.system('cp %s/%s ./allen_morphs' % (str(id),filename))
+
+* [2020-6-22 Mon] - morphology and Ih dist 
+** a few suter-shepherd morphologies still running on neurosim machines 
+** testing out allen morphologies on zn 
+** added a few utils for computing morphology stats     

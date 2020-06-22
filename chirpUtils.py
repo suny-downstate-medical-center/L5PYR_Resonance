@@ -166,8 +166,8 @@ def computeBranchPoints(secList = None):
                 N = N + 1
                 x, y, z = sec.x3d(sec.n3d()-1), sec.y3d(sec.n3d()-1), sec.y3d(sec.n3d()-1)
                 pos.append((x,y,z))
-            else:
-                print(str(sec) + ' ' + str(len(sec.children())))
+            # else:
+            #     print(str(sec) + ' ' + str(len(sec.children())))
     else:
         for sec in secList:
             if len(sec.children()) == 2:
@@ -175,3 +175,15 @@ def computeBranchPoints(secList = None):
                 x, y, z = sec.x3d(sec.n3d()-1), sec.y3d(sec.n3d()-1), sec.y3d(sec.n3d()-1)
                 pos.append((x,y,z))
     return N, pos
+
+def maxSegDist(soma_seg, secList = None):
+    out = {'secs' : [], 'dists' : []}
+    if not secList:
+        for sec in h.allsec():
+            for seg in sec.allseg():
+                out['secs'].append(sec)
+                out['dists'].append(fromtodistance(soma_seg,seg))
+    ind = np.argmax(out['dists'])
+    tipseg = out['secs'][ind](1)
+    maxDist = fromtodistance(soma_seg, tipseg)
+    return maxDist

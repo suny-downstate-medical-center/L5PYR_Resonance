@@ -96,7 +96,8 @@ if sys.argv[-1] == 'pt':
 elif sys.argv[-1] == 'zn':
     N = 16#32
     # morph_files = ['BS0284.CNG.swc', 'BS0430.CNG.swc', 'BS0483.CNG.swc', 'BS0613.CNG.swc']
-    morph_files = ['Rorb-IRES2-Cre-D_Ai14-197353.06.02.01_496079587_m.swc']
+    # morph_files = ['Rorb-IRES2-Cre-D_Ai14-197353.06.02.01_496079587_m.swc']
+    moprh_files = ['Rbp4-Cre_KL100_Ai14-203498.04.02.01_496001061_m.swc', 'Rbp4-Cre_KL100_Ai14-203503.04.01.01_527109145_m.swc', 'Scnn1a-Tg2-Cre_Ai14-176962.05.01.01_495335447_m.swc', 'Scnn1a-Tg3-Cre_Ai14-168093.03.02.01_491119592_m.swc', 'Scnn1a-Tg3-Cre_Ai14-177297.05.02.01_495335458_m.swc']
     # data = data[35:225]
 elif sys.argv[-1] == 'my':
     N = 12

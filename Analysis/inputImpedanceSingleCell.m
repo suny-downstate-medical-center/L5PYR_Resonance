@@ -33,7 +33,7 @@ for i = 1:length(list)
         for j = 1:length(file.dist)
             dist = [dist file.dist(j)];
             fVarIn = [fVarIn file.fVarIn(j)];
-            QfactorIn = [QfactorIn file.QfactorIn(j)];
+            QfactorIn = [QfactorIn file.QfactorTrans(j)];
             ZinResAmp = [ZinResAmp file.ZinResAmp(j)];
             ZinResFreq = [ZinResFreq file.ZinResFreq(j)];
             ZinLeadPhaseBool(count,:) = file.ZinLeadPhaseBool(j,:);
@@ -42,13 +42,8 @@ for i = 1:length(list)
             else
                 ZinSynchFreq = [ZinSynchFreq file.ZinSynchFreq(j)];
             end
-            if isstr(ZinLeadPhaseBW)
-                ZinLeadPhaseBW  = [ZinLeadPhaseBW  NaN];
-            else
-                ZinLeadPhaseBW  = [ZinLeadPhaseBW  file.ZinLeadPhaseBW(j)];
-            end
             ZcResFreq =  [ZcResFreq file.ZcResFreq(j)];
-            dendType = [dendType type];
+            % dendType = [dendType type];
             count = count + 1;
         end
     end

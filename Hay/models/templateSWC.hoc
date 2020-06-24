@@ -117,7 +117,7 @@ proc distribute_channels()	{local dist,val,base,maxLength
 				} else {
 					dist = distance(x)/maxLength
 				}
-				val = calculate_distribution($3,dist,$4,$5,$6,$7,$8)
+				val = calculate_distribution($3,dist,$4,$5,$6,$7,$8) //"apic","gIhbar_Ih", 2, dist, -0.8696,3.6161,0.0,2.0870,0.00020000000
 				sprint(tstr,"%s(%-5.10f) = %-5.10f",$s2,x,val)
 				execute(tstr)
 			}

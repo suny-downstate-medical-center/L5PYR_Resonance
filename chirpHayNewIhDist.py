@@ -1,5 +1,5 @@
 import os
-os.environ["OPENBLAS_NUM_THREADS"] = "32"
+os.environ["OPENBLAS_NUM_THREADS"] = "20"
 import numpy as np
 import sys
 import multiprocessing
@@ -116,7 +116,7 @@ for ind, sec in enumerate(pt_cell.apic):
 data = tuple(data)
 
 def mp_handler():
-    p = multiprocessing.Pool(32)
+    p = multiprocessing.Pool(20)
     p.map(chirpForMulti, data)
 
 if __name__ == '__main__':

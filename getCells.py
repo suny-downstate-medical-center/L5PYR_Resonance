@@ -91,6 +91,7 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 	h.load_file('stdrun.hoc')
 	h.load_file('import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
+	# h.load_file('./models/L5PCsigmoid.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')
 	cell = h.L5PCtemplate(morphology_file)
 	os.chdir(owd)

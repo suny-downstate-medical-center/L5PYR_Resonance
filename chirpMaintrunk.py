@@ -110,7 +110,7 @@ if model == 'ackerantic':
     from getCells import AckerAnticCell
     cell = AckerAnticCell()
     for sec_num in cell.apical_maintrunk:
-        nseg = cell.apic[sec_num].nseg 
+        nseg = cell.apical[sec_num].nseg 
         if nseg == 1:
             data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/AckerAntic/trunk_data/'+str(cell.apic[sec_num](0.5))])
         else:

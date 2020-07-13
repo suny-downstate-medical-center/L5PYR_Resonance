@@ -4,7 +4,7 @@ h.load_file('stdrun.hoc')
 import numpy as np 
 from scipy.signal import chirp
 from pylab import fft, convolve
-# from scipy.io import savemat
+from scipy.io import savemat
 import json
 
 # get chirp stim: based on sam's code form evoizhi/sim.py

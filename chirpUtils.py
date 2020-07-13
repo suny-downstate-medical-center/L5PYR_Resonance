@@ -119,14 +119,22 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
 
     freqsIn = np.argwhere(ZinPhase > 0)
-    ZinSynchFreq = Freq[freqsIn[-1]]
-    ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
-        [float(Freq[ind]) for ind in freqsIn])
+    if len(freqsIn) > 0:
+        ZinSynchFreq = Freq[freqsIn[-1]]
+        ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+            [float(Freq[ind]) for ind in freqsIn])
+    else:
+        ZinSynchFreq = 0 
+        ZinPhaseL = 0
 
     freqsC = np.argwhere(ZcPhase > 0)
-    ZcSynchFreq = Freq[freqsC[-1]]
-    ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
-        [float(Freq[ind]) for ind in freqsC])
+    if len(freqsC) > 0:
+        ZcSynchFreq = Freq[freqsC[-1]]
+        ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
+            [float(Freq[ind]) for ind in freqsC])
+    else:
+        ZcSynchFreq = 0
+        ZcPhaseL = 0
 
     v_attenuation = Vattenuation(ZinAmp, ZcAmp)
     phase_lag = phaseLag(ZinPhase, ZcPhase)

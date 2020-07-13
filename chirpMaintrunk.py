@@ -33,7 +33,7 @@ def chirpForMulti(invar):
     elif model == 'hay':
         from getCells import HayCell
         cell, _ = HayCell()
-        seg = cell.apic[sec_nume](loc)
+        seg = cell.apic[sec_num](loc)
         soma_seg = cell.soma[0](0.5)
     elif model == 'ackerantic':
         from getCells import AckerAnticCell

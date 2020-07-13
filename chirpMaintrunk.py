@@ -112,10 +112,10 @@ if model == 'ackerantic':
     for sec_num in cell.apical_maintrunk:
         nseg = cell.apical[sec_num].nseg 
         if nseg == 1:
-            data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/AckerAntic/trunk_data/'+str(cell.apic[sec_num](0.5))])
+            data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/AckerAntic/trunk_data/'+str(cell.apical[sec_num](0.5))])
         else:
             for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-                data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/AckerAntic/trunk_data/'+str(cell.apic[sec_num](loc))])
+                data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/AckerAntic/trunk_data/'+str(cell.apical[sec_num](loc))])
 
 
 data = tuple(data)

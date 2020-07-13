@@ -44,9 +44,9 @@ def chirpForMulti(invar):
     from chirpUtils import applyChirp, getChirp
     amp = 0.025
     f0, f1, t0, Fs, delay = 0.5, 10, 10, 1000, 5 # for looking at bimodal leading phase response in Hay cell
-    I, t = getChirp(f0, f1, t0, amp, Fs, delay, out_file_name=filename)
+    I, t = getChirp(f0, f1, t0, amp, Fs, delay)
     print('running chirp on ' + str(seg))
-    applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1)
+    applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name=filename)
     
     print(str(sec) + ' ' + str(loc) + ': done')
 

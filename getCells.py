@@ -56,11 +56,15 @@ def KoleCell():
 	owd = os.getcwd()
 	os.chdir('./Kole')
 	from neuron import h, init
-	h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
+	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
+	h.load_file('stdrun.hoc')
 	h.load_file('cellTemplate.hoc')
 	cell = h.KoleCell()
+	apical_maintrunk = [0, 8, 10, 18, 30, 32, 34, 36, 42, 44]
+	# apical_maintrunk = [cell.apic[0], cell.apic[8], cell.apic[10], cell.apic[18],cell.apic[30], 
+	# 	cell.apic[32], cell.apic[34], cell.apic[36], cell.apic[42], cell.apic[44]]
 	os.chdir(owd)
-	return cell
+	return cell, apical_maintrunk
 
 def AckerAnticCell():
 	owd = os.getcwd()
@@ -69,10 +73,33 @@ def AckerAnticCell():
 	sys.path.insert(1, './cells/')
 	from eeeD import MakeCell
 	cell = MakeCell()
+	cell.apical_maintrunk = [i for i in range(2,9)]
+	# for i in range(2,9):
+	# 	cell.apical_maintrunk.append(cell.apical[i])
 	os.chdir(owd)
 	return cell
 
-def NeymotinCell(slope=14*2):
+def NeymotinHarnettCell(slope=14*2):
+	owd = os.getcwd()
+	os.chdir('./Neymotin')
+	from neuron import h, init
+	h.load_file("./cells/PTcell.hoc")
+	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
+	cell = h.PTcell(ihMod2str['harnett'], slope)
+	os.chdir(owd)
+	return cell
+
+def NeymotinKoleCell(slope=14*2):
+	owd = os.getcwd()
+	os.chdir('./Neymotin')
+	from neuron import h, init
+	h.load_file("./cells/PTcell.hoc")
+	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
+	cell = h.PTcell(ihMod2str['kole'], slope)
+	os.chdir(owd)
+	return cell
+
+def NeymotinMiglioreCell(slope=14*2):
 	owd = os.getcwd()
 	os.chdir('./Neymotin')
 	from neuron import h, init
@@ -86,16 +113,16 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 	owd = os.getcwd()
 	os.chdir('./Hay')
 	from neuron import h#, init
-	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
-	# h.load_file('/usr/local/nrn//share/nrn/lib/hoc/import3d.hoc')
 	h.load_file('stdrun.hoc')
 	h.load_file('import3d.hoc')
 	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
-	# h.load_file('./models/L5PCsigmoid.hoc') # BAP version
 	h.load_file('./models/L5PCtemplate.hoc')
 	cell = h.L5PCtemplate(morphology_file)
+	apical_maintrunk = [0,1,2,3,14,20,26,34,36]
+	# apical_maintrunk = [cell.apic[0], cell.apic[1], cell.apic[2], cell.apic[3],
+	# 	cell.apic[14], cell.apic[20], cell.apic[26], cell.apic[34], cell.apic[36]]
 	os.chdir(owd)
-	return cell
+	return cell, apical_maintrunk
 
 def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	owd = os.getcwd()

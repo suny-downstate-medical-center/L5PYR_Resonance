@@ -1848,3 +1848,6 @@ for id in model_ids:
 ** a few suter-shepherd morphologies still running on neurosim machines 
 ** testing out allen morphologies on zn 
 ** added a few utils for computing morphology stats     
+
+* [2020-7-9 Thu] - traces for synchronous frequency 
+** using Kole cell, best fit to data 

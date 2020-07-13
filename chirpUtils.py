@@ -4,7 +4,7 @@ h.load_file('stdrun.hoc')
 import numpy as np 
 from scipy.signal import chirp
 from pylab import fft, convolve
-from scipy.io import savemat
+# from scipy.io import savemat
 import json
 
 # get chirp stim: based on sam's code form evoizhi/sim.py
@@ -118,6 +118,16 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
     _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
 
+    freqsIn = np.argwhere(ZinPhase > 0)
+    ZinSynchFreq = Freq[freqsIn[-1]]
+    ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+        [float(Freq[ind]) for ind in freqsIn])
+
+    freqsC = np.argwhere(ZcPhase > 0)
+    ZcSynchFreq = Freq[freqsC[-1]]
+    ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
+        [float(Freq[ind]) for ind in freqsC])
+
     v_attenuation = Vattenuation(ZinAmp, ZcAmp)
     phase_lag = phaseLag(ZinPhase, ZcPhase)
 
@@ -133,6 +143,10 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
         'ZcReact' : ZcReact,
         'ZcAmp' : ZcAmp,
         'ZcPhase' : ZcPhase,
+        'ZinSynchFreq' : ZinSynchFreq,
+        'ZinPhaseL' : ZinPhaseL,
+        'ZcSynchFreq' : ZcSynchFreq,
+        'ZcPhaseL' : ZcPhaseL,
         'phase_lag' : phase_lag,
         'Vattenuation' : v_attenuation,
         'ZinResAmp' : ZinResAmp,

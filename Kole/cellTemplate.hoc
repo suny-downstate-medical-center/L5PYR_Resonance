@@ -21,23 +21,23 @@ proc celldef() {
 
 
 create soma, axon, dend[43], apic[87]
-create myelin[45], node[42]
-for i=0,44	{
-            myelin[i] {
-            nseg = 20	//for space plot
-            L = 60	//spacing 100 times the diameter  
-            diam = 1.6 
-            }
-    }
+// create myelin[45], node[42]
+// for i=0,44	{
+//             myelin[i] {
+//             nseg = 20	//for space plot
+//             L = 60	//spacing 100 times the diameter  
+//             diam = 1.6 
+//             }
+//     }
 
-for i=0,41	{
+// for i=0,41	{
 
-        node[i] {
-            nseg = 1
-            L = 1           
-            diam = 1.1
-            }
-}
+//         node[i] {
+//             nseg = 1
+//             L = 1           
+//             diam = 1.1
+//             }
+// }
 
 
 proc topol() { local i
@@ -126,52 +126,52 @@ proc topol() { local i
   connect apic[84](0), apic[76](1)
   for i = 85, 86 connect apic[i](0), apic[84](1)
   basic_shape()
-  axon connect myelin[0](1), 1
-  myelin[0] connect node[0](1), 0
+//   axon connect myelin[0](1), 1
+//   myelin[0] connect node[0](1), 0
   
-  for i=0,8  {node[i] connect myelin[i+1](1), 0 
-              myelin[i+1] connect node[i+1](1), 0}
-  
-  
-  node[1] connect myelin[10](1), 0
-  myelin[10] connect node[10](1), 0
-  
-  for i=10,13  {node[i] connect myelin[i+1](1), 0 
-          myelin[i+1] connect node[i+1](1), 0}
+//   for i=0,8  {node[i] connect myelin[i+1](1), 0 
+//               myelin[i+1] connect node[i+1](1), 0}
   
   
-  node[0] connect myelin[15](1), 0
-  myelin[15] connect node[15](1), 0
-  node [15] connect myelin[44](1), 0
+//   node[1] connect myelin[10](1), 0
+//   myelin[10] connect node[10](1), 0
   
-  node[2] connect myelin[42](1), 0
-  myelin [42] connect myelin[43](1), 0
+//   for i=10,13  {node[i] connect myelin[i+1](1), 0 
+//           myelin[i+1] connect node[i+1](1), 0}
   
-  node[12] connect myelin[16](1), 0
-  myelin[16] connect node[16](1), 0
   
-  for i=16,29  {node[i] connect myelin[i+1](1), 0 
-          myelin[i+1] connect node[i+1](1), 0
-  }
+//   node[0] connect myelin[15](1), 0
+//   myelin[15] connect node[15](1), 0
+//   node [15] connect myelin[44](1), 0
   
-  node [20] connect myelin[31](1), 0
-  myelin [31] connect node[31](1), 0
+//   node[2] connect myelin[42](1), 0
+//   myelin [42] connect myelin[43](1), 0
   
-  for i=31,34  {node[i] connect myelin[i+1](1), 0 
-          myelin[i+1] connect node[i+1](1), 0
-  }
+//   node[12] connect myelin[16](1), 0
+//   myelin[16] connect node[16](1), 0
   
-  node[33] connect myelin[36](1), 0
-  myelin [36] connect node[36](1), 0
+//   for i=16,29  {node[i] connect myelin[i+1](1), 0 
+//           myelin[i+1] connect node[i+1](1), 0
+//   }
   
-  node[26] connect myelin[37](1), 0
-  myelin [37] connect node[37](1), 0
+//   node [20] connect myelin[31](1), 0
+//   myelin [31] connect node[31](1), 0
   
-  for i=37,39  {node[i] connect myelin[i+1](1), 0 
-              myelin[i+1] connect node[i+1](1), 0}
+//   for i=31,34  {node[i] connect myelin[i+1](1), 0 
+//           myelin[i+1] connect node[i+1](1), 0
+//   }
+  
+//   node[33] connect myelin[36](1), 0
+//   myelin [36] connect node[36](1), 0
+  
+//   node[26] connect myelin[37](1), 0
+//   myelin [37] connect node[37](1), 0
+  
+//   for i=37,39  {node[i] connect myelin[i+1](1), 0 
+//               myelin[i+1] connect node[i+1](1), 0}
 
-  node[16] connect myelin[41](1), 0
-  myelin [41] connect node[41](1), 0
+//   node[16] connect myelin[41](1), 0
+//   myelin [41] connect node[41](1), 0
 }
 
 proc shape3d_1() {
@@ -15199,23 +15199,23 @@ proc biophys() {
 // Myelinated axon properties
 
 
-	for i=0,44 {
-		myelin[i] {g_pas=1/Rm  cm=0.02} 
-		myelin[i] {e_pas=-75}			
-		myelin[i] {insert Km gbar_Km = Km_soma}
-		myelin[i]	{insert Kv gbar_Kv = Kv_soma}
-		myelin[i] {insert na gbar_na = na_myelin}   
-	}	
+	// for i=0,44 {
+	// 	myelin[i] {g_pas=1/Rm  cm=0.02} 
+	// 	myelin[i] {e_pas=-75}			
+	// 	myelin[i] {insert Km gbar_Km = Km_soma}
+	// 	myelin[i]	{insert Kv gbar_Kv = Kv_soma}
+	// 	myelin[i] {insert na gbar_na = na_myelin}   
+	// }	
 	
 
-	for i=0,41 {
-		node[i]  	{g_pas=400/Rm cm=Cm}
-		node[i]	{e_pas=-75}	
-		node[i]  	{insert nax gbar_nax = na_node} 
-		node[i]  	{insert Km gbar_Km = Km_axon}
-		node[i]  	{insert Kv1 gbar_Kv1 = Kv1_axon} 
-		node[i]	{insert Kv gbar_Kv = Kv_axon} 		
-	}
+	// for i=0,41 {
+	// 	node[i]  	{g_pas=400/Rm cm=Cm}
+	// 	node[i]	{e_pas=-75}	
+	// 	node[i]  	{insert nax gbar_nax = na_node} 
+	// 	node[i]  	{insert Km gbar_Km = Km_axon}
+	// 	node[i]  	{insert Kv1 gbar_Kv1 = Kv1_axon} 
+	// 	node[i]	{insert Kv gbar_Kv = Kv_axon} 		
+	// }
 
 	forall ena=55
 	forall ek=-85
@@ -15260,13 +15260,13 @@ proc biophys() {
 	axon {ghdbar_ih=0}
 		
 
-	for i=0,44 {
-		myelin[i] {ghdbar_ih=0} 
-		}
-	for i=0,41 {
-		node[i]  	{ghdbar_ih=0}
+	// for i=0,44 {
+	// 	myelin[i] {ghdbar_ih=0} 
+	// 	}
+	// for i=0,41 {
+	// 	node[i]  	{ghdbar_ih=0}
 
-		}
+	// 	}
 }
 access soma
 

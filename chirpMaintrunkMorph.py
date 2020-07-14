@@ -33,7 +33,7 @@ with open('suter_shepherd_trunk_data.json','rb') as fileObj:
 # model = sys.argv[-1]
 for model in models.keys():
     if len(models[model]) > 0:
-        cellID = morph_file.split('.')[0]
+        cellID = model.split('.')[0]
         try:
             os.mkdir('/u/craig/L5PYR_Resonance/Hay/suter_trunk_data/'+cellID+'/')
         except:

@@ -21,7 +21,7 @@ def chirpForMulti(invar):
     print('running chirp on ' + str(seg))
     applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name=filename)
     
-    print(str(sec) + ' ' + str(loc) + ': done')
+    print(str(seg) + ': done')
 
 #populate data tuple
 data = []

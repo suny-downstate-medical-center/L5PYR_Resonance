@@ -1859,4 +1859,4 @@ for id in model_ids:
 *** including sam's cell allows to easily look at effect of different Ih models
 *** also should make looking at influence of morphology a bit more sensible
 *** kole - pt, neymotinharnett - au, hay - el, neymotinmigliore - my, 
-neymotinkole - zn, 
+neymotinkole - zn, ackerantic - ag

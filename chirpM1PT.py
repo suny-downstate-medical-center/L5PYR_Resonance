@@ -10,6 +10,7 @@ from scipy.io import savemat
 
 def chirpForMulti(invar):
     sec_num, loc, filename = invar
+    from getCells import M1Cell
     s = M1Cell()
     seg = s.net.cells[0][sec_num]['hObj'](loc)
     soma_seg = s.net.cells[0]['soma']['hObj'](0.5)

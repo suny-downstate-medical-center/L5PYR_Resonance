@@ -1860,3 +1860,17 @@ for id in model_ids:
 *** also should make looking at influence of morphology a bit more sensible
 *** kole - pt, neymotinharnett - au, hay - el, neymotinmigliore - my, 
 neymotinkole - zn, ackerantic - ag
+
+* [2020-7-14 Tue] - new figs 
+** Comparisons of the decent models (no ABA) to available data
+*** Analysis/comparison2transferDataWithQ.svg 
+*** Analysis/comparison2transfer.svg
+** Morphologies from L5b corticospinal neurons 
+*** Analysis/hay_shepherdMorphsZAP.svg
+*** Analysis/hay_shepherdMorphs.svg 
+*** variety of morphologies accounts for 46% of the range of experimentally
+observed range of resonance frequencies and the full range of observed resonance
+strengths.
+
+* [2020-7-15 Wed]
+** running m1 cell with joao's changes - looks promising

@@ -137,3 +137,13 @@ def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	cell = h.templateSWC(morphology_file)
 	os.chdir(owd)
 	return cell
+
+def M1Cell():
+	owd = os.getcwd()
+	os.chdir('M1_PTcell')
+	from netParams_unified import netParams 
+	from cfg_unified import cfg
+	from netpyne import sim 
+	sim.create(netParams, cfg)
+	os.chdir(owd)
+	return sim 

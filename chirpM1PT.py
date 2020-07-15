@@ -1,4 +1,5 @@
 import sys
+sys.path.insert(0,'../my_netpyne')
 import os
 os.environ["OPENBLAS_NUM_THREADS"] = sys.argv[-1]
 N = int(sys.argv[-1])
@@ -12,8 +13,8 @@ def chirpForMulti(invar):
     sec_num, loc, filename = invar
     from getCells import M1Cell
     s = M1Cell()
-    seg = s.net.cells[0][sec_num]['hObj'](loc)
-    soma_seg = s.net.cells[0]['soma']['hObj'](0.5)
+    seg = s.net.cells[0].secs[sec_num]['hObj'](loc)
+    soma_seg = s.net.cells[0].secs['soma']['hObj'](0.5)
 
     from chirpUtils import applyChirp, getChirp
     amp = 0.025

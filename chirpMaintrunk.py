@@ -111,7 +111,7 @@ if model == 'hay':
         else:
             for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
                 data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/Hay/trunk_data/'+str(cell.apic[sec_num](loc))])
-if model == 'hay':
+if model == 'haymig':
     from getCells import HayCellMig
     cell, trunk = HayCellMig()
     for sec_num in trunk:

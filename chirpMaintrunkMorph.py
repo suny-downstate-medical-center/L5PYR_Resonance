@@ -43,10 +43,10 @@ for model in models.keys():
         for sec_num in models[model]:
             nseg = cell.apic[sec_num].nseg 
             if nseg == 1:
-                data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/Hay/suter_trunk_data/'+cellID+'/'+str(cell.apic[sec_num](0.5))])
+                data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/Hay/mig_suter_trunk_data/'+cellID+'/'+str(cell.apic[sec_num](0.5))])
             else:
                 for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-                    data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/Hay/suter_trunk_data/'+cellID+'/'+str(cell.apic[sec_num](loc))])
+                    data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/Hay/mig_suter_trunk_data/'+cellID+'/'+str(cell.apic[sec_num](loc))])
 
 data = tuple(data)
 

@@ -124,6 +124,21 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 	os.chdir(owd)
 	return cell, apical_maintrunk
 
+def HayCellMig(morphology_file = './morphologies/cell1.asc'):
+	owd = os.getcwd()
+	os.chdir('./Hay')
+	from neuron import h#, init
+	h.load_file('stdrun.hoc')
+	h.load_file('import3d.hoc')
+	h.load_file('./models/L5PCbiophysMig.hoc') # BAP version
+	h.load_file('./models/L5PCtemplate.hoc')
+	cell = h.L5PCtemplate(morphology_file)
+	apical_maintrunk = [0,1,2,3,14,20,26,34,36]
+	# apical_maintrunk = [cell.apic[0], cell.apic[1], cell.apic[2], cell.apic[3],
+	# 	cell.apic[14], cell.apic[20], cell.apic[26], cell.apic[34], cell.apic[36]]
+	os.chdir(owd)
+	return cell, apical_maintrunk
+
 def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	owd = os.getcwd()
 	os.chdir('./Hay')
@@ -132,7 +147,8 @@ def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	# h.load_file('/usr/local/nrn//share/nrn/lib/hoc/import3d.hoc')
 	h.load_file('stdrun.hoc')
 	h.load_file('import3d.hoc')
-	h.load_file('./models/L5PCbiophys3.hoc') # BAP version
+	# h.load_file('./models/L5PCbiophys3.hoc') # BAP version
+	h.load_file('./models/L5PCbiophysMig.hoc')
 	h.load_file('./models/templateSWC.hoc')
 	cell = h.templateSWC(morphology_file)
 	os.chdir(owd)

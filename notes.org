@@ -1873,4 +1873,13 @@ observed range of resonance frequencies and the full range of observed resonance
 strengths.
 
 * [2020-7-15 Wed]
-** running m1 cell with joao's changes - looks promising
+** running m1 cell with salva's changes in netpyne - looks promising
+** i'm a dope, it's the only cell that makes sense now 
+*** transfer frequency, synchronous frequencies, and Q-factor (least of all) match experimental values
+*** phase lead (not reported in L5 Pyr cells) matches what's seen in CA1 Pyr cells
+**** reasonable comparison since location dependence of transfer and synch freqs is comparable
+
+* [2020-7-17 Fri] - Hay dist + migliore HCN 
+** altered Hay cell biophys template to implement migliore's shunt current params 
+*** see how this effects impedance in original morph 
+*** see how morph effects a realistic impedance profile 

@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0,'../my_netpyne')
+# sys.path.insert(0,'../my_netpyne')
 import os
 os.environ["OPENBLAS_NUM_THREADS"] = sys.argv[-1]
 N = int(sys.argv[-1])

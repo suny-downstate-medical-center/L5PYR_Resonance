@@ -35,7 +35,7 @@ for model in models.keys():
     if len(models[model]) > 0:
         cellID = model.split('.')[0]
         try:
-            os.mkdir('/u/craig/L5PYR_Resonance/Hay/suter_trunk_data/'+cellID+'/')
+            os.mkdir('/u/craig/L5PYR_Resonance/Hay/mig_suter_trunk_data/'+cellID+'/')
         except:
             pass
         from getCells import HayCellSWC

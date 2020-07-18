@@ -1883,3 +1883,5 @@ strengths.
 ** altered Hay cell biophys template to implement migliore's shunt current params 
 *** see how this effects impedance in original morph 
 *** see how morph effects a realistic impedance profile 
+** evidence for changes is m-type k+ channels affecting impedance from Dewell2019-ra
+** Migliore2012-ev in ca1 pyramidal cells, probably no m-type in dendrites - same hold for L5b PYR?

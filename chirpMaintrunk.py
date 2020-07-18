@@ -88,10 +88,10 @@ if model == 'kolenoim':
     for sec_num in trunk:
         nseg = cell.apic[sec_num].nseg 
         if nseg == 1:
-            data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/Kole/trunk_data/'+str(cell.apic[sec_num](0.5))])
+            data.append([model, sec_num, 0.5, '/u/craig/L5PYR_Resonance/Kole/noim_trunk_data/'+str(cell.apic[sec_num](0.5))])
         else:
             for loc in np.linspace(1/(nseg+1), nseg/(nseg+1), nseg):
-                data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/Kole/trunk_data/'+str(cell.apic[sec_num](loc))])
+                data.append([model, sec_num, loc, '/u/craig/L5PYR_Resonance/Kole/noim_trunk_data/'+str(cell.apic[sec_num](loc))])
 if model == 'neymotinkole':
     from getCells import NeymotinKoleCell
     cell = NeymotinKoleCell()

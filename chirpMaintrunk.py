@@ -15,6 +15,17 @@ def chirpForMulti(invar):
         cell, _ = KoleCell()
         seg = cell.apic[sec_num](loc)
         soma_seg = cell.soma(0.5)
+    if model == 'kolenoim':
+        from getCells import KoleCell
+        cell, _ = KoleCell()
+        from neuron import h 
+        for sec in h.allsec():
+            try:
+                sec.uninsert('Km')
+            except:
+                pass
+        seg = cell.apic[sec_num](loc)
+        soma_seg = cell.soma(0.5)
     elif model == 'neymotinkole':
         from getCells import NeymotinKoleCell
         cell = NeymotinKoleCell()
@@ -74,12 +85,6 @@ if model == 'kole':
 if model == 'kolenoim':
     from getCells import KoleCell
     cell, trunk = KoleCell()
-    from neuron import h 
-    for sec in h.allsec():
-        try:
-            sec.uninsert('Km')
-        except:
-            pass
     for sec_num in trunk:
         nseg = cell.apic[sec_num].nseg 
         if nseg == 1:

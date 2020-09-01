@@ -12,9 +12,9 @@ PARAMETER {
     gbar     = 0.0001       (mho/cm2)
     vhalf    = -100.6       (mV)
     k        = 6.4
-    bA       = 9.63 : for activation tau - (note - only 1 tau)
+    bAct       = 9.63 : for activation tau - (note - only 1 tau)
     bD       = 1.30 : for deactivation tau
-    mA       = 0.0458 : for activation tau
+    mAct       = 0.0458 : for activation tau
     mD       = -0.0447 : for deactivation tau
     q10      = 2.2
     taumin	= 2.0	(ms)		: minimal value of time constant
@@ -23,8 +23,8 @@ PARAMETER {
 NEURON {
     SUFFIX h15
     NONSPECIFIC_CURRENT i
-    RANGE gbar, minf, tau, g, m
-    GLOBAL taumin, k, bA, bD, mA, mD, vhalf
+    RANGE gbar, g, m
+    GLOBAL taumin, k, bAct, bD, mAct, mD, vhalf, minf, tau
 }
 
 STATE {
@@ -59,7 +59,7 @@ PROCEDURE rate(v (mV)) { :callable from hoc - leads to segfault in python
     qt = q10^((celsius-26.0)/10.0)
 
     if(v <= -92.0046199111992) {
-      tau = exp(bA + mA * v) / qt 
+      tau = exp(bAct + mAct * v) / qt 
     } else {
       tau = exp(bD + mD * v) / qt
     }

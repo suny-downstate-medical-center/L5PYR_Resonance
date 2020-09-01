@@ -1876,7 +1876,7 @@ strengths.
 ** running m1 cell with salva's changes in netpyne - looks promising
 ** i'm a dope, it's the only cell that makes sense now 
 *** transfer frequency, synchronous frequencies, and Q-factor (least of all) match experimental values
-*** phase lead (not reported in L5 Pyr cells) matches what's seen in CA1 Pyr cells
+*** phase lead (not reported in L5 Pyr cells) matches what's seen in CA1 Pyr cells Narayanan2008-zw
 **** reasonable comparison since location dependence of transfer and synch freqs is comparable
 
 * [2020-7-17 Fri] - Hay dist + migliore HCN 
@@ -1885,3 +1885,43 @@ strengths.
 *** see how morph effects a realistic impedance profile 
 ** evidence for changes is m-type k+ channels affecting impedance from Dewell2019-ra
 ** Migliore2012-ev in ca1 pyramidal cells, probably no m-type in dendrites - same hold for L5b PYR?
+
+* [2020-7-25 Sat] - working on WIP 
+** From Salva's paper on improving PT cell:
+For the current simulations, we further
+improved the PT model by 1. increasing the concentration of Ca2+ channels (“hot zones”) between the
+nexus and apical tuft, following parameters published in 52; 2. lowering dendritic Na+ channel density in
+order to increase the threshold required to elicit dendritic spikes, which then required adapting the axon
+sodium conductance and axial resistance to maintain a similar f-I curve; 3. replacing the HCN channel
+model and distribution with a more recent implementation 88.The new HCN channel reproduced a wider
+range of experimental observations than our previous implementation 68, including the change from
+excitatory to inhibitory effect in response to synaptic inputs of increasing strength 44. This was achieved by
+including a shunting current proportional to Ih. We tuned the HCN parameters (lk and vrevlk) and passive
+parameters to reproduce the findings noted above, while keeping a consistent f-I curve consistent 131.
+Dura-Bernal2019-pj
+
+* [2020-8-5 Wed] - notes on task channels and discussion 
+** HCN channel from migliore and migliore
+*** While the dendritic impedance was not considered in the development 
+of any of the models considered here, it is only the model from Dura-Bernal et al. (2019)
+which accurately captures features from both dendritic impedance amplitude and
+phase profiles.
+*** The updated model of I$_h$ in conjunction with a TASK-like shunt current was
+included in the model to account for the paradoxical change from the excitatory 
+to inhibitory effects of I$_h$ in response to increasingly strong synaptic inputs 
+\cite{George2009-ad,Migliore2012-ev, Dura-Bernal2019-pj}.
+*** The parameters $lk$ and $v_{rev_{lk}}$ were tuned to reproduce this result while 
+maintaining a consistent F-I curve with experimental observations \cite{Neymotin2017-dr, Dura-Bernal2019-pj}.
+*** Importantly, the Dura-Bernal et al. (2019) model does not reproduce biologically realistic synchronous
+frequencies when the HCN model from Migliore \& Migliore (2012) was replaced with
+earlier models not including a shunting current but also tuned to maintain the
+experimentally observed F-I curve \cite{Kole2006-bm, Harnett2015-sj, Neymotin2017-dr}.
+This suggests the model combining I$_h$ and the TASK-like shunting current provide
+the best approximation of the currents mediating the location-dependent impedance
+profiles of PT cells.
+*** It is also noteworthy that the Migliore \& Migliore (2012) model undermines the hypothesis 
+that the aforementioned paradoxical effect of I$_h$ is mediated by M-type K$^+$ channel currents.  
+The only model studied here which includes M-type K$^+$ channels throughout the dendrites is Kole et al. (2008),
+which produces reasonable synchronous frequencies but overestimates dendritic transfer frequencies.
+** TASK channels 
+*** 

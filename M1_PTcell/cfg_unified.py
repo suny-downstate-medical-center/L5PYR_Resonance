@@ -116,7 +116,7 @@ cfg.cellmod =  {'PT5B': 'HH_full'}
 # 				'IT6': 'HH_reduced',
 # 				'CT6': 'HH_reduced'}
 
-cfg.ihModel         = 'migliore'  # ih model
+cfg.ihModel         =  'migliore'  # ih model
 cfg.ihGbar          = 1.0  # multiplicative factor for ih gbar in PT cells
 cfg.ihGbarZD        = None # multiplicative factor for ih gbar in PT cells
 cfg.ihGbarBasal     = 1.0 # 0.1 # multiplicative factor for ih gbar in PT cells

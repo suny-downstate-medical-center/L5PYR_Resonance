@@ -1925,3 +1925,6 @@ The only model studied here which includes M-type K$^+$ channels throughout the 
 which produces reasonable synchronous frequencies but overestimates dendritic transfer frequencies.
 ** TASK channels 
 *** 
+
+* [2020-9-11 Fri] - revisiting STA
+** basically impossible to get spikes by just stimulating near nexus 

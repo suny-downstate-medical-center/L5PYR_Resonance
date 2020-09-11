@@ -6,6 +6,7 @@ from scipy.signal import chirp
 from pylab import fft, convolve
 from scipy.io import savemat
 import json
+from scipy.signal import find_peaks
 
 # get chirp stim: based on sam's code form evoizhi/sim.py
 def getChirp(f0, f1, t0, amp, Fs, delay):
@@ -177,6 +178,84 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
         savemat(out_file_name + '_traces.mat', out2)
     else:
         return out
+
+# setup gaussian white noise for STA
+def getNoise(avg, std, t0, amp, Fs, delay):
+    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs+1)
+    means = np.zeros(t0*Fs+1)
+    stds = np.repeat(std,t0*Fs+1)
+    ch = np.random.normal(means, stds, (t0)*Fs+1)
+    ch = np.hstack((np.zeros(Fs*delay), ch, np.zeros(Fs*delay)))
+    vch = h.Vector(); vch.from_python(ch); vch.mul(amp)
+    vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
+    return vch, vtt
+
+def STA(pks, I, sampr, delay):
+    out = {'freq': [], 'fft': []}
+    for i in range(pks):
+        if i == 0:
+            if pks[i] > sampr * (delay+1):
+                ## demean and zero-pad
+                current = I[pks[i]-sampr : pks[i])]
+                current = current - np.mean(current)
+                current = np.hstack((np.repeat(current[0],int(delay*sampr)),current, np.repeat(current[-1], int(delay*sampr))))
+                ## compute FFT
+                f_current = (fft(current)/len(current))[0:int(len(current)/2)]
+                Freq = np.linspace(0.0, sampr/2.0, len(f_current)) 
+                mask = (Freq >= 0.5) & (Freq <= 20) 
+                out['freq'].append(Freq[mask])
+                out['fft'].append(f_current[mask])
+        else:
+            if (pks[i]-pks[i-1]) >= sampr+20:
+                current = I[pks[i-1]+20 : pks[i]]
+                current = current - np.mean(current)
+                current = np.hstack((np.repeat(current[0],int(delay*sampr)),current, np.repeat(current[-1], int(delay*sampr))))
+                ## compute FFT
+                f_current = (fft(current)/len(current))[0:int(len(current)/2)]
+                Freq = np.linspace(0.0, sampr/2.0, len(f_current)) 
+                mask = (Freq >= 0.5) & (Freq <= 20) 
+                out['freq'].append(Freq[mask])
+                out['fft'].append(f_current[mask])
+    return out
+
+# run STA sims
+def applyNoise(I, t, seg, soma_seg, t0, delay, Fs):
+    ## place current clamp on soma
+    stim = h.IClamp(seg)
+    stim.amp = 0
+    stim.dur = (t0+delay*2) * Fs + 1
+    I.play(stim._ref_amp, t)
+
+    ## Record time
+    t_vec = h.Vector()
+    t_vec.record(h._ref_t)
+
+    ## Record soma voltage
+    soma_v = h.Vector()
+    soma_v.record(soma_seg._ref_v)
+    cis_v = h.Vector()
+    cis_v.record(seg._ref_v)
+    
+    ## run simulation
+    h.celsius = 34
+    h.tstop = (t0+delay*2) * Fs + 1
+    h.run()
+
+    ## get numpy arrays from data
+    soma_np = soma_v.as_numpy()
+    current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
+                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs + 1,endpoint=True), I.as_numpy())
+    time = t_vec.as_numpy()
+    cis_np = cis_v.as_numpy()
+    
+    samp_rate = (1 / (time[1] - time[0])) * Fs
+
+    ## find spikes
+    pks, _ = find_peaks(soma_np, 0)
+
+    ## compute STA stuff 
+    if len(pks):
+        out = STA(pks, current_np, samp_rate, delay)
 
 # compute number of bifurcations in cell morph or in section list
 def computeBranchPoints(secList = None):

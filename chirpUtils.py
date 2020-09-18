@@ -191,35 +191,23 @@ def getNoise(avg, std, t0, amp, Fs, delay):
     return vch, vtt
 
 def STA(pks, I, sampr, delay):
-    out = {'freq': [], 'fft': []}
-    for i in range(pks):
+    currents = []
+    for i in range(len(pks)):
         if i == 0:
             if pks[i] > sampr * (delay+1):
-                ## demean and zero-pad
-                current = I[pks[i]-sampr : pks[i])]
-                current = current - np.mean(current)
-                current = np.hstack((np.repeat(current[0],int(delay*sampr)),current, np.repeat(current[-1], int(delay*sampr))))
-                ## compute FFT
-                f_current = (fft(current)/len(current))[0:int(len(current)/2)]
-                Freq = np.linspace(0.0, sampr/2.0, len(f_current)) 
-                mask = (Freq >= 0.5) & (Freq <= 20) 
-                out['freq'].append(Freq[mask])
-                out['fft'].append(f_current[mask])
+                currents.append(I[int(pks[i]-sampr) : int(pks[i])])
         else:
-            if (pks[i]-pks[i-1]) >= sampr+20:
-                current = I[pks[i-1]+20 : pks[i]]
-                current = current - np.mean(current)
-                current = np.hstack((np.repeat(current[0],int(delay*sampr)),current, np.repeat(current[-1], int(delay*sampr))))
-                ## compute FFT
-                f_current = (fft(current)/len(current))[0:int(len(current)/2)]
-                Freq = np.linspace(0.0, sampr/2.0, len(f_current)) 
-                mask = (Freq >= 0.5) & (Freq <= 20) 
-                out['freq'].append(Freq[mask])
-                out['fft'].append(f_current[mask])
+            if (pks[i]-pks[i-1]) > sampr:
+                currents.append(I[int(pks[i]-sampr) : int(pks[i])])
+    currents = np.array(currents)
+    avgI = np.mean(currents, axis=0)
+    f_current = (fft(avgI)/len(avgI))[0:int(len(avgI)/2)]
+    Freq = np.linspace(0.0, sampr/2.0, len(f_current))
+    out = {'currents' : currents, 'f_current' : f_current, 'Freq' : Freq} 
     return out
 
 # run STA sims
-def applyNoise(I, t, seg, soma_seg, t0, delay, Fs):
+def applyNoise(I, t, seg, soma_seg, t0, delay, Fs, out_file_name=None):
     ## place current clamp on soma
     stim = h.IClamp(seg)
     stim.amp = 0
@@ -256,6 +244,19 @@ def applyNoise(I, t, seg, soma_seg, t0, delay, Fs):
     ## compute STA stuff 
     if len(pks):
         out = STA(pks, current_np, samp_rate, delay)
+    else:
+        out = {}
+
+    out2 = {'soma_np' : soma_np,
+            'cis_np' : cis_np,
+            'time' : time,
+            'current_np' : current_np}
+
+    if out_file_name:
+        savemat(out_file_name + '.mat', out)
+        savemat(out_file_name + '_traces.mat', out2)
+    else:
+        return out
 
 # compute number of bifurcations in cell morph or in section list
 def computeBranchPoints(secList = None):

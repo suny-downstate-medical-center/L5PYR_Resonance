@@ -23,6 +23,8 @@ PARAMETER {
 	qtl=1
 	clk=0
 	elk = -70 (mV)
+        Kh = 1
+        Ks = 1
 }
 
 
@@ -57,8 +59,8 @@ INITIAL {
 BREAKPOINT {
 	SOLVE states METHOD cnexp
 	ghd = gbar*l
-	i = ghd*(v-ehd)
-	lk = clk*gbar*(v-elk)
+	i = Kh*ghd*(v-ehd)
+	lk = Ks*clk*gbar*(v-elk)
 }
 
 

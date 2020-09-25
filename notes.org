@@ -1928,3 +1928,12 @@ which produces reasonable synchronous frequencies but overestimates dendritic tr
 
 * [2020-9-11 Fri] - revisiting STA
 ** basically impossible to get spikes by just stimulating near nexus 
+
+* [2020-9-24 Thu] - more sta 
+** I, t = getNoise(0, 0.75, t0, 20, 1000, 5) gets a couple spikes for apic20
+
+* [2020-9-25 Fri] - " " 
+** rerun previous sims, record voltages as well 
+*** apic2 - std: 0.1, amp: 2.5
+*** apic12 - std: 0.2, amp: 3.5
+*** apic20 - std: 1.0, amp: 15

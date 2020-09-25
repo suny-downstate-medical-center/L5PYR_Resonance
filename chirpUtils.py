@@ -190,20 +190,25 @@ def getNoise(avg, std, t0, amp, Fs, delay):
     vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
     return vch, vtt
 
-def STA(pks, I, sampr, delay):
+def STA(pks, I, V, sampr, delay):
     currents = []
+    voltages = []
+    out = {}
     for i in range(len(pks)):
         if i == 0:
             if pks[i] > sampr * (delay+1):
                 currents.append(I[int(pks[i]-sampr) : int(pks[i])])
+                voltages.append(V[int(pks[i]-sampr) : int(pks[i])])
         else:
             if (pks[i]-pks[i-1]) > sampr:
                 currents.append(I[int(pks[i]-sampr) : int(pks[i])])
-    currents = np.array(currents)
-    avgI = np.mean(currents, axis=0)
-    f_current = (fft(avgI)/len(avgI))[0:int(len(avgI)/2)]
-    Freq = np.linspace(0.0, sampr/2.0, len(f_current))
-    out = {'currents' : currents, 'f_current' : f_current, 'Freq' : Freq} 
+                voltages.append(V[int(pks[i]-sampr) : int(pks[i])])
+    if len(currents):
+        currents = np.array(currents)
+        avgI = np.mean(currents, axis=0)
+        f_current = (fft(avgI)/len(avgI))[0:int(len(avgI)/2)]
+        Freq = np.linspace(0.0, sampr/2.0, len(f_current))
+        out = {'currents' : currents, 'voltages' : voltages, 'f_current' : f_current, 'Freq' : Freq} 
     return out
 
 # run STA sims
@@ -243,7 +248,7 @@ def applyNoise(I, t, seg, soma_seg, t0, delay, Fs, out_file_name=None):
 
     ## compute STA stuff 
     if len(pks):
-        out = STA(pks, current_np, samp_rate, delay)
+        out = STA(pks, current_np, soma_np, samp_rate, delay)
     else:
         out = {}
 

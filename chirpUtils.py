@@ -10,10 +10,10 @@ from scipy.signal import find_peaks
 
 # get chirp stim: based on sam's code form evoizhi/sim.py
 def getChirp(f0, f1, t0, amp, Fs, delay):
-    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs+1)
-    chirp_time = np.linspace(0, t0, (t0)*Fs+1)
+    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs*40+1)
+    chirp_time = np.linspace(0, t0, (t0)*Fs*40+1)
     ch = chirp(chirp_time, f0, t0, f1, method='linear',phi=-90)
-    ch = np.hstack((np.zeros(Fs*delay), ch, np.zeros(Fs*delay)))
+    ch = np.hstack((np.zeros(Fs*40*delay), ch, np.zeros(Fs*40*delay)))
     vch = h.Vector(); vch.from_python(ch); vch.mul(amp)
     vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
     return vch, vtt
@@ -109,7 +109,7 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     soma_np = soma_v.as_numpy()
     
     current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
-                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs + 1,endpoint=True), I.as_numpy())
+                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs * 40 + 1,endpoint=True), I.as_numpy())
     time = t_vec.as_numpy()
     cis_np = cis_v.as_numpy()
     

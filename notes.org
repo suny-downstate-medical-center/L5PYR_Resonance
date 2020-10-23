@@ -1937,3 +1937,846 @@ which produces reasonable synchronous frequencies but overestimates dendritic tr
 *** apic2 - std: 0.1, amp: 2.5
 *** apic12 - std: 0.2, amp: 3.5
 *** apic20 - std: 1.0, amp: 15
+
+* [2020-9-27 Sun] - plotting basic STA results 
+** code 
+from scipy.io import loadmat 
+from pylab import fft, convolve 
+import numpy as np 
+from matplotlib import pyplot as plt 
+plt.ion()
+
+# from getCells import M1Cell 
+# s = M1Cell() 
+# soma_seg = s.net.cells[0].secs['soma']['hObj'](0.5) 
+# stim_seg = s.net.cells[0].secs['apic_2']['hObj'](0.5) 
+# from chirpUtils import fromtodistance
+# dists = [fromtodistance(soma_seg, stim_seg)]
+# stim_seg = s.net.cells[0].secs['apic_12']['hObj'](0.5) 
+# dists.append(fromtodistance(soma_seg, stim_seg))
+# stim_seg = s.net.cells[0].secs['apic_20']['hObj'](0.5) 
+# dists.append(fromtodistance(soma_seg, stim_seg))
+
+from getCells import HayCellMig
+cell, _ = HayCellMig()
+soma_seg = cell.soma[0](0.5)
+from chirpUtils import fromtodistance
+stim_seg = cell.apic[1](0.5)
+dists = [fromtodistance(soma_seg, stim_seg)]
+stim_seg = cell.apic[14](0.5)
+dists.append(fromtodistance(soma_seg, stim_seg))
+stim_seg = cell.apic[36](0.5)
+dists.append(fromtodistance(soma_seg, stim_seg))
+
+# files = ['apic2_sta_1000s.mat', 'apic12_sta_2000s.mat', 'apic20_sta_5000s.mat']  
+files = ['hay_apic1_sta_1000s.mat', 'hay_apic14_sta_1000s.mat', 'hay_apic36_sta_1000s.mat']
+
+bwinsz = 5 #20
+fblur = np.array([1.0/bwinsz for i in range(bwinsz)])  
+
+plt.figure(figsize=(10,6))
+
+for file, dist in zip(files, dists):
+    data = loadmat(file)
+    avgI = np.mean(data['currents'], axis=0)
+    # avgI = avgI[int(3/10*40000)*-1:]
+    Ipad = np.concatenate((np.zeros(2**16-40000, dtype=avgI.dtype),avgI))   
+    # Ipad = np.concatenate((np.zeros(2**14-len(avgI), dtype=avgI.dtype),avgI))   
+    f_current = (fft(Ipad)/len(Ipad))[0:int(len(Ipad)/2)]
+    f_smoothI = convolve(np.abs(f_current),fblur, 'same') 
+    Freq = np.linspace(0.0, 40000/2.0, len(f_current)) 
+    plt.plot(Freq, np.divide(f_smoothI,np.max(f_smoothI)), label=r'%d.1 $\mu$m' % (dist))
+plt.xlim(0,50)
+plt.legend(fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel(r'Normalized |STA|', fontsize=16)
+plt.show()
+
+* [2020-9-28 Mon] - pretty weak case for STA location dependence 
+** Figures 
+*** ./sta_examples_unsmoothed.png 
+*** ./sta_examples_5ptSmooth.png 
+
+* [2020-10-5 Mon] - looking at modified hay cell 
+** some ok params 
+*** apic1: noise - 0.35, amp - 2.5
+*** apic14: noise - 0.475, amp - 3.0
+*** apic36: noise - 0.75, amp - 3.2
+
+* [2020-10-7 Wed] - srdjan's comments on paper
+** abstract
+*** "but most captured" -> "catpured" actually changes the meaning of the sentence.
+Implies that none of the models captured both.
+** introduction 
+***  'Corticopontine cells are not carried by the Pyramidal tract, and their function
+ is not “pyramidal” either.' - srdjan 
+**** changed to "pyramidal tract type neurons".
+**** they're described as PT in Dmebrow et al. 2015
+**** share similar morphology, high levels of HCN, resonance w/ honest-to-god
+pyramidal tract. just a term of convenience to refer to those non-corticothalamic,
+non-intratelencephalic, subcortically projecting cells.
+*** srdjan's problem paragraph
+**** original 
+HCN also affects neuronal filtering properties, which are characterized as impedance profiles measured 
+at subthreshold voltages \cite{Ulrich2002-dd, Robinson2003-uc, Dembrow2015-zb}.
+A common experimental method for probing the impedance response is to stimulate the neuron with a chirp current injection, 
+which is a constant-amplitude, sinusoidal waveform whose instantaneous frequency is a linear function of time \cite{Puil1986-uv}.  
+Subthreshold resonance is identified when there is a peak in impedance amplitude ($|Z|$) at a nonzero frequency.
+It has been observed in a wide variety of species and neuronal cell 
+types \cite{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
+and is proposed to impart neurons with the ability to discriminate inputs by frequency \cite{Branco2010-nr, Das2017-nz}.
+The simple parallel conductance RC circuit (Hodgkin-Huxley model without active \na\ and \k\ channels) does not show resonance properties but instead shows voltage
+amplitude fall-off above a certain frequency. IT cells largely respond in this way, showing the properties of a low-pass filter \cite{Dembrow2015-zb}. In order to get resonance, one
+must add an inductive reactance such as that provided by HCN channels, which dynamically oppose changes in the direction of current flow\cite{Das2017-nz}.
+The presence of relatively high HCN in PT cells endows them with resonance, giving the properties of a bandpass filter.
+Impedance phase shift ($\Phi$) describes the temporal relationship between the stimulating current and \vmemb\.
+Leading, or inductive, phase is defined as the case where membrane potential peak comes before current peak, and at the synchronous frequency membrane potential and stimulating current are synchronized \cite{Puil1986-uv}. 
+Both resonance and synchronous frequencies increase with distance from the soma in PT cells in a
+manner similar to hippocampal PCs \cite{Ulrich2002-dd, Dembrow2015-zb, Das2017-nz}.
+**** new version 
+HCN also affects neuronal filtering properties, which are characterized as impedance profiles measured 
+at subthreshold voltages \cite{Ulrich2002-dd, Robinson2003-uc, Dembrow2015-zb}.
+A common experimental method for probing the impedance response is to stimulate the neuron with a chirp current injection, 
+which is a constant-amplitude, sinusoidal waveform whose instantaneous frequency is a linear function of time \cite{Puil1986-uv}.  
+Subthreshold resonance is identified when there is a peak in impedance amplitude ($|Z|$) at a nonzero frequency.
+It has been observed in a wide variety of species and neuronal cell 
+types \cite{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
+and is proposed to impart neurons with the ability to discriminate inputs by frequency \cite{Branco2010-nr, Das2017-nz}.
+The simple parallel conductance RC circuit (Hodgkin-Huxley model without active \na\ and \k\ channels) does not show resonance4
+properties but instead shows voltage amplitude fall-off above a certain frequency. IT cells largely respond in this way, 
+showing the properties of a low-pass filter \cite{Dembrow2015-zb}. In order to get resonance, one
+must add an inductance which dynamically oppose changes in the direction of current flow.
+The voltage dependent conductance produced by HCN channels fills this role by generating
+what has been termed an "anomalous" or "phenomenonolgical" inductance \cite{Das2017-nz}.
+The  relatively high expression of HCN in PT cells endows them with resonance, giving the properties of a bandpass filter.
+Impedance phase ($\Phi$) is another important, yet often neglected, filter property that describes the temporal relationship 
+between the stimulating current and \vmemb\.
+Leading, or inductive, phase is defined as the case where peaks in \vmemb\ come before peaks in the stimulating current, 
+and at the synchronous frequency membrane potential and stimulating current are synchronized \cite{Puil1986-uv}. 
+Inductive phase has been proposed as a mechanism for compensating the location-dependent capacitive delay of dendritic
+inputs at the soma (\cite{Vaidya2013-sx}).
+Both resonance and synchronous frequnecy are to the sensitive to the presence and distribution of voltage-gated 
+ion channels in the dendrites and increase with distance from the soma in PT cells in a
+manner similar to hippocampal PCs \cite{Ulrich2002-dd, Dembrow2015-zb, Das2017-nz}.
+**** Questions:
+1. So, inductive reactance is “a membrane conductance which opposes a change in the direction of current flow”? Is this correct? This definition is confusing to me. 
+    Removed mention of reactance, it's not really the important part here. 
+
+2. Sentence-01 introduces the term “inductive reactance”, but Sentence-02 does not follow this prelude in any way or sense. 
+What is the connection between inductive reactance mentioned in Sentence-01 and the content of the Sentence-02? 
+    Format has changed obv, but in short HCN acts like an inductor, membrane acts like RLC circuit 
+
+3. Is “inductive reactance” mentioned in Sentence-01 the same as “imaginary valued reactance” mentioned in Methods? 
+    Partly.  There are inductive and capacitive contributions to reactance (which is analogous to resistance in the context of alternating currents).
+
+4. “Impedance phase shift (Φ) describes the temporal relationship between the stimulating current and Vmemb Leading”. 
+Why should anyone study “phase shift”? I am missing that point. 
+    Cited one physiologically relevant aspect: "Inductive phase has been proposed as a mechanism for compensating the location-dependent capacitive delay of dendritic
+    inputs at the soma (\cite{Vaidya2013-sx})."
+    Also, I at least partially address that by the addition of "Both resonance and synchronous frequnecy are to the sensitive to the presence and distribution 
+    of voltage-gated ion channels in the dendrites".  Right now I'm deliberately avoiding the questions of how do these impedance properties translate
+    to physiological conditions.  People argue for a strong relationship between resonance and spiking, but I think it's a tenous argument.  The relevance of phase
+    physiologically is even less clear.  However, these are experimentally observable measures, and they give a fairly detailed picture of the equivalent circuit of the
+    neuron, and I think that is important in itself.  Even if resonance or synch frequency isn't "important" physiologically, changes to them reflect changes in cell 
+    properties (like HCN dist) which certainly do.
+
+5. How is Sentence-03 related to Sentence-02? 
+    Hopefully addressed by: "In addition to resonance, which is a property of $|Z|$, impedance phase shift ($\Phi$) 
+    is another important, yet often neglected, filter property".
+
+6. “Synchronous frequencies” are mentioned in Sentence-04 for the first time? The Introduction should perhaps explain 
+why anyone should care about “synchronous frequencies”? 
+    In addition to what I've said wrt Q4, synchronous frequency provides a single value which partly
+    characterized the impedance phase in a similar way to how resonance characterizes impedance amplitude.
+
+** Results
+*** deleted 
+Experimental studies have shown location-dependent resonance and leading phase in the dendrites of PT cells (\cite{Ulrich2002-dd, Dembrow2015-zb}).
+Previous modeling studies have explored the impedance amplitude properties of PT cells with simplified morphologies. 
+However, location-dependent gradients in resonance and impedance phase were not extensively investigated 
+*** what measures?
+They are listed in the next sentence... I think it's more concise this way, but if you feel especially passionate about it could change to:
+We computed transfer impedance (Z$_c$), and from it transfer resonance frequency, resonance strength, total inductive phase, and synchronous frequency 
+from each of the recorded somatic membrane potential 
+waveforms via Equations 1-3 (\fref{methods}I-K).
+In an example neuron ({\bf model 5} ), we see location-dependent changes in the impedance profiles with
+all features increasing along the apical trunk with distance from the soma (\fref{methods}J, K).
+*** I do not see any logic in naming the first neuron described in the Results section “model 5”. This is analogous to calling Monday the “3rd day of the week”. 
+**** Monday is the 2nd day of the week...
+**** It's not first in the methods section, and it's not first when all 5 are referred to in the next paragraph.  This figure is just meant to be an example
+and makes sense (to me) to use the best model wrt experimental data as the example.  
+*** resonance strength and total inductive phase 
+**** so both of these are defined in the mehtods section.  And since resonance strength is a ratio and total inductive phase is an integral, I believe it would
+overcrowd the figure to try to visually indicate them.  I can try to further indicate them in the text if you think it's helpful:
+    In an example neuron ({\bf model 5} ), we see location-dependent changes in the impedance profiles with
+    transfer resonance frequency, resonance strength (\frac{|Z_c(f_{transfer})|}{|Z_c(0.5)|}}), total inductive phase (area under the positive portion of $\Phi$),
+    and synchronous frequency all increasing along the apical trunk with distance from the soma (\fref{methods}J, K).
+but this seems cumbersome to me.
+*** reader familiarity with degeneracy
+**** added to same paragraph: This is an example of degeneracy, wherein different combinations of elements, parameters,
+or in this case ion channels, can produce the same behavior.
+
+** Discussion 
+*** Did you mean to say Meena et al. (2009)? - Meena George
+
+* [2020-10-19 Mon] - looking at subthreshold membrane oscillations 
+** scipy for filtering 
+from scipy.signal import butter, lfilter, freqz                                        
+
+def butter_lowpass(cutoff, fs, order=5): 
+    nyq = 0.5 * fs 
+    normal_cutoff = cutoff / nyq 
+    b, a = butter(order, normal_cutoff, btype='low', analog=False) 
+    return b, a 
+ 
+def butter_lowpass_filter(data, cutoff, fs, order=5): 
+    b, a = butter_lowpass(cutoff, fs, order=order) 
+    y = lfilter(b, a, data) 
+    return y 
+** started new banch of M1 repo for looking at PT5B oscillations 
+
+* [2020-10-20 Tue] - first pass on memb oscillations, Ted's comments 
+** first decent run of M1 model - ../data/membOsc/
+*** cells with decent subthreshold oscillations 
+**** good - 6037, 
+**** ok - 6169, 
+*** analysis for 6037
+import math 
+import numpy as np 
+from matplotlib import pyplot as plt 
+plt.ion()
+import json 
+from pylab import fft
+from scipy.signal import butter, filtfilt
+
+def next_power_of_2(x):
+    return 1 if x == 0 else 2**math.ceil(math.log2(x))
+
+def zeroPadFFT(x, Fs):
+    nZeros = math.floor((next_power_of_2(len(x)) - len(x)) / 2)
+    xPad = [0 for i in range(nZeros)]
+    xPad.extend(x - np.mean(x))
+    xPad.extend([0 for i in range(nZeros)])
+    Y = (fft(xPad)/len(xPad))[0:int(len(xPad)/2)]
+    Y = np.abs(Y)
+    freq = np.linspace(0, Fs/2.0, len(Y))
+    return freq, Y
+
+def butter_lowpass(cutoff, fs, order=5): 
+    nyq = 0.5 * fs 
+    normal_cutoff = cutoff / nyq 
+    b, a = butter(order, normal_cutoff, btype='low', analog=False) 
+    return b, a 
+
+def butter_lowpass_filter(data, cutoff, fs, order=5): 
+    b, a = butter_lowpass(cutoff, fs, order=order) 
+    y = filtfilt(b, a, data) 
+    return y    
+
+file = open('membOsc_v0.json')
+data = json.load(file)
+file.close()
+cellName = 'cell_6037'
+v = data['simData']['V_soma'][cellName]
+times = np.linspace(0,1,len(v))
+v_trim = [vol for vol, t in zip(v,times) if (0.2 <= t <= 0.875)] 
+fs = 1 / (times[1] - times[0])
+freq, Y = zeroPadFFT(v_trim, fs)
+
+** Ted's comments 
+Big issues first, smaller stuff later.
+
+############################################
+Recurring issue: terminology and definitions
+############################################
+
+Page 2
+======
+
+***
+Lines 27 - 34
+Issue: inconsistent terminology
+What to call different cell classes?
+L5 PCs is OK--layer 5 pyramidal cells.
+What about names for pyramidal cells classified by their projections, e.g.  corticothalamic, pyramidal tract, and intratelencephalic PCs?
+pathname + cell or neuron or PC is OK, e.g. "CT cell," "PT neuron," "IT PC."
+What about CT, PT and IT, without "cell" | "neuron" | "PC"?
+*** Srdjan also has qualms with nomenclature, should discuss 
+
+***
+Line 50
+Resonance
+Subthreshold resonance: 
+impedance amplitude has a maximum at a nonzero f.
+f is the resonant frequency
+*** Subthreshold resonance occurs when impedance 
+amplitude (|Z|) has a maximum at a nonzero frequency 
+known as the resonance frequency (f$_{res]$}).
+
+Line 60
+Impedance phase
+*** don't follow
+
+***
+Lines 61-62
+Inductive phase / leading phase
+peak of v precedes peak of i
+Line 63
+Synchronous frequency
+f at which maxima of v and i are synchronized
+*** noted, will change 
+
+Page 3
+======
+
+***
+Line 69
+"resonant frequency" is used without being defined.  A good place to define it might be on page 2 near line 50.
+*** addressedd in rewrite above 
+
+Line 76
+"resonance frequencies" is used.  For consistency, change to resonant frequencies.
+*** noted 
+
+Page 4
+======
+
+Lines 113-114
+Algebraic formulas for chirp's i and instantaneous frequency?
+
+
+Line 122
+"Transfer resonance strength" defined
+
+Equation 4
+What is Zc(0.5)?
+*** transfer frequency at f = 0.5 Hz . . . could put Hz 
+
+***
+Line 127
+"Total inductive phase" defined without citation.
+Why care about it?  Does it have a specific functional implication?
+The amount of phase lead was characterized by integrating phi(f) over the range 
+where phi(f) > 0 (Narayanan and Johnston 2008).
+*** will add the citation
+*** hopefully addressed in introduction with "nductive phase has been proposed 
+as a mechanism for compensating the location-dependent capacitive delay of 
+dendritic inputs at the soma " (line 64)
+
+***
+Line 143
+Where is "transfer frequency" defined?
+*** will include distinction of transfer from resonance freqeuncy ~line 50 alongside
+new description of resonance above 
+
+Page 5
+======
+***
+Line 165
+PHI_L is not defined.
+*** will reference equation 5
+
+***
+Line 166
+ZPP is not defined
+*** noted 
+
+***
+Line 167
+PHI_c is not defined.  Also, why would this be lower case c and not upper case C?
+*** will reference equation 4 
+*** idk, was using lowercase c for transfer impedance 
+
+###################
+Problematical stuff
+###################
+
+Page 2
+======
+
+Lines 56-58
+Ih doesn't oppose change in the direction of membrane current.  
+It enhances membrane current at DC and very low frequencies 
+(typically well below f_m = 1/(2*PI*tau_m)).  A cell with a passive 
+membrane acts like a low pass filter--below f_m = 1/(2*PI*tau_m) the v 
+elicited by injecting current is relatively independent of the current's
+frequency, but the response to higher frequency currents falls off by about 
+6db/octave.  Ih makes the membrane leakier to current at frequencies well 
+below tau_m, but has little effect on high frequency signals.  This carves 
+a "hollow" out of the low frequency range of the cell's Z vs. f graph, 
+producing a broad peak.
+
+Hutcheon and Yarom 2000 summarized the conditions that lead to resonance 
+in neurons in the form of a basic idea plus a simple rule.  The basic idea 
+is that resonance emerges from the interaction of two kinds of mechanisms:  
+one that attenuates responses to high frequency signals, and another that 
+attenuates responses to low frequency signals.  Acting together, these 
+mechanisms produce a frequency response with a maximum at a nonzero frequency.  
+The first mechanism is present in all cells, because membrane capacitance 
+attenuates the v response to membrane currents at high frequencies.  
+The second mechanism is provided by a voltage-gated current that follows a 
+two-part rule.  Part 1 is that it must "actively oppose changes" of v 
+(restated, this means that any perturbation of v elicits a change in the open 
+or closed state of the channels that tends to restore v to its original value).  
+Part 2 is that it must "activate slowly relative to the membrane time constant."  Ih is just one of many kinds of currents that satisfy this rule.  Garden variety delayed rectifier potassium channels also satisfy it.  A cell that has nothing more than cm and spike potassium channels will have resonance.  Add leak channels, and it still has resonance.  Any ion channel that satisfies the rule will do--doesn't matter whether the channels are opened by depolarization or by hyperpolarization--either way, it produces phenomenological inductance, and combined with the electrical properties of membrane, the result is resonance.
+
+Page 3
+======
+
+-------
+Methods
+-------
+
+What was the maximum elicited/allowed peak-to-peak variation of v?  
+What was done to quantify/estimate the degree of nonlinearity over the 
+studied v range(s) in each model?
+*** haven't checked for the maximum, but from fig 1 about +/-2mV
+used the same current stim for all sims.  All I did to check on nonlinearity
+make sure voltage excursion was symmetrical to withing 0.1 or so mV.
+*** this gets at something that I know has been an issue for Bill and (I think) 
+Srdjan - the voltages are so small. 
+I know that you want to keep it as small as possible,
+but even some of the experimental papers I've seen doing chirp seem to overdue
+and have asymmetric voltage excursions 
+
+*** Missing: validation of methods ***
+1. against analytical results for a simple model (e.g. single compartment RLC).
+2. against results generated with NEURON's Impedance class.
+
+
+#######################
+Composition and clarity
+#######################
+
+Page 1
+======
+
+Abstract
+--------
+***
+Repeated words:
+complex--lines 2 and 4
+relationships--lines 2 and 7
+
+***
+Line 14
+"demonstrated that"
+sounds like we knew all along, so why bother with all this modeling?
+Better to say 
+"found that"
+which implies that getting these results involved some (cognitive and computational) effort.
+
+Introduction
+------------
+***
+Line 19
+L5 pyramidal neurons aren't "outputs" of cortical circuits.
+L5 pyram nn generate the main output of cortical circuits, in the form of spike trains that propagate along axons to other regions of the CNS.
+
+
+Page 2
+======
+***
+Line 27
+Cortical PCs
+should start a new paragraph.
+
+***
+Line 45
+would change
+neuronal filtering properties which are characterized
+to
+neuronal filtering properties, which have been characterized
+Why?
+1.  There's more than one way to characterize filtering.
+2.  Others have done this before.
+
+***
+Lines 47-48
+would change
+the impedance response
+to
+impedance
+because impedance isn't a response.  It is inferred from a response.
+
+***
+Line 48
+would change
+with a chirp current injection, which is
+to
+by injecting
+
+**** - sort of fixed I think 
+Line 49
+would change
+time [51]
+to
+time [51] ("linear chirp")
+The original form of the sentence suggests incorrectly that linear chirp is the only kind that has been used (others have used exponential chirp, e.g. Gabbiani).
+
+*** 
+Line 54
+resonance4
+should be
+resonance
+
+***
+Line 65
+omit
+to the
+
+
+Page 3
+======
+***
+Line 76
+would change
+demonstrated
+to
+examined
+
+Page 4
+======
+
+Line 144
+"extracted from published data and pooled"
+Were all such data available in the source articles as numerical values?  If not, how were they obtained?
+***
+@misc{Rohatgi2020,
+  url = {https://automeris.io/WebPlotDigitizer},
+  author = {Rohatgi,  Ankit},
+  title = {Webplotdigitizer: Version 4.3},
+  year = {2020}
+}
+
+Page 5
+======
+***
+Line 147
+would omit "here"
+
+***
+Lines 156-157
+with resonance and synchronous frequencies
+If "resonance" is supposed to be "resonant frequency" then change to
+with resonant frequency and synchronous frequency
+Otherwise provide a quantitative definition of "resonance". 
+
+Paragraph 3 (lines 164-171)
+
+Not a good idea to pile observation after observation onto readers without
+some suggestion as to why any of this matters.  How does PHI_L or PHI_c affect 
+individual epsp or ipsp waveforms, or integration of a train of psps, locally or
+at the soma or spike trigger zone?  How does it affect local (dendritic) spike 
+initiation or propagation?  Why should anyone care about 2 Hz--what does this 
+frequency have to do with experimentally observed firing rates or spontaneous 
+brain rhythms in behaving animals?  (btw:  even sleep is a behavior)
+
+***
+Lines 179-180
+What "other two HCN models?
+
+***
+Line 181
+What "They"?  The other HCN models?  The transfer frequencies?
+
+Line 185
+What's special about TASK currents?  Are they purely passive or do they have some special voltage gating?
+
+
+Page 6
+======
+
+Line 191
+Exactly what is meant by "simple HH parallel RC circuit model"?
+
+Line 214-215
+"but they did not contribute equally" to what?
+
+Line 215
+change
+modulating
+to
+varying
+
+Lines 217-218
+"transfer impedance between the distal end of the apical trunk" and what?
+
+Lines 219-220
+"Changes . . . "
+Ambiguous.  Does this mean
+Ih had a bigger effect on Z profile than on shunting current
+or
+Ih had a bigger effect on Z profile than shunting current did
+?
+
+Lines 219-220 and elsewhere
+Shouldn't the statement be that h channel density had a stronger effect on Z profile than shunt channel did?  After all, you can't change any channel's current directly--you can only change its channel density.
+
+Lines 221 and elsewhere.
+"Q-factor"
+Q factor should not be hyphenated.
+Which definition of Q factor are you using?  Ratio of center frequency to resonance width?  Are you defining resonance width as the frequency range over which power is > half power at resonant frequency?  Given a plot of Z vs. f, how do you define power at resonant frequency and at half resonant frequency?  An illustration that uses a Bode plot would help.
+
+The values in Fig. 7A seem very high to me.  I'm not used to seeing such a high degree of resonance in model cells.  Most responses to swept sine that I've seen look like Figs. 1C and D, which demonstrate Q values < 0.5.  I'd like to see a time domain plot of a swept sine response for a cell with a Q of 3.
+
+Lines 226-227
+There are no contour lines in Fig. 7.
+
+Page 7
+======
+
+Line 233
+would change
+was included
+to
+was intended
+
+Line 234
+Does the shunting current actually have an activation variable?  Isn't it just a passive current, with no voltage gating?
+
+Lines 235-236
+consistent F-I curve with
+should be
+F-I curve consistent with
+
+Line 248
+change 
+which
+to
+that
+
+Line 255
+Does "how" refer to
+"description of an observation"
+or does it mean
+"mechanism that accounts for something that is observed"
+?
+
+Lines 264-265
+Not a sentence.
+
+Line 265
+from "is" on is a conjecture.  I'd prefer to say "seems".  Leave as is and see whether reviewer says anything.
+
+Line 269
+"with" isn't quite right.  Maybe "for example" instead?
+
+Line 270
+HCN channels may account for this resonance in these cells, but it doesn't account for all resonance phenomena.  Maybe change
+"resonance"
+to
+"resonance in these cells"
+or
+"resonance in PT neurons"
+
+Page 8
+======
+
+Line 281
+would change
+only modulate
+to
+but can only modulate
+
+Figure 1
+========
+Ih increases exponentially with distance from the soma.
+If Ih accounts for resonance, why does resonance decrease 
+with distance from the soma?  Shouldn't it increase with distance?
+
+Figure 2
+========
+Symbols need to be bigger, and a different style should be used for 
+experimental data (so the latter can be distinguished from simulation results).  
+Similar comments for other figures with small symbols.
+
+Figure 3
+========
+Nice pictures.  Phase shift in D is not impressive.  Experimentalists will be 
+underwhelmed.  "When was the last time I saw a sine wave in a cell?"  
+Demo of effect on a psp waveform or a coincidence-detection scenario might
+be more compelling.
+
+* [2020-10-21 Wed] - meeting w/ Ted, Srdjan, Bill 
+** Major topics
+*** Nomencalture, stick w/ just PT? Srdjan's problem w/ corticopontine
+**** just PT 
+
+*** Description of impedance, resonance, etc. (lines 46-67)
+**** get rid of anomalous phenomenological, fix mechanism of HCN 
+**** make sure impedance phase description 
+**** single transient, >L -> earlier peak in V 
+**** Ted's .ses file . . . 
+
+*** Methods/Validation (voltage excursion amplitude, comparison w/ analytical
+ or nrn impedance class)
+**** mention check for symmetry about Vrest 
+**** repeat fig 1 sims w/ different amplitude current stim 
+
+** Minor topics 
+*** equations defining chirp stimulus
+**** include in  methods 
+
+*** Numbering of the models 
+**** go for it 
+
+*** description of results in 
+
+
+* [2020-10-22 Thu] - sorting out things from comments 
+** doubling current amplitude 
+traces = loadmat('apic13_doubleAmp_traces.mat') 
+plt.figure()
+plt.subplot(1,3,1)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['current_np'][0] - traces['current_np'][0][int(4990*1/0.025)], 'b')
+plt.subplot(1,3,2)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['cis_np'][0] - traces['cis_np'][0][int(4990*1/0.025)], 'b') 
+plt.subplot(1,3,3)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['soma_np'][0] - traces['soma_np'][0][int(4990*1/0.025)], 'b')
+traces = loadmat('M1_PTcell/trunk_data2/apic_130.5_traces.mat') 
+plt.subplot(1,3,1)
+plt.xlim(-0.5, 20.5)
+plt.ylabel('Current (mA)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.title('Stimulus', fontsize=18)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['current_np'][0] - traces['current_np'][0][int(4990*1/0.025)], 'r--')
+plt.subplot(1,3,2)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['cis_np'][0] - traces['cis_np'][0][int(4990*1/0.025)], 'r--') 
+plt.xlim(-0.5, 20.5)
+plt.ylim(-2.5,2.5)
+plt.ylabel(r'V$_{dend}$ (mV)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.xlabel('Time (s)', fontsize=16)
+plt.title('Local Membrane Potential', fontsize=18)
+plt.subplot(1,3,3)
+plt.plot(np.linspace(-5,25,len(traces['time'][0])), traces['soma_np'][0] - traces['soma_np'][0][int(4990*1/0.025)], 'r--')
+plt.xlim(-0.5, 20.5)
+plt.ylim(-2.5,2.5)
+plt.ylabel(r'V$_{soma}$ (mV)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Somatic Membrane Potential', fontsize=18)
+
+plt.figure()
+data = loadmat('apic13_doubleAmp.mat')
+plt.subplot(2,2,1)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'b')
+plt.subplot(2,2,2)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'b')
+plt.subplot(2,2,3)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'b')
+plt.subplot(2,2,4)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'b')
+data = loadmat('M1_PTcell/trunk_data2/apic_130.5.mat')
+plt.subplot(2,2,1)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'r--')
+plt.title('Input Impedance', fontsize=18)
+plt.ylabel(r'Impedance Amplitude (M$\Omega$)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.subplot(2,2,2)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r--')
+plt.ylabel(r'Impedance Amplitude (M$\Omega$)', fontsize=16)
+plt.title('Transfer Impedance', fontsize=18)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.subplot(2,2,3)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'r--')
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel('Impedance Phase (rad)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.subplot(2,2,4)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r--')
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel('Impedance Phase (rad)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+
+* [2020-10-23 Fri] - toy example 
+** plotting results of chirp w/ and w/out L 
+from matplotlib import pyplot as plt 
+plt.ion()
+from scipy.io import loadmat 
+import numpy as np 
+
+traces = loadmat('toy_withL_traces.mat')
+plt.subplot(3,2,1)
+plt.plot(np.linspace(-5,55,len(traces['time'][0])), traces['cis_np'][0] - traces['cis_np'][0][int(4990*1/0.025)], 'r', label='10 kH')
+plt.subplot(3,2,2)
+plt.plot(np.linspace(-5,55,len(traces['time'][0])), traces['soma_np'][0] - traces['soma_np'][0][int(4990*1/0.025)], 'r')
+traces = loadmat('toy_withoutL_traces.mat')
+plt.subplot(3,2,1)
+plt.plot(np.linspace(-5,55,len(traces['time'][0])), traces['cis_np'][0] - traces['cis_np'][0][int(4990*1/0.025)], 'b', label='0.001 H') 
+plt.subplot(3,2,2)
+plt.plot(np.linspace(-5,55,len(traces['time'][0])), traces['soma_np'][0] - traces['soma_np'][0][int(4990*1/0.025)], 'b')
+
+
+data = loadmat('toy_withoutL.mat')
+plt.subplot(3,2,3)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'b')
+plt.subplot(3,2,4)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'b')
+plt.subplot(3,2,5)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'b')
+plt.subplot(3,2,6)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'b')
+
+data = loadmat('toy_withL.mat')
+plt.subplot(3,2,3)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'r')
+plt.subplot(3,2,4)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r')
+plt.subplot(3,2,5)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'r')
+plt.subplot(3,2,6)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r')
+
+plt.subplot(3,2,1)
+plt.xlim(-1,51)
+plt.ylim(-2,2)
+plt.xlabel('Time (s)', fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{dend}$ (mV)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.title('Dendrite', fontsize=16)
+
+plt.subplot(3,2,2)
+plt.xlim(-1,51)
+plt.ylim(-2,2)
+plt.xlabel('Time (s)', fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{soma}$ (mV)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.title('Soma', fontsize=16)
+
+plt.subplot(3,2,3)
+plt.ylim(0,55)
+plt.xlim(0,1000)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.ylabel('$|Z_{in}|$ (M$\Omega$)', fontsize=14)
+plt.title('Input Impedance', fontsize=16)
+
+plt.subplot(3,2,4)
+plt.ylim(0,55)
+plt.xlim(0,1000)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.ylabel('$|Z_{in}|$ (M$\Omega$)', fontsize=14)
+plt.title('Transfer Impedance', fontsize=16)
+
+plt.subplot(3,2,5)
+plt.ylabel(r'$\Phi_{in}$ (rad)', fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=14)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.xticks(fontsize=12)
+
+plt.subplot(3,2,6)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=14)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.xticks(fontsize=12)
+plt.tight_layout()

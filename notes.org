@@ -2242,8 +2242,7 @@ Page 4
 ======
 
 Lines 113-114
-Algebraic formulas for chirp's i and instantaneous frequency?
-
+Algebraic formulas for chirp's i and instantaneous frequency
 
 Line 122
 "Transfer resonance strength" defined
@@ -2290,7 +2289,7 @@ PHI_c is not defined.  Also, why would this be lower case c and not upper case C
 ###################
 Problematical stuff
 ###################
-
+***
 Page 2
 ======
 
@@ -2481,27 +2480,33 @@ Line 181
 What "They"?  The other HCN models?  The transfer frequencies?
 
 Line 185
-What's special about TASK currents?  Are they purely passive or do they have some special voltage gating?
+What's special about TASK currents?  Are they purely passive or do they have
+ some special voltage gating?
 
 
 Page 6
 ======
 
+***
 Line 191
 Exactly what is meant by "simple HH parallel RC circuit model"?
 
+***
 Line 214-215
 "but they did not contribute equally" to what?
 
+***
 Line 215
 change
 modulating
 to
 varying
 
+***
 Lines 217-218
 "transfer impedance between the distal end of the apical trunk" and what?
 
+***
 Lines 219-220
 "Changes . . . "
 Ambiguous.  Does this mean
@@ -2509,15 +2514,18 @@ Ih had a bigger effect on Z profile than on shunting current
 or
 Ih had a bigger effect on Z profile than shunting current did
 ?
-
+***
 Lines 219-220 and elsewhere
-Shouldn't the statement be that h channel density had a stronger effect on Z profile than shunt channel did?  After all, you can't change any channel's current directly--you can only change its channel density.
+Shouldn't the statement be that h channel density had a stronger effect on Z profile than shunt channel did?  
+After all, you can't change any channel's current directly--you can only change its channel density.
 
+***
 Lines 221 and elsewhere.
 "Q-factor"
 Q factor should not be hyphenated.
 Which definition of Q factor are you using?  Ratio of center frequency to resonance width?  Are you defining resonance width as the frequency range over which power is > half power at resonant frequency?  Given a plot of Z vs. f, how do you define power at resonant frequency and at half resonant frequency?  An illustration that uses a Bode plot would help.
 
+***
 The values in Fig. 7A seem very high to me.  I'm not used to seeing such a high degree of resonance in model cells.  Most responses to swept sine that I've seen look like Figs. 1C and D, which demonstrate Q values < 0.5.  I'd like to see a time domain plot of a swept sine response for a cell with a Q of 3.
 
 Lines 226-227
@@ -2526,26 +2534,31 @@ There are no contour lines in Fig. 7.
 Page 7
 ======
 
+***
 Line 233
 would change
 was included
 to
 was intended
 
+***
 Line 234
 Does the shunting current actually have an activation variable?  Isn't it just a passive current, with no voltage gating?
 
+***
 Lines 235-236
 consistent F-I curve with
 should be
 F-I curve consistent with
 
+***
 Line 248
 change 
 which
 to
 that
 
+***
 Line 255
 Does "how" refer to
 "description of an observation"
@@ -2553,15 +2566,19 @@ or does it mean
 "mechanism that accounts for something that is observed"
 ?
 
+***
 Lines 264-265
 Not a sentence.
 
+***
 Line 265
 from "is" on is a conjecture.  I'd prefer to say "seems".  Leave as is and see whether reviewer says anything.
 
+***
 Line 269
 "with" isn't quite right.  Maybe "for example" instead?
 
+***
 Line 270
 HCN channels may account for this resonance in these cells, but it doesn't account for all resonance phenomena.  Maybe change
 "resonance"
@@ -2572,7 +2589,7 @@ or
 
 Page 8
 ======
-
+***
 Line 281
 would change
 only modulate
@@ -2780,3 +2797,639 @@ plt.xlabel('Frequency (Hz)', fontsize=14)
 plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
 plt.xticks(fontsize=12)
 plt.tight_layout()
+
+* [2020-10-24 Sat] more syn stuff 
+** gmax for 1mv at soma for model/sec 
+*** m1/apic_22(0.8) - 1.5e-2
+*** m1/apic_13(0.5) - 3e-3 
+*** ptharnett/apic_22(0.8) - 1.5e-3
+
+** plotting m1 apic_13(0.5) w/ and w/out hcn 
+from scipy.io import loadmat 
+import numpy as np 
+from matplotlib import pyplot as plt 
+plt.ion()
+
+data = loadmat('m1pt_apic1305_syn.mat')
+data_zd = loadmat('m1pt_apic1305_zd_syn.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 5020]
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 5020]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 5020]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 5020]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 5020]
+i = [i for i, t in zip(data['i'][0], data['time'][0]) if 4995 <= t <= 5020]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+i = np.array(i)
+
+plt.figure()
+plt.subplot(2,1,1)
+plt.plot(time-5000, i, 'k')
+
+plt.subplot(2,1,2)
+plt.plot(time-5000, dend_v-dend_v[0], 'r', label='Dendrite')
+plt.plot(time-5000, soma_v-soma_v[0], 'r--', label='Soma')
+plt.plot(time-5000, dend_v_zd-dend_v_zd[0], 'b', label='Dendrite - ZD7288')
+plt.plot(time-5000, soma_v_zd-soma_v_zd[0], 'b--', label='Soma - ZD7288')
+
+plt.subplot(2,1,1)
+plt.plot([1,1], [-0.22,0.01],'k--')
+plt.ylim(-0.22,0.01)
+plt.xlim(-1,15)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('Current (nA)', fontsize=16)
+plt.title('Stimulus', fontsize=18)
+
+plt.subplot(2,1,2)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)',fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Response', fontsize=18)
+plt.plot([1,1], [-0.1, 7.1], 'k--')
+plt.xlim(-1,15)
+plt.ylim(-0.1, 7.1)
+plt.plot([time[np.argmax(dend_v)]-5000, time[np.argmax(dend_v)]-5000], [-0.1, np.max(dend_v)-dend_v[0]], 'r')
+plt.plot([time[np.argmax(soma_v)]-5000, time[np.argmax(soma_v)]-5000], [-0.1, np.max(soma_v)-soma_v[0]], 'r--')
+plt.plot([time[np.argmax(dend_v_zd)]-5000, time[np.argmax(dend_v_zd)]-5000], [-0.1, np.max(dend_v_zd)-dend_v_zd[0]], 'b')
+plt.plot([time[np.argmax(soma_v_zd)]-5000, time[np.argmax(soma_v_zd)]-5000], [-0.1, np.max(soma_v_zd)-soma_v_zd[0]], 'b--')
+plt.legend()
+
+** toy model 
+import numpy as np 
+plt.figure()
+plt.subplot(2,1,1)
+plt.plot(time, i, 'k')
+plt.plot([1,1], [-0.035, 0.001],'k--')
+plt.ylim(-0.035, 0.001)
+plt.xlim(0,8)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('Current (nA)', fontsize=16)
+plt.title('Stimulus', fontsize=18)
+plt.subplot(2,1,2)
+plt.plot(time, dend_v, 'r', label='Dendrite - L = 10 kH')
+plt.plot(time, soma_v, 'r--', label='Soma - L = 10 kH')
+plt.plot(time, dend_v_noL, 'b', label='Dendrite - L = 1 mH')
+plt.plot(time, soma_v_noL, 'b--', label='Soma - L = 1 mH')
+plt.plot([time[np.argmax(dend_v)], time[np.argmax(dend_v)]], [-70, np.max(dend_v.as_numpy())], 'r')
+plt.plot([time[np.argmax(soma_v)], time[np.argmax(soma_v)]], [-70, np.max(soma_v.as_numpy())], 'r--')
+plt.plot([time[np.argmax(dend_v_noL)], time[np.argmax(dend_v_noL)]], [-70, np.max(dend_v_noL.as_numpy())], 'b')
+plt.plot([time[np.argmax(soma_v_noL)], time[np.argmax(soma_v_noL)]], [-70, np.max(soma_v_noL.as_numpy())], 'b--')
+
+** impedance for detailed model 
+from scipy.io import loadmat 
+from matplotlib import pyplot as plt 
+plt.ion()
+import numpy as np 
+
+data = loadmat('M1_PTcell/trunk_data2/apic_130.5.mat')
+# data_zd = loadmat('M1_PTcell/noih_trunk_data/apic_130.5.mat')
+data_zd = loadmat('apic13_noih.mat')
+plt.figure()
+plt.subplot(2,3,1)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'r', label='Control')
+plt.plot(data_zd['Freq'][0], data_zd['ZinAmp'][0], 'b', label='ZD7288')
+plt.subplot(2,3,4)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'r')
+plt.plot(data_zd['Freq'][0], data_zd['ZinPhase'][0], 'b')
+plt.subplot(2,3,2)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r--', label='Control')
+plt.plot(data_zd['Freq'][0], data_zd['ZcAmp'][0], 'b--', label='ZD7288')
+plt.subplot(2,3,5)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r--')
+plt.plot(data_zd['Freq'][0], data_zd['ZcPhase'][0], 'b--')
+plt.subplot(2,3,1)
+plt.legend()
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel(r'$|Z_{in}|$ (M$\Omega$)', fontsize=16)
+plt.title('Input Impedance', fontsize=18)
+plt.xlim(0.5,20)
+plt.subplot(2,3,2)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel(r'$|Z_{c}|$ (M$\Omega$)', fontsize=16)
+plt.title('Transfer Impedance', fontsize=18)
+plt.xlim(0.5,20)
+plt.subplot(2,3,4)
+plt.plot([0.5,20], [0,0], 'k--')
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel(r'$\Phi_{in}$ (rad)', fontsize=16)
+plt.xlim(0.5,20)
+plt.subplot(2,3,5)
+plt.plot([0.5,20], [0,0], 'k--')
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+plt.xlim(0.5,20)
+
+data = loadmat('m1pt_apic1305_syn.mat')
+data_zd = loadmat('m1pt_apic1305_zd_syn.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 5020]
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 5020]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 5020]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 5020]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 5020]
+i = [i for i, t in zip(data['i'][0], data['time'][0]) if 4995 <= t <= 5020]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+i = np.array(i)
+
+plt.subplot(2,3,3)
+plt.plot(time-5000, i, 'k')
+
+plt.subplot(2,3,6)
+plt.plot(time-5000, dend_v-dend_v[0], 'r', label='Dendrite')
+plt.plot(time-5000, soma_v-soma_v[0], 'r--', label='Soma')
+plt.plot(time-5000, dend_v_zd-dend_v_zd[0], 'b', label='Dendrite - ZD7288')
+plt.plot(time-5000, soma_v_zd-soma_v_zd[0], 'b--', label='Soma - ZD7288')
+
+plt.subplot(2,3,3)
+plt.plot([1,1], [-0.22,0.01],'k--')
+plt.ylim(-0.22,0.0)
+plt.xlim(0,15)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('Current (nA)', fontsize=16)
+plt.title('Stimulus', fontsize=18)
+
+plt.subplot(2,3,6)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)',fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Response', fontsize=18)
+plt.plot([1,1], [-0.1, 7.1], 'k--')
+plt.xlim(0,15)
+plt.ylim(-0.1, 7.1)
+plt.plot([time[np.argmax(dend_v)]-5000, time[np.argmax(dend_v)]-5000], [-0.1, np.max(dend_v)-dend_v[0]], 'r')
+plt.plot([time[np.argmax(soma_v)]-5000, time[np.argmax(soma_v)]-5000], [-0.1, np.max(soma_v)-soma_v[0]], 'r--')
+plt.plot([time[np.argmax(dend_v_zd)]-5000, time[np.argmax(dend_v_zd)]-5000], [-0.1, np.max(dend_v_zd)-dend_v_zd[0]], 'b')
+plt.plot([time[np.argmax(soma_v_zd)]-5000, time[np.argmax(soma_v_zd)]-5000], [-0.1, np.max(soma_v_zd)-soma_v_zd[0]], 'b--')
+plt.legend()
+
+** toy model impedance 
+from matplotlib import pyplot as plt 
+plt.ion()
+import numpy as np 
+from scipy.io import loadmat 
+
+data = loadmat('toy_withL.mat')
+plt.subplot(2,3,1)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'r', label='L = 10 kH')
+plt.subplot(2,3,2)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r')
+plt.subplot(2,3,4)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'r')
+plt.subplot(2,3,5)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r')
+
+data = loadmat('toy_withoutL.mat')
+plt.subplot(2,3,1)
+plt.plot(data['Freq'][0], data['ZinAmp'][0], 'b', label='L = 1 mH')
+plt.subplot(2,3,2)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'b--')
+plt.subplot(2,3,4)
+plt.plot(data['Freq'][0], data['ZinPhase'][0], 'b')
+plt.subplot(2,3,5)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'b--')
+
+plt.subplot(2,3,1)
+plt.ylim(0,55)
+plt.xlim(0,1000)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('$|Z_{in}|$ (M$\Omega$)', fontsize=16)
+plt.title('Input Impedance', fontsize=18)
+plt.legend()
+
+plt.subplot(2,3,2)
+plt.ylim(0,55)
+plt.xlim(0,1000)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('$|Z_{in}|$ (M$\Omega$)', fontsize=16)
+plt.title('Transfer Impedance', fontsize=18)
+
+plt.subplot(2,3,4)
+plt.ylabel(r'$\Phi_{in}$ (rad)', fontsize=16)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.xticks(fontsize=14)
+plt.plot([0,1000],[0,0],'k--')
+plt.xlim(0,1000)
+
+plt.subplot(2,3,5)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.xticks(fontsize=14)
+plt.plot([0,1000],[0,0],'k--')
+plt.xlim(0,1000)
+
+data = loadmat('withL_syn_traces.mat')
+data_zd = loadmat('withoutL_syn_traces.mat')
+soma_v = data['soma_v'][0]
+dend_v = data['dend_v'][0]
+time = data['time'][0]
+i = data['i'][0]
+soma_v_noL = data_zd['soma_v'][0]
+dend_v_noL = data_zd['dend_v'][0]
+
+plt.subplot(2,3,3)
+plt.plot(time, i, 'k')
+plt.plot([1,1], [-0.035, 0.001],'k--')
+plt.ylim(-0.035, 0.001)
+plt.yticks([-0.035, 0.0], fontsize=14)
+plt.xlim(0,8)
+plt.xticks(fontsize=14)
+# plt.yticks(fontsize=14)
+plt.ylabel('Current (nA)', fontsize=16)
+plt.title('Stimulus', fontsize=18)
+plt.subplot(2,3,6)
+plt.plot(time, dend_v-dend_v[0], 'r', label='Dendrite - L = 10 kH')
+plt.plot(time, soma_v-soma_v[0], 'r--', label='Soma - L = 10 kH')
+plt.plot(time, dend_v_noL-dend_v_noL[0], 'b', label='Dendrite - L = 1 mH')
+plt.plot(time, soma_v_noL-soma_v_noL[0], 'b--', label='Soma - L = 1 mH')
+plt.plot([time[np.argmax(dend_v-dend_v[0])], time[np.argmax(dend_v-dend_v[0])]], [0, np.max(dend_v-dend_v[0])], 'r')
+plt.plot([time[np.argmax(soma_v-soma_v[0])], time[np.argmax(soma_v-soma_v[0])]], [0, np.max(soma_v-soma_v[0])], 'r--')
+plt.plot([time[np.argmax(dend_v_noL-dend_v_noL[0])], time[np.argmax(dend_v_noL-dend_v_noL[0])]], [0, np.max(dend_v_noL-dend_v_noL[0])], 'b')
+plt.plot([time[np.argmax(soma_v_noL-soma_v_noL[0])], time[np.argmax(soma_v_noL-soma_v_noL[0])]], [0, np.max(soma_v_noL-soma_v_noL[0])], 'b--')
+plt.xlim(0,8)
+# plt.plot([1,1],[-70,-68.5],'k--')
+# plt.ylim(-70,-68.5)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.legend()
+plt.title('Response', fontsize=18)
+plt.xlim(0,5)
+plt.ylim(0,1.2)
+plt.plot([1,1],[0,1.2], 'k--')
+
+
+* [2020-10-25 Sun] - looking at phase fig 
+** hardly any difference in time to peak for m1 vs harnett 
+*** could reduce m1 EPSP amplitude (currently 1.2 to harnetts ~1.0)
+*** could compare to kole version instead where there's 0 inductive phase 
+
+* [2020-10-27 Tue] - square + syn 
+** toy model 
+from scipy.io import loadmat 
+from matplotlib import pyplot as plt 
+plt.ion()
+
+data = loadmat('toyModel_sqaureWave.mat')
+data_zd = loadmat('toyModel_noL_sqaureWave.mat')
+
+plt.subplot(1,2,1)
+plt.plot(data['time'][0]-1, data['dend_v'][0]-data['dend_v'][0][0], 'r', label='Dendrite 10 kH')
+plt.plot(data['time'][0]-1, data['soma_v'][0]-data['soma_v'][0][0], 'r--', label='Soma 10 kH')
+plt.plot(data_zd['time'][0]-1, data_zd['dend_v'][0]-data_zd['dend_v'][0][0], 'b', label='Dendrite 1 mH')
+plt.plot(data_zd['time'][0]-1, data_zd['soma_v'][0]-data_zd['soma_v'][0][0], 'b--', label='Soma 1 mH')
+plt.xlabel('Time (ms)', fontsize=16)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Response to Square Wave', fontsize=18)
+plt.xlim(-1,10)
+
+data = loadmat('withL_syn_traces.mat')
+data_zd = loadmat('withoutL_syn_traces.mat')
+
+plt.subplot(1,2,2)
+plt.plot(data['time'][0], data['dend_v'][0]-data['dend_v'][0][0], 'r', label='Dendrite 10 kH')
+plt.plot(data['time'][0], data['soma_v'][0]-data['soma_v'][0][0], 'r--', label='Soma 10 kH')
+plt.plot(data_zd['time'][0], data_zd['dend_v'][0]-data_zd['dend_v'][0][0], 'b', label='Dendrite 1 mH')
+plt.plot(data_zd['time'][0], data_zd['soma_v'][0]-data_zd['soma_v'][0][0], 'b--', label='Soma 1 mH')
+plt.xlabel('Time (ms)', fontsize=16)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Response to Synaptic Stimulation', fontsize=18)
+plt.plot([1,1], [0,1.2], 'k--')
+plt.ylim(0,1.2)
+plt.xlim(0,10)
+
+** detailed model 
+from scipy.io import loadmat 
+from matplotlib import pyplot as plt 
+plt.ion()
+import numpy as np 
+
+data = loadmat('detailed_sqaureWave.mat')
+data_zd = loadmat('detailed_noih_sqaureWave.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 6000]
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 6000]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 6000]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 6000]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 6000]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+
+soma_dif = soma_v-soma_v[0]
+dend_dif = dend_v-dend_v[0]
+soma_zd_dif = soma_v_zd-soma_v_zd[0]
+dend_zd_dif = dend_v_zd-dend_v_zd[0]
+
+soma_max = np.max(soma_dif)
+dend_max = np.max(dend_dif)
+soma_zd_max = np.max(soma_zd_dif)
+dend_zd_max = np.max(dend_zd_dif)
+
+soma_ind = 0
+while soma_dif[soma_ind] < 0.99 * soma_max:
+    soma_ind = soma_ind + 1
+dend_ind = 0
+while dend_dif[dend_ind] < 0.99 * dend_max:
+    dend_ind = dend_ind + 1
+soma_zd_ind = 0
+while soma_zd_dif[soma_zd_ind] < 0.99 * soma_zd_max:
+    soma_zd_ind = soma_zd_ind + 1
+dend_zd_ind = 0
+while dend_zd_dif[dend_zd_ind] < 0.99 * dend_zd_max:
+    dend_zd_ind = dend_zd_ind + 1
+
+plt.subplot(1,2,1)
+plt.plot(time-5000, dend_v-dend_v[0], 'r', label='Dendrite')
+plt.plot(time-5000, soma_v-soma_v[0], 'r--', label='Soma')
+plt.plot(time-5000, dend_v_zd-dend_v_zd[0], 'b', label='Dendrite - ZD7288')
+plt.plot(time-5000, soma_v_zd-soma_v_zd[0], 'b--', label='Soma - ZD7288')
+plt.plot([time[soma_ind]-5000, time[soma_ind]-5000], [-0.2, soma_v[soma_ind]-soma_v[0]], 'r--')
+plt.plot([time[dend_ind]-5000, time[dend_ind]-5000], [-0.2, dend_v[dend_ind]-dend_v[0]], 'r')
+plt.plot([time[soma_zd_ind]-5000, time[soma_zd_ind]-5000], [-0.2, soma_v_zd[soma_zd_ind]-soma_v_zd[0]], 'b--')
+plt.plot([time[dend_zd_ind]-5000, time[dend_zd_ind]-5000], [-0.2, dend_v_zd[dend_zd_ind]-dend_v_zd[0]], 'b')
+plt.ylim(-.2, 17.5)
+plt.xlim(-2,800)
+plt.plot([-2,800], [0,0], 'k--')
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title('Response to Square Wave', fontsize=18)
+
+data = loadmat('m1pt_apic1305_syn.mat')
+data_zd = loadmat('m1pt_apic1305_zd_syn.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 5600]
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+
+plt.subplot(1,2,2)
+plt.plot(time-5000, dend_v-dend_v[0], 'r', label='Dendrite')
+plt.plot(time-5000, soma_v-soma_v[0], 'r--', label='Soma')
+plt.plot(time-5000, dend_v_zd-dend_v_zd[0], 'b', label=r'Dendrite - Block I$_{h}$')
+plt.plot(time-5000, soma_v_zd-soma_v_zd[0], 'b--', label=r'Soma - Block I$_{h}$')
+plt.plot([time[np.argmax(dend_v)]-5000, time[np.argmax(dend_v)]-5000], [-0.1, np.max(dend_v)-dend_v[0]], 'r')
+plt.plot([time[np.argmax(soma_v)]-5000, time[np.argmax(soma_v)]-5000], [-0.1, np.max(soma_v)-soma_v[0]], 'r--')
+plt.plot([time[np.argmax(dend_v_zd)]-5000, time[np.argmax(dend_v_zd)]-5000], [-0.1, np.max(dend_v_zd)-dend_v_zd[0]], 'b')
+plt.plot([time[np.argmax(soma_v_zd)]-5000, time[np.argmax(soma_v_zd)]-5000], [-0.1, np.max(soma_v_zd)-soma_v_zd[0]], 'b--')
+plt.legend(fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.plot([1,1],[0,7],'k--')
+plt.ylim(0,7)
+plt.xlim(0,30)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.title('Response to Synaptic Stimulation', fontsize=18)
+
+* [2020-10-29 Thu]
+** extra references 
+@ARTICLE{2020SciPy-NMeth,
+  author  = {Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and
+            Haberland, Matt and Reddy, Tyler and Cournapeau, David and
+            Burovski, Evgeni and Peterson, Pearu and Weckesser, Warren and
+            Bright, Jonathan and {van der Walt}, St{\'e}fan J. and
+            Brett, Matthew and Wilson, Joshua and Millman, K. Jarrod and
+            Mayorov, Nikolay and Nelson, Andrew R. J. and Jones, Eric and
+            Kern, Robert and Larson, Eric and Carey, C J and
+            Polat, {\.I}lhan and Feng, Yu and Moore, Eric W. and
+            {VanderPlas}, Jake and Laxalde, Denis and Perktold, Josef and
+            Cimrman, Robert and Henriksen, Ian and Quintero, E. A. and
+            Harris, Charles R. and Archibald, Anne M. and
+            Ribeiro, Ant{\^o}nio H. and Pedregosa, Fabian and
+            {van Mulbregt}, Paul and {SciPy 1.0 Contributors}},
+  title   = {{{SciPy} 1.0: Fundamental Algorithms for Scientific
+            Computing in Python}},
+  journal = {Nature Methods},
+  year    = {2020},
+  volume  = {17},
+  pages   = {261--272},
+  adsurl  = {https://rdcu.be/b08Wh},
+  doi     = {10.1038/s41592-019-0686-2},
+}
+
+@book{MATLAB:2010,
+    year = {2020},
+    author = {MATLAB},
+    title = {version 9.9.0 (R2020b)},
+    publisher = {The MathWorks Inc.},
+    address = {Natick, Massachusetts}
+}
+
+@misc{Rohatgi2020,
+  url = {https://automeris.io/WebPlotDigitizer},
+  author = {Rohatgi,  Ankit},
+  title = {Webplotdigitizer: Version 4.3},
+  year = {2020}
+}
+
+* [2020-10-30 Fri] - still working on synaptic stuff 
+** no ih, no lk 
+from scipy.io import loadmat 
+from matplotlib import pyplot as plt 
+plt.ion() 
+import numpy as np 
+
+data = loadmat('m1pt_apic1305_syn_traces_v2.mat')
+# data_zd = loadmat('m1pt_apic1305_zd_syn.mat')
+data_zd = loadmat('detailed_noih_syn_v2.mat')
+data_lk = loadmat('detailed_nolk_syn_v2.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 5600]
+time_lk = [t for t in data_lk['time'][0] if 4995 <= t <= 5600]
+time_zd = [t for t in data_zd['time'][0] if 4995 <= t <= 5600]
+
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+soma_v_lk = [v for v, t in zip(data_lk['soma_v'][0], data_lk['time'][0]) if 4995 <= t <= 5600]
+dend_v_lk = [v for v, t in zip(data_lk['dend_v'][0], data_lk['time'][0]) if 4995 <= t <= 5600]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+soma_v_lk = np.array(soma_v_lk)
+dend_v_lk = np.array(dend_v_lk)
+time_lk = np.array(time_lk)
+time_zd = np.array(time_zd)
+# plt.plot(time-5000, dend_v-dend_v[0], 'm', label='Dendrite')
+plt.plot(time-5000, soma_v-soma_v[0], 'm', label='Control')
+# plt.plot(time-5000, dend_v_zd-dend_v_zd[0], 'g', label=r'Dendrite - Block I$_{h}$')
+plt.plot(time_zd-5000, soma_v_zd-soma_v_zd[0], 'g', label=r'Block I$_{h}$')
+# plt.plot(time_lk-5000, dend_v_lk-dend_v_lk[0], 'b', label=r'Dendrite - Block shunting current')
+plt.plot(time_lk-5000, soma_v_lk-soma_v_lk[0], 'b', label=r'Block shunting current')
+# plt.plot([time[np.argmax(dend_v)]-5000, time[np.argmax(dend_v)]-5000], [-0.1, np.max(dend_v)-dend_v[0]], 'm')
+plt.plot([time[np.argmax(soma_v)]-5000, time[np.argmax(soma_v)]-5000], [-0.1, np.max(soma_v)-soma_v[0]], 'm--')
+# plt.plot([time[np.argmax(dend_v_zd)]-5000, time[np.argmax(dend_v_zd)]-5000], [-0.1, np.max(dend_v_zd)-dend_v_zd[0]], 'g')
+plt.plot([time_zd[np.argmax(soma_v_zd)]-5000, time[np.argmax(soma_v_zd)]-5000], [-0.1, np.max(soma_v_zd)-soma_v_zd[0]], 'g--')
+# plt.plot([time_lk[np.argmax(dend_v_lk)]-5000, time_lk[np.argmax(dend_v_lk)]-5000], [-0.1, np.max(dend_v_lk)-dend_v_lk[0]], 'b')
+plt.plot([time_lk[np.argmax(soma_v_lk)]-5000, time_lk[np.argmax(soma_v_lk)]-5000], [-0.1, np.max(soma_v_lk)-soma_v_lk[0]], 'b--')
+plt.legend(fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+# plt.plot([1,1],[0,7],'k--')
+# plt.ylim(0,7)
+plt.xlim(0,30)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.title('Response to Synaptic Stimulation', fontsize=18)
+
+** figure of impedance and synaptic response toy 
+from matplotlib import pyplot as plt 
+plt.ion()
+import numpy as np 
+from scipy.io import loadmat 
+
+data = loadmat('toy_withL.mat')
+plt.subplot(1,3,1)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r', label='L = 10 kH')
+plt.subplot(1,3,2)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r')
+
+data = loadmat('toy_withoutL.mat')
+plt.subplot(1,3,1)
+plt.plot(data['Freq'][0], data['ZcAmp'][0], 'b', label='L = 1 mH')
+plt.subplot(1,3,2)
+plt.plot(data['Freq'][0], data['ZcPhase'][0], 'b')
+
+plt.subplot(1,3,1)
+plt.ylim(0,55)
+plt.xlim(0,1000)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('$|Z_{c}|$ (M$\Omega$)', fontsize=16)
+plt.title('Impedance Amplitude', fontsize=18)
+plt.legend(fontsize=14)
+
+plt.subplot(1,3,2)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.xticks(fontsize=14)
+plt.plot([0,1000],[0,0],'k--')
+plt.xlim(0,1000)
+plt.title('Impedance Phase', fontsize=18)
+
+data = loadmat('withL_syn_traces.mat')
+data_zd = loadmat('withoutL_syn_traces.mat')
+soma_v = data['soma_v'][0]
+dend_v = data['dend_v'][0]
+time = data['time'][0]
+i = data['i'][0]
+soma_v_noL = data_zd['soma_v'][0]
+dend_v_noL = data_zd['dend_v'][0]
+
+plt.subplot(1,3,3)
+plt.plot(time, soma_v-soma_v[0], 'r', label='Soma - L = 10 kH')
+plt.plot(time, soma_v_noL-soma_v_noL[0], 'b', label='Soma - L = 1 mH')
+plt.plot([time[np.argmax(soma_v-soma_v[0])], time[np.argmax(soma_v-soma_v[0])]], [0, np.max(soma_v-soma_v[0])], 'r')
+plt.plot([time[np.argmax(soma_v_noL-soma_v_noL[0])], time[np.argmax(soma_v_noL-soma_v_noL[0])]], [0, np.max(soma_v_noL-soma_v_noL[0])], 'b')
+plt.xlim(0,8)
+# plt.plot([1,1],[-70,-68.5],'k--')
+# plt.ylim(-70,-68.5)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.title('Response', fontsize=18)
+plt.xlim(0,5)
+plt.ylim(0,1.2)
+# plt.plot([1,1],[0,1.2], 'k--')
+
+* [2020-11-1 Sun] - writing 
+** incorporating ted's toy model into the introduction 
+** block ih, lk, and control syn times
+ih: 7.3, lk: 5.8, control 4.7
+
+* [2020-11-2 Mon] - supplementals 
+** stimulating current amplitude 
+from scipy.io import loadmat 
+from matplotlib import pyplot as plt 
+plt.ion() 
+
+data = loadmat('M1_PTcell/trunk_data2/apic_130.5.mat')
+# dataDouble = loadmat('data/apic13_doubleAmp.mat')
+dataHalf = loadmat('data/apic13_halfAmp.mat')
+dataTriple = loadmat('data/apic13_tripleAmp.mat')
+dataThreeHalf = loadmat('data/apic13_threeHalfAmp.mat')
+data50 = loadmat('data/apic13_50amp.mat')
+data40 = loadmat('data/apic13_40Amp.mat')
+data100 = loadmat('data/apic13_100amp.mat')
+
+plt.figure()
+plt.subplot(1,2,1)
+plt.plot(dataHalf['Freq'][0], dataHalf['ZcAmp'][0], label='17.5 pA')
+plt.plot(data['Freq'][0], data['ZcAmp'][0], '--', label='25.0 pA')
+plt.plot(dataThreeHalf['Freq'][0], dataThreeHalf['ZcAmp'][0], ':', label='37.5 pA')
+# plt.plot(dataDouble['Freq'][0], dataDouble['ZcAmp'][0], '-.', label='50 pA')
+plt.plot(dataTriple['Freq'][0], dataTriple['ZcAmp'][0], '--', label='75 pA')
+plt.plot(data50['Freq'][0], data50['ZcAmp'][0], ':', label='50 pA v2')
+plt.plot(data40['Freq'][0], data40['ZcAmp'][0], '-.', label='40 pA')
+plt.plot(data100['Freq'][0], data100['ZcAmp'][0], '-.', label='100 pA')
+plt.subplot(1,2,2)
+plt.plot(dataHalf['Freq'][0], dataHalf['ZcPhase'][0], label='1.75 pA')
+plt.plot(data['Freq'][0], data['ZcPhase'][0], '--', label='2.5 pA')
+plt.plot(dataThreeHalf['Freq'][0], dataThreeHalf['ZcPhase'][0], ':', label='37.5 pA')
+# plt.plot(dataDouble['Freq'][0], dataDouble['ZcPhase'][0], '-.', label='5 pA')
+plt.plot(dataTriple['Freq'][0], dataTriple['ZcPhase'][0], '--', label='75 pA')
+plt.plot(data50['Freq'][0], data50['ZcPhase'][0], ':', label='50 pA v2')
+plt.plot(data40['Freq'][0], data40['ZcPhase'][0], '-.', label='40 pA')
+plt.plot(data100['Freq'][0], data100['ZcPhase'][0], '-.', label='100 pA')
+
+plt.subplot(1,2,1)
+plt.title('ZAP', fontsize=18)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel(r'$|Z_{c}|$ (M\Omega)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.legend(fontsize=14)
+plt.subplot(1,2,2)
+plt.title('ZPP', fontsize=18)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)

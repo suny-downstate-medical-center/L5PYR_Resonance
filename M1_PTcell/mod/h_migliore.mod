@@ -23,8 +23,6 @@ PARAMETER {
 	qtl=1
 	clk=0
 	elk = -70 (mV)
-        Kh = 1
-        Ks = 1
 }
 
 
@@ -32,7 +30,7 @@ NEURON {
 	THREADSAFE SUFFIX hd
 	NONSPECIFIC_CURRENT i
 	NONSPECIFIC_CURRENT lk
-        RANGE gbar, elk, clk, glk, ehd
+        RANGE gbar, vhalfl, elk, clk, glk, ehd
         GLOBAL linf,taul
 }
 
@@ -59,8 +57,8 @@ INITIAL {
 BREAKPOINT {
 	SOLVE states METHOD cnexp
 	ghd = gbar*l
-	i = Kh*ghd*(v-ehd)
-	lk = Ks*clk*gbar*(v-elk)
+	i = ghd*(v-ehd)
+	lk = clk*gbar*(v-elk)
 }
 
 

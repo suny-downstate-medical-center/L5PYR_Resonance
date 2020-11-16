@@ -3324,17 +3324,17 @@ plt.ion()
 import numpy as np 
 from scipy.io import loadmat 
 
-data = loadmat('toy_withL.mat')
+data = loadmat('data/toy_withL.mat')
 plt.subplot(1,3,1)
-plt.plot(data['Freq'][0], data['ZcAmp'][0], 'r', label='L = 10 kH')
+plt.plot(data['Freq'][0], data['ZcAmp'][0], color='k', linestyle='-', label='L = 10 kH')
 plt.subplot(1,3,2)
-plt.plot(data['Freq'][0], data['ZcPhase'][0], 'r')
+plt.plot(data['Freq'][0], data['ZcPhase'][0], color='k', linestyle='-')
 
-data = loadmat('toy_withoutL.mat')
+data = loadmat('data/toy_withoutL.mat')
 plt.subplot(1,3,1)
-plt.plot(data['Freq'][0], data['ZcAmp'][0], 'b', label='L = 1 mH')
+plt.plot(data['Freq'][0], data['ZcAmp'][0], color='k', linestyle='--', label='L = 1 mH')
 plt.subplot(1,3,2)
-plt.plot(data['Freq'][0], data['ZcPhase'][0], 'b')
+plt.plot(data['Freq'][0], data['ZcPhase'][0], color='k', linestyle='--')
 
 plt.subplot(1,3,1)
 plt.ylim(0,55)
@@ -3344,18 +3344,20 @@ plt.yticks(fontsize=14)
 plt.ylabel('$|Z_{c}|$ (M$\Omega$)', fontsize=16)
 plt.title('Impedance Amplitude', fontsize=18)
 plt.legend(fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=16)
 
 plt.subplot(1,3,2)
 plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
 plt.xlabel('Frequency (Hz)', fontsize=16)
-plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=14)
+plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=22)
 plt.xticks(fontsize=14)
-plt.plot([0,1000],[0,0],'k--')
+plt.plot([0,1000],[0,0], color='k', linestyle=':')
 plt.xlim(0,1000)
 plt.title('Impedance Phase', fontsize=18)
 
-data = loadmat('withL_syn_traces.mat')
-data_zd = loadmat('withoutL_syn_traces.mat')
+data = loadmat('data/withL_syn_traces.mat')
+# data_zd = loadmat('data/withoutL_syn_traces.mat')
+data_zd = loadmat('data/toy_lowL_v2.mat')
 soma_v = data['soma_v'][0]
 dend_v = data['dend_v'][0]
 time = data['time'][0]
@@ -3364,10 +3366,10 @@ soma_v_noL = data_zd['soma_v'][0]
 dend_v_noL = data_zd['dend_v'][0]
 
 plt.subplot(1,3,3)
-plt.plot(time, soma_v-soma_v[0], 'r', label='Soma - L = 10 kH')
-plt.plot(time, soma_v_noL-soma_v_noL[0], 'b', label='Soma - L = 1 mH')
-plt.plot([time[np.argmax(soma_v-soma_v[0])], time[np.argmax(soma_v-soma_v[0])]], [0, np.max(soma_v-soma_v[0])], 'r')
-plt.plot([time[np.argmax(soma_v_noL-soma_v_noL[0])], time[np.argmax(soma_v_noL-soma_v_noL[0])]], [0, np.max(soma_v_noL-soma_v_noL[0])], 'b')
+plt.plot(time, soma_v-soma_v[0], 'k-', label='Soma - L = 10 kH')
+plt.plot(time, soma_v_noL-soma_v_noL[0], color='k', linestyle='--', label='Soma - L = 1 mH')
+plt.plot([time[np.argmax(soma_v-soma_v[0])], time[np.argmax(soma_v-soma_v[0])]], [0, np.max(soma_v-soma_v[0])], color='k', linestyle='-')
+plt.plot([time[np.argmax(soma_v_noL-soma_v_noL[0])], time[np.argmax(soma_v_noL-soma_v_noL[0])]], [0, np.max(soma_v_noL-soma_v_noL[0])], color='k', linestyle='--')
 plt.xlim(0,8)
 # plt.plot([1,1],[-70,-68.5],'k--')
 # plt.ylim(-70,-68.5)
@@ -3375,10 +3377,10 @@ plt.xticks(fontsize=14)
 plt.yticks(fontsize=14)
 plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
 plt.xlabel('Time (ms)', fontsize=16)
-plt.title('Response', fontsize=18)
+plt.title('Response to Synaptic Stimulation', fontsize=18)
 plt.xlim(0,5)
-plt.ylim(0,1.2)
-# plt.plot([1,1],[0,1.2], 'k--')
+plt.ylim(0,1.1)
+plt.plot([1,1],[0,1.2], color='k', linestyle=':')
 
 * [2020-11-1 Sun] - writing 
 ** incorporating ted's toy model into the introduction 
@@ -3433,3 +3435,106 @@ plt.xlabel('Frequency (Hz)', fontsize=16)
 plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
 plt.xticks(fontsize=14)
 plt.yticks(fontsize=14)
+
+* [2020-11-9 Mon] - summary of changes to paper 
+** Simplified model - effects of inductance, differences with anomalous 
+inductance from Ih 
+
+*** New Figure 1 - impedance amplitude, impedance phase, and response to synaptic 
+stimulation at low and high L
+**** Didn't include response to square wave since never comes up again, wheras 
+these three can be related to later results
+
+*** Edited Intro Paragraph 4 on impedance, inductance, and HCN channels 
+
+*** New Intro Para 5 on simple model
+I make a couple "as we shall sees" regarding differences with the more detailed 
+models in Results - seems like maybe poor form, but also doesn't seem like it 
+belongs in Results because not new info.
+
+*** Detailed desciption of simplified model (Methods Para 2)
+
+** Description of chirp stim in Methods Para 4
+*** mentions quality check on our data and issue w/ SciPy and Matlab's chirp
+
+** Resonance strength: sticking with the quantity, no longer calling it q factor
+*** I note the issue with calling it Q at the end of Methods Para 5
+
+** Replaced sinusoids w/ response to synaptic stimulation in what is now Fig. 4
+
+** New Fig. 7 - effects of blocking TASK of HCN on response to synaptic stim 
+*** include new prediction (#4) in Discussion 
+
+** suggestions I'm inclined not to follow
+*** still haven't changed number of the models, would prefer not to,
+makes less sense now that none of the detailed models are first + pain in the ass
+
+*** also no validation - not sure exactly what it should/would entail, chirp is 
+awfully well established, a formal comparison of it to other methods (imped tool 
+in NEURON, Gaussian white noise, spike-triggered averaging for suprathreshold) 
+might even be better suited to a methods paper imho 
+
+* [2020-11-10 Tue] - rewriting description of phenomenological inductance 
+** original 
+HCN also affects neuronal filtering properties, which have been characterized as impedance profiles measured 
+at subthreshold voltages \cite{Ulrich2002-dd, Robinson2003-uc, Dembrow2015-zb}.
+A common experimental method for probing the impedance is to stimulate the neuron by injecting a chirp current waveform, 
+which is a constant-amplitude, sinusoidal waveform whose instantaneous frequency changes as function of time \cite{Puil1986-uv}.
+Subthreshold resonance occurs when impedance amplitude ($|Z|$) has a maximum at a nonzero frequency
+known as the resonant frequency (f$_{res}$). 
+It has been observed in a wide variety of species and neuronal cell 
+types \cite{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
+and is proposed to impart neurons with the ability to discriminate inputs by frequency \cite{Branco2010-nr, Das2017-nz}.
+A simple parallel conductance RC circuit model of a passive neuron (Hodgkin-Huxley model without active \na\ and \k\ channels) does not show resonance
+properties but instead shows voltage amplitude fall-off above a certain frequency \cite{Hodgkin1952-av}. IT cells largely respond in this way, 
+showing the properties of a low-pass filter \cite{Dembrow2015-zb}. In order to get resonance, one
+must add an inductance.
+The voltage dependent conductance produced by HCN channels fills this role by generating
+what has been termed an "anomalous" inductance, wherein HCN channels actively oppose changes
+in \vmemb\ and activate slowly relative to the membrane time constant.  
+These two properties have the effect of reducing $|Z|$ at frequencies below f$_{res}$,
+creating a broad peak in the impedance amplitude profile (ZAP) \cite{Hutcheon2000-gs}.
+The relatively high expression of HCN in PTs endows them with resonance, giving the properties of a bandpass filter.
+Impedance phase ($\Phi$) is another important, yet often neglected, filter property that describes the temporal relationship 
+between the stimulating current and \vmemb\ .
+Leading, or inductive, phase is defined as the case where peaks in \vmemb\ precede peaks in the stimulating current, 
+and at the synchronous frequency the peaks in \vmemb\ and stimulating current are synchronized \cite{Puil1986-uv}. `
+The "anomalous" inductance generated by HCN channels also increases inductive phase \cite{Narayanan2008-zw}.
+Inductive phase has been proposed as a mechanism for compensating the location-dependent capacitive delay of dendritic
+inputs at the soma \cite{Vaidya2013-sx}.
+Both resonance and synchronous frequency are sensitive to the presence and distribution of voltage-gated 
+ion channels in the dendrites and increase with distance from the soma in PTs in a
+manner similar to hippocampal PCs \cite{Ulrich2002-dd, Dembrow2015-zb, Das2017-nz}.
+** new version 
+HCN also affects neuronal filtering properties, which have been characterized as impedance profiles measured 
+at subthreshold voltages \cite{Ulrich2002-dd, Robinson2003-uc, Dembrow2015-zb}.
+A common experimental method for probing the impedance is to stimulate the neuron by injecting a chirp current waveform, 
+which is a constant-amplitude, sinusoidal waveform whose instantaneous frequency changes as function of time \cite{Puil1986-uv}.
+Impedance amplitude ($|Z|$) characterizes voltage response with respect to the frequency of the stimulus, 
+and resonance occurs when $|$$\Delta$V$_{memb}$$|$, and consequently $|Z|$, have a maximum at a nonzero frequency
+known as the resonant frequency (f$_{res}$). 
+Resonance has been observed in a wide variety of species and neuronal cell 
+types \cite{Crawford1981-av, Puil1988-ca, Hutcheon2000-gs, Yoshida2011-ec, Ulrich2002-dd},
+and is proposed to impart neurons with the ability to discriminate inputs by frequency \cite{Branco2010-nr, Das2017-nz}.
+A simple parallel conductance RC circuit model of a passive neuron (Hodgkin-Huxley model without active \na\ and \k\ channels) does not show resonance
+properties but instead shows voltage amplitude fall-off above a certain frequency \cite{Hodgkin1952-av}. 
+IT cells largely respond in this way, showing the properties of a low-pass filter \cite{Dembrow2015-zb}.
+The voltage dependent conductance produced by HCN channels produces resonance by generating
+what has been termed an "phenomenological" inductance, wherein a time-variant conductance 
+imparts some of the effects of an inductor on neuronal impedance \cite{Cole1949-ca, Cole1941-vd}.
+HCN channels, unlike \na\ and \k\ channels, achieve this by being open at resting membrane potential, 
+actively opposing changes in \vmemb\, and activating slowly relative to the membrane time constant \cite{Hutcheon2000-gs}}.  
+This produces an "anomalous" impedance, where $|Z|$ is attenuated at low frequencies,
+creating a broad resonance peak in the impedance amplitude profile (ZAP) \cite{Mauro1961-ow}.
+By contrast, an inductor has the effect of amplifying $|Z|$ nonuniformly across frequencies, creating a resonance peak \cite{Vaidya2013-sx}. 
+The relatively high expression of HCN in PTs endows them with resonance, giving the properties of a bandpass filter.
+Impedance phase ($\Phi$) is another important, yet often neglected, filter property that describes the temporal relationship 
+between the stimulating current and \vmemb\ .
+Leading, or inductive, phase is defined as the case where peaks in \vmemb\ precede peaks in the stimulating current, 
+and at the synchronous frequency the peaks in \vmemb\ and stimulating current are synchronized \cite{Puil1986-uv}. `
+The "phenomenological" inductance generated by HCN channels increases inductive phase \cite{Narayanan2008-zw}.
+Inductive phase has been proposed as a mechanism for compensating the location-dependent capacitive delay of dendritic
+inputs at the soma \cite{Vaidya2013-sx}.
+Both resonance and synchronous frequency are sensitive to the presence and distribution of voltage-gated 
+ion channels in the dendrites and increase with distance from the soma in PTs in a
+manner similar to hippocampal PCs \cite{Ulrich2002-dd, Dembrow2015-zb, Das2017-nz}.

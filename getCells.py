@@ -30,9 +30,9 @@ def GetAllenCells(neuronal_model_ids):
 	bp.cache_stimulus = False # change to True to download the large stimulus NWB file
 
 	for neuronal_model_id in neuronal_model_ids:
-		os.system('mkdir ' + str(neuronal_model_id))
+		os.system('mkdir models/' + str(neuronal_model_id))
 		bp.cache_data(neuronal_model_id, working_directory=str(neuronal_model_id))
-		os.system('cd ' + str(neuronal_model_id) + '; nrnivmodl ./modfiles; cd ../')
+		os.system('cd ' + str(neuronal_model_id) + '; nrnivmodl ./modfiles; cd ../../')
 
 def AllenCell(path = None):
 	owd = os.getcwd()
@@ -54,7 +54,7 @@ def AllenCell(path = None):
 
 def KoleCell():
 	owd = os.getcwd()
-	os.chdir('./Kole')
+	os.chdir('./models/Kole')
 	from neuron import h, init
 	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	h.load_file('stdrun.hoc')
@@ -68,7 +68,7 @@ def KoleCell():
 
 def AckerAnticCell():
 	owd = os.getcwd()
-	os.chdir('./AckerAntic')
+	os.chdir('./models/AckerAntic')
 	import sys 
 	sys.path.insert(1, './cells/')
 	from eeeD import MakeCell
@@ -81,7 +81,7 @@ def AckerAnticCell():
 
 def NeymotinHarnettCell(slope=14*2):
 	owd = os.getcwd()
-	os.chdir('./Neymotin')
+	os.chdir('./models/Neymotin')
 	from neuron import h, init
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
@@ -91,7 +91,7 @@ def NeymotinHarnettCell(slope=14*2):
 
 def NeymotinKoleCell(slope=14*2):
 	owd = os.getcwd()
-	os.chdir('./Neymotin')
+	os.chdir('./models/Neymotin')
 	from neuron import h, init
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
@@ -101,7 +101,7 @@ def NeymotinKoleCell(slope=14*2):
 
 def NeymotinMiglioreCell(slope=14*2):
 	owd = os.getcwd()
-	os.chdir('./Neymotin')
+	os.chdir('./models/Neymotin')
 	from neuron import h, init
 	h.load_file("./cells/PTcell.hoc")
 	ihMod2str = {'harnett': 1, 'kole': 2, 'migliore': 3}
@@ -111,7 +111,7 @@ def NeymotinMiglioreCell(slope=14*2):
 
 def HayCell(morphology_file = './morphologies/cell1.asc'):
 	owd = os.getcwd()
-	os.chdir('./Hay')
+	os.chdir('./models/Hay')
 	from neuron import h#, init
 	h.load_file('stdrun.hoc')
 	h.load_file('import3d.hoc')
@@ -126,7 +126,7 @@ def HayCell(morphology_file = './morphologies/cell1.asc'):
 
 def HayCellMig(morphology_file = './morphologies/cell1.asc'):
 	owd = os.getcwd()
-	os.chdir('./Hay')
+	os.chdir('./models/Hay')
 	from neuron import h#, init
 	h.load_file('stdrun.hoc')
 	h.load_file('import3d.hoc')
@@ -141,7 +141,7 @@ def HayCellMig(morphology_file = './morphologies/cell1.asc'):
 
 def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 	owd = os.getcwd()
-	os.chdir('./Hay')
+	os.chdir('./models/Hay')
 	from neuron import h#, init
 	# h.load_file("/usr/local/nrn//share/nrn/lib/hoc/stdrun.hoc")
 	# h.load_file('/usr/local/nrn//share/nrn/lib/hoc/import3d.hoc')
@@ -156,7 +156,7 @@ def HayCellSWC(morphology_file = '../suter_shepherd/BS0284.CNG.swc'):
 
 def M1Cell():
 	owd = os.getcwd()
-	os.chdir('M1_PTcell')
+	os.chdir('models/DuraBernal')
 	from netParams_unified import netParams 
 	from cfg_unified import cfg
 	from netpyne import sim 

@@ -1,0 +1,234 @@
+{load_file("nrngui.hoc")}
+objectvar save_window_, rvp_
+objectvar scene_vector_[7]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{pwman_place(0,0,0)}
+
+//Begin CellBuild[0]
+{
+load_file("celbild.hoc", "CellBuild")
+}
+{ocbox_ = new CellBuild(1)}
+{object_push(ocbox_)}
+{
+version(5.7)
+continuous = 1
+}
+{object_push(topol)}
+{
+first = 0
+slist.remove_all()
+sname = "dend"
+objref tobj
+}
+{
+tobj = new CellBuildSection("soma",0, 0, tobj, 0) slist.append(tobj)
+  tobj.position(0,0,15,0) tobj.lx=7.5 tobj.ly=0 tobj.i3d=0
+tobj = new CellBuildSection("dend",0, 0, tobj, 1) slist.append(tobj)
+tobj.parent=slist.object(0)
+  tobj.position(15,0,75,0) tobj.lx=45 tobj.ly=0 tobj.i3d=0
+all_init()
+}
+for i=0, slist.count-1 {slist.object(i).rdses()}
+{object_pop()}
+{
+}
+{object_push(subsets)}
+{first = 0}
+{ tobj = snlist.object(0)}
+{consist()}
+{object_pop()}
+{
+}
+{object_push(geom)}
+{
+first = 0
+tobj = new GeoSpec(0, bild.subsets.snlist.object(0))
+for i=0, 1 {tobj.snlist.list.object(i).ldiaminfo.x[0] = fscan()}}
+10
+75
+{
+bild.subsets.snlist.object(0).geo.append(tobj)
+tobj = new GeoSpec(1, bild.subsets.snlist.object(0))
+for i=0, 1 {tobj.snlist.list.object(i).ldiaminfo.x[1] = fscan()}}
+10
+1
+{
+bild.subsets.snlist.object(0).geo.append(tobj)
+tobj = new GeoSpec(7)
+tobj.value = 0.1
+bild.subsets.snlist.object(0).geo.append(tobj)
+set_default()
+}
+{object_pop()}
+{
+}
+{object_push(memb)}
+{first=0}
+{
+tobj = new FakeMechStan(0)
+tobj.value = 100
+tobj.set_default()
+tobj = new MStanWrap(tobj, 0)
+bild.subsets.snlist.object(0).ml.append(tobj)
+}
+{
+tobj = new FakeMechStan(1)
+tobj.value = 1
+tobj.set_default()
+tobj = new MStanWrap(tobj, 0)
+bild.subsets.snlist.object(0).ml.append(tobj)
+}
+{
+tobj = new MechanismStandard("pas")
+tobj.set("g_pas", 5e-05, 0)
+tobj.set("e_pas", -70, 0)
+tobj = new MStanWrap(tobj, 1)
+bild.subsets.snlist.object(0).ml.append(tobj)
+}
+{object_pop()}
+{
+}
+{object_push(manage)}
+{
+first = 0
+classname = "Cell"
+etop=1 esub=1 egeom=1 emem=1
+itop=1 isub=0 igeom=0 imem=0
+bild.topol.names_off = 0
+bild.topol.circles_off = 0
+output_index = 0  output_x = 1
+thresh = 10
+}
+{object_pop()}
+{
+cexport()
+}
+{object_pop()}
+{
+save_window_=ocbox_.gtopol
+save_window_.size(-200,200,-150,150)
+scene_vector_[2] = save_window_
+ocbox_.gtopol = save_window_
+save_window_.save_name("ocbox_.gtopol")
+}
+{
+ocbox_.map("CellBuild[0]", 85, 507, 766.08, 374.4)
+}
+objref ocbox_
+//End CellBuild[0]
+
+
+//Begin PointProcessManager
+{
+load_file("pointman.hoc")
+}
+{
+soma ocbox_ = new PointProcessManager(0)
+}
+{object_push(ocbox_)}
+{
+mt.select("IClamp") i = mt.selected()
+ms[i] = new MechanismStandard("IClamp")
+ms[i].set("del", 1, 0)
+ms[i].set("dur", 5, 0)
+ms[i].set("amp", 0.2, 0)
+mt.select("IClamp") i = mt.selected() maction(i)
+hoc_ac_ = 0.5
+sec.sec move() d1.flip_to(0)
+}
+{object_pop() doNotify()}
+{
+ocbox_ = ocbox_.v1
+ocbox_.map("PointProcessManager", 925, 331, 208.32, 326.4)
+}
+objref ocbox_
+//End PointProcessManager
+
+
+//Begin LinearCircuit[0]
+{
+load_file("lincir.hoc", "LinearCircuit")
+}
+{
+ocbox_ = new LinearCircuit(1)
+}
+{object_push(ocbox_)}
+{version(2)}
+{mkelm(8, 100, 120, 2, 0)}
+{mklabel(0, "dend(0.5)", -48.2908, 33.13)}
+{mklabel(1, "cn", -4.5591, 28.091)}
+{sel.extra_info.set("dend", 0.5) sel.extra_info.name(sel)}
+{mkelm(3, 120, 140, 2, 0)}
+15000
+{mklabel(0, "L", 9.469, 24.415)}
+{mkelm(1, 160, 140, 2, 0)}
+25
+{mklabel(0, "R", 4.953, 18.661)}
+{mkelm(6, 180, 80, 2, 0)}
+{mkelm(4, 180, 120, 2, 1.5708)}
+{mklabel(0, "B", 15, 15)}
+{sel.extra_info.restore()}
+3
+1e+09 -70
+1e+09 0
+1e+09 0
+{parasitic_ = 0  noconsist_ = 0}
+{sel = nil}
+{object_pop()}
+{
+{
+save_window_=ocbox_.g
+save_window_.size(0,300,0,200)
+scene_vector_[4] = save_window_
+ocbox_.g = save_window_
+save_window_.save_name("ocbox_.g")
+save_window_.label(51.7092, 153.13, "dend(0.5)", 1, 1, 0.5, 0.5, 1)
+save_window_.label(95.4409, 168.091, "cn", 1, 1, 0.5, 0.5, 1)
+save_window_.label(129.469, 164.415, "L", 1, 1, 0.5, 0.5, 1)
+save_window_.label(164.953, 158.661, "R", 1, 1, 0.5, 0.5, 1)
+save_window_.label(195, 135, "B", 1, 1, 0.5, 0.5, 1)
+}
+ocbox_.map("LinearCircuit[0]", 376, 371, 519.36, 288)
+}
+objref ocbox_
+//End LinearCircuit[0]
+
+{
+xpanel("RunControl", 0)
+v_init = -70
+xvalue("Init","v_init", 1,"stdinit()", 1, 1 )
+xbutton("Init & Run","run()")
+xbutton("Stop","stoprun=1")
+runStopAt = 5
+xvalue("Continue til","runStopAt", 1,"{continuerun(runStopAt) stoprun=1}", 1, 1 )
+runStopIn = 1
+xvalue("Continue for","runStopIn", 1,"{continuerun(t + runStopIn) stoprun=1}", 1, 1 )
+xbutton("Single Step","steprun()")
+t = 20
+xvalue("t","t", 2 )
+tstop = 20
+xvalue("Tstop","tstop", 1,"tstop_changed()", 0, 1 )
+dt = 0.025
+xvalue("dt","dt", 1,"setdt()", 0, 1 )
+steps_per_ms = 40
+xvalue("Points plotted/ms","steps_per_ms", 1,"setdt()", 0, 1 )
+screen_update_invl = 0.05
+xvalue("Scrn update invl","screen_update_invl", 1,"", 0, 1 )
+realtime = 0.00999999
+xvalue("Real Time","realtime", 0,"", 0, 1 )
+xpanel(86,107)
+}
+{
+save_window_ = new Graph(0)
+save_window_.size(0,20,-75,-50)
+scene_vector_[6] = save_window_
+{save_window_.view(0, -75, 20, 25, 376, 107, 300.48, 200.32)}
+graphList[0].append(save_window_)
+save_window_.save_name("graphList[0].")
+save_window_.addexpr("v(.5)", 2, 1, 0.595527, 0.9623, 2)
+save_window_.addvar("dend.v( 0.5 )", 3, 1, 0.592332, 0.947923, 2)
+}
+objectvar scene_vector_[1]
+{doNotify()}

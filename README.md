@@ -27,17 +27,28 @@ compartment:
 python -i init.py
 ```
 
-# Code Structure
-*getCells.py* contains functions for loading stand-alone versions of 
+# Code
+## init.py 
+Example simulation of chirp current stimulation of the apical trunk and computation
+of transfer impedance between stimulated dendrite and the soma.  The chirp stimulus
+provides sinusoidal current stimultion with instantaneous frequency linearly
+increasing from 0.5-10Hz in 10s. Transfer impedance is computed from the resulting
+somatic membrane potential waveforms.
+
+## getCells.py
+Contains functions for loading stand-alone versions of 
 pyramidal-tract type neurons used in the manuscript. 
 There are also functions for automatically downloading and instantiating models
 from the [Allen Brain Atlas](https://portal.brain-map.org/).
 
-*chirpUtils.py* contains functions for simulating chirp current stimulation and
+## chirpUtils.py
+Contains functions for simulating chirp current stimulation and
 computing neuronal impedance.  
 
-'./models/' contains folders with each of the cell models studied in the 
+## ./models/
+Contains folders with each of the cell models studied in the 
 manuscript.  Each of those folders contains .mod files that must be compiled prior
 to runtime.
 
-'./simcode/' contains scripts used to run the batch simulations and analyses used in the study. 
+## ./simcode/ 
+Contains scripts used to run the batch simulations and analyses used in the study. Many of these are machine specific and weren't intended for general use. 

@@ -18,12 +18,21 @@ def getChirp(f0, f1, t0, amp, Fs, delay):
     vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
     return vch, vtt
 
+def getChirpHighFs(f0, f1, t0, amp, Fs, delay):
+    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs*500+1)
+    chirp_time = np.linspace(0, t0, (t0)*Fs*500+1)
+    ch = chirp(chirp_time, f0, t0, f1, method='linear',phi=-90)
+    ch = np.hstack((np.zeros(Fs*500*delay), ch, np.zeros(Fs*500*delay)))
+    vch = h.Vector(); vch.from_python(ch); vch.mul(amp)
+    vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
+    return vch, vtt
+
 # get chirp stim: based on sam's code form evoizhi/sim.py
 def getChirpLog(f0, f1, t0, amp, Fs, delay):
-    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs+1)
-    chirp_time = np.linspace(0, t0, (t0)*Fs+1)
-    ch = chirp(chirp_time, f0, t0, f1, method='linear',phi=-90)
-    ch = np.hstack((np.zeros(Fs*delay), ch, np.zeros(Fs*delay)))
+    time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs*40+1)
+    chirp_time = np.linspace(0, t0, (t0)*Fs*40+1)
+    ch = chirp(chirp_time, f0, t0, f1, method='log',phi=-90)
+    ch = np.hstack((np.zeros(Fs*40*delay), ch, np.zeros(Fs*40*delay)))
     vch = h.Vector(); vch.from_python(ch); vch.mul(amp)
     vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
     return vch, vtt
@@ -51,7 +60,7 @@ def zMeasures(current, v,  delay, sampr, f1, bwinsz=1):
     ## impedance measures
     Freq       = np.linspace(0.0, sampr/2.0, len(z))
     zAmp       = abs(z)
-    zPhase     = np.arctan(np.imag(z)/np.real(z))
+    zPhase     = np.arctan2(np.imag(z),np.real(z))
     zRes       = np.real(z)
     zReact     = np.imag(z)
 
@@ -105,6 +114,206 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     h.celsius = 34
     h.tstop = (t0+delay*2) * Fs + 1
     h.run()
+
+    soma_np = soma_v.as_numpy()
+    
+    current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
+                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs * 40 + 1,endpoint=True), I.as_numpy())
+    time = t_vec.as_numpy()
+    cis_np = cis_v.as_numpy()
+    
+    samp_rate = (1 / (time[1] - time[0])) * Fs
+    
+    ## calculate impedance
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
+    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
+
+    freqsIn = np.argwhere(ZinPhase > 0)
+    if len(freqsIn) > 0:
+        ZinSynchFreq = Freq[freqsIn[-1]]
+        ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+            [float(Freq[ind]) for ind in freqsIn])
+    else:
+        ZinSynchFreq = 0 
+        ZinPhaseL = 0
+
+    freqsC = np.argwhere(ZcPhase > 0)
+    if len(freqsC) > 0:
+        ZcSynchFreq = Freq[freqsC[-1]]
+        ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
+            [float(Freq[ind]) for ind in freqsC])
+    else:
+        ZcSynchFreq = 0
+        ZcPhaseL = 0
+
+    v_attenuation = Vattenuation(ZinAmp, ZcAmp)
+    phase_lag = phaseLag(ZinPhase, ZcPhase)
+
+    dist = fromtodistance(seg, soma_seg)
+
+    ## generate output
+    out = {'Freq' : Freq,
+        'ZinRes' : ZinRes,
+        'ZinReact' : ZinReact,
+        'ZinAmp' : ZinAmp,
+        'ZinPhase' : ZinPhase,
+        'ZcRes' : ZcRes,
+        'ZcReact' : ZcReact,
+        'ZcAmp' : ZcAmp,
+        'ZcPhase' : ZcPhase,
+        'ZinSynchFreq' : ZinSynchFreq,
+        'ZinPhaseL' : ZinPhaseL,
+        'ZcSynchFreq' : ZcSynchFreq,
+        'ZcPhaseL' : ZcPhaseL,
+        'phase_lag' : phase_lag,
+        'Vattenuation' : v_attenuation,
+        'ZinResAmp' : ZinResAmp,
+        'ZinResFreq' : ZinResFreq,
+        'ZcResAmp' : ZcResAmp,
+        'ZcResFreq' : ZcResFreq,
+        'QfactorIn' : QfactorIn,
+        'QfactorTrans' : QfactorTrans,
+        'fVarIn' : fVarIn,
+        'fVarTrans' : fVarTrans,
+        'dist' : dist}
+
+    out2 = {'soma_np' : soma_np,
+            'cis_np' : cis_np,
+            'time' : time,
+            'current_np' : current_np}
+
+    if out_file_name:
+        savemat(out_file_name + '.mat', out)
+        savemat(out_file_name + '_traces.mat', out2)
+    else:
+        return out
+
+# apply chirp stimulus to segment
+def applyChirpHighFs(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
+    h.dt = 0.005
+    ## place current clamp on soma
+    stim = h.IClamp(seg)
+    stim.amp = 0
+    stim.dur = (t0+delay*2) * Fs + 1
+    I.play(stim._ref_amp, t)
+
+    ## Record time
+    t_vec = h.Vector()
+    t_vec.record(h._ref_t)
+
+    ## Record soma voltage
+    soma_v = h.Vector()
+    soma_v.record(soma_seg._ref_v)
+    cis_v = h.Vector()
+    cis_v.record(seg._ref_v)
+    
+    ## run simulation
+    h.celsius = 34
+    h.tstop = (t0+delay*2) * Fs + 1
+    h.run()
+
+    soma_np = soma_v.as_numpy()
+    
+    current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
+                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs *500 + 1,endpoint=True), I.as_numpy())
+    time = t_vec.as_numpy()
+    cis_np = cis_v.as_numpy()
+    
+    samp_rate = (1 / (time[1] - time[0])) * Fs
+    
+    ## calculate impedance
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
+    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=5)
+
+    freqsIn = np.argwhere(ZinPhase > 0)
+    if len(freqsIn) > 0:
+        ZinSynchFreq = Freq[freqsIn[-1]]
+        ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+            [float(Freq[ind]) for ind in freqsIn])
+    else:
+        ZinSynchFreq = 0 
+        ZinPhaseL = 0
+
+    freqsC = np.argwhere(ZcPhase > 0)
+    if len(freqsC) > 0:
+        ZcSynchFreq = Freq[freqsC[-1]]
+        ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
+            [float(Freq[ind]) for ind in freqsC])
+    else:
+        ZcSynchFreq = 0
+        ZcPhaseL = 0
+
+    v_attenuation = Vattenuation(ZinAmp, ZcAmp)
+    phase_lag = phaseLag(ZinPhase, ZcPhase)
+
+    dist = fromtodistance(seg, soma_seg)
+
+    ## generate output
+    out = {'Freq' : Freq,
+        'ZinRes' : ZinRes,
+        'ZinReact' : ZinReact,
+        'ZinAmp' : ZinAmp,
+        'ZinPhase' : ZinPhase,
+        'ZcRes' : ZcRes,
+        'ZcReact' : ZcReact,
+        'ZcAmp' : ZcAmp,
+        'ZcPhase' : ZcPhase,
+        'ZinSynchFreq' : ZinSynchFreq,
+        'ZinPhaseL' : ZinPhaseL,
+        'ZcSynchFreq' : ZcSynchFreq,
+        'ZcPhaseL' : ZcPhaseL,
+        'phase_lag' : phase_lag,
+        'Vattenuation' : v_attenuation,
+        'ZinResAmp' : ZinResAmp,
+        'ZinResFreq' : ZinResFreq,
+        'ZcResAmp' : ZcResAmp,
+        'ZcResFreq' : ZcResFreq,
+        'QfactorIn' : QfactorIn,
+        'QfactorTrans' : QfactorTrans,
+        'fVarIn' : fVarIn,
+        'fVarTrans' : fVarTrans,
+        'dist' : dist}
+
+    out2 = {'soma_np' : soma_np,
+            'cis_np' : cis_np,
+            'time' : time,
+            'current_np' : current_np}
+
+    if out_file_name:
+        savemat(out_file_name + '.mat', out)
+        savemat(out_file_name + '_traces.mat', out2)
+    else:
+        return out
+
+# apply chirp stimulus to segment
+def applyChirpVarDt(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
+
+    ## place current clamp on soma
+    stim = h.IClamp(seg)
+    stim.amp = 0
+    stim.dur = (t0+delay*2) * Fs + 1
+    I.play(stim._ref_amp, t)
+
+    # ## Record time
+    # t_vec = h.Vector()
+    # t_vec.record(h._ref_t)
+    t_vec = h.CVode().record(h._ref_t)
+
+    ## Record soma voltage
+    soma_v = h.Vector()
+    # soma_v.record(soma_seg._ref_v)
+    cis_v = h.Vector()
+    # cis_v.record(seg._ref_v)
+    h.CVode().record(soma_seg._ref_v, soma_v, t_vec)
+    h.CVode().record(seg._ref_v, cis_v, t_vec)
+    
+    ## run simulation
+    h.celsius = 34
+    h.tstop = (t0+delay*2) * Fs + 1
+    h.CVode()
+    while h.t < h.tstop:
+        h.fadvance()
+        h.t = h.t + h.dt 
 
     soma_np = soma_v.as_numpy()
     

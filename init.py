@@ -14,6 +14,7 @@ sec_num = 'apic_20' # indicates stimulated section
 loc = 0.5 # indicates stimulated compartment (0-1)
 seg = s.net.cells[0].secs[sec_num]['hObj'](loc)
 soma_seg = s.net.cells[0].secs['soma']['hObj'](0.5)
+# seg = soma_seg 
 
 ## record voltages
 from neuron import h, gui
@@ -24,7 +25,7 @@ time = h.Vector().record(h._ref_t)
 ## parameters of the chirp stimulus
 from chirpUtils import applyChirp, getChirp
 amp = 0.025 # amplitude of chirp stim
-f0, f1, t0, Fs, delay = 0.5, 10, 10, 1000, 5 # initial and final frequencies, duration, sampling freq, delay
+f0, f1, t0, Fs, delay = 0.5, 20, 20, 1000, 5 # initial and final frequencies, duration, sampling freq, delay
 I, t = getChirp(f0, f1, t0, amp, Fs, delay) # defines current clamp
 
 ## run simulation

@@ -3600,3 +3600,75 @@ for f in freqs:
 * [2020-11-24 Tue] - more synaptic stims 
 ** sync frequency between middle of trunk and soma based on viadya is 7.7 Hz
 *** nearby obliques 89, 90, 91
+
+* [2020-12-2 Wed] - methods validation figure
+** fig code 
+from matplotlib import pyplot as plt 
+plt.ion()
+from scipy.io import loadmat 
+chirpDet = loadmat('models/DuraBernal/trunk_data2/apic_130.5.mat')
+validDet = loadmat('data/detailedValidate.mat')
+chirpPas = loadmat('data/noL_chirp.mat.mat')
+validPas = loadmat('data/noL_imped_v4.mat')
+chirpL = loadmat('data/withL_chirp.mat')
+validL = loadmat('data/withL_imped_v4.mat')
+
+fig, big_axes = plt.subplots( figsize=(15.0, 15.0) , nrows=3, ncols=1, sharey=True) 
+
+for row, big_ax in enumerate(big_axes, start=1):
+    # Turn off axis lines and ticks of the big subplot 
+    # obs alpha is 0 in RGBA string!
+    big_ax.tick_params(labelcolor=(1.,1.,1., 0.0), top='off', bottom='off', left='off', right='off')
+    # removes the white frame
+    big_ax._frameon = False
+
+big_axes[0].set_title('Simple Passive Model', fontsize=18)
+big_axes[1].set_title('Simple Model w/ Inductor', fontsize=18)
+big_axes[2].set_title('Detailed Model w/ HCN', fontsize=18)
+
+ax1 = fig.add_subplot(3,2,1)
+ax1.plot(chirpPas['Freq'][0], chirpPas['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax1.plot(validPas['freqs'][0], validPas['zAmp'][0], label='Validation', color='k')
+ax1.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+
+ax2 = fig.add_subplot(3,2,2)
+ax2.plot(chirpPas['Freq'][0], chirpPas['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax2.plot(validPas['freqs'][0], validPas['zPhase'][0], label='Validation', color='k')
+ax2.legend(fontsize=14)
+ax2.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+
+ax3 = fig.add_subplot(3,2,3)
+ax3.plot(chirpL['Freq'][0], chirpL['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax3.plot(validL['freqs'][0], validL['zAmp'][0], label='Validation', color='k')
+ax3.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+
+ax4 = fig.add_subplot(3,2,4)
+ax4.plot(chirpL['Freq'][0], chirpL['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax4.plot(validL['freqs'][0], validL['zPhase'][0], label='Validation', color='k')
+ax4.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+
+ax5 = fig.add_subplot(3,2,5)
+ax5.plot(chirpDet['Freq'][0], chirpDet['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax5.plot(validDet['freqs'][0], validDet['zAmp'][0], label='Validation', color='k')
+ax5.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+ax5.set_xlabel('Frequency (Hz)', fontsize=16)
+
+ax6 = fig.add_subplot(3,2,6)
+ax6.plot(chirpDet['Freq'][0], chirpDet['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax6.plot(validDet['freqs'][0], validDet['zPhase'][0], label='Validation', color='k')
+ax6.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+ax6.set_xlabel('Frequency (Hz)', fontsize=16)
+
+ax1.set_xlim(0,100)
+ax1.set_ylim(200,950)
+ax1.set_title('ZAPs', fontsize=16)
+
+ax2.set_xlim(0,100)
+ax2.set_ylim(-1.5, 0.05)
+ax2.set_title('ZPPs', fontsize=16)
+
+ax3.set_xlim(0,100)
+ax3.set_ylim(23.4,24.5)
+
+ax4.set_xlim(0,100)
+ax4.set_ylim(0,0.75)

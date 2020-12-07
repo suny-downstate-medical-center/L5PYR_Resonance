@@ -48,7 +48,16 @@ computing neuronal impedance.
 ## ./models/
 Contains folders with each of the cell models studied in the 
 manuscript.  Each of those folders contains .mod files that must be compiled prior
-to runtime.
+to runtime. Also includes simplified model presented in the paper that was built with
+NEURON's LinearCircuitBuilder: 'cellwithL.ses'. This model can be used interactively 
+by running:
+```
+from neuron import h, gui
+h.load_file('models/cellwithL.ses')
+```
+Note that circuit elements will not be recognized by NEURON unless the 'Simulate'
+button is selected on the LinearCircuit window.
 
 ## ./simcode/ 
-Contains scripts used to run the batch simulations and analyses used in the study. Many of these are machine specific and weren't intended for general use. 
+Contains scripts used to run the batch simulations and analyses used in the study. 
+Many of these are machine specific and weren't intended for general use. 

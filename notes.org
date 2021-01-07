@@ -3672,3 +3672,52 @@ ax3.set_ylim(23.4,24.5)
 
 ax4.set_xlim(0,100)
 ax4.set_ylim(0,0.75)
+
+* [2021-1-6 Wed] - ted's comments 
+** problem paragraph original 
+The basic passive parallel-conductance model of the neuron membrane is an RC circuit. 
+This provides low-pass filtering -- voltage amplitude falls off above a certain current-injection frequency, 
+determined primarily by membrane resistance (R), since membrane capacitance (C) is presumed to vary little in neurons \cite{Hodgkin1952-av}.
+In electrical engineering, a band-pass filter (or resonator) is produced by adding an inductor (L) to get an RLC circuit.
+Instead of a uniform response at low frequencies with fall-off at high (characteristic of the simple RC circuit \cite{Hodgkin1952-av}), 
+a resonator shows an augmented response at some restricted intermediate range of frequencies.  
+The neural membrane, however, is simply RC; there is no inductor. 
+Most voltage-dependent conductances, mediated by \na, \k, \ca, increase conductance with depolarization (outward rectification),
+preserving this low-pass filter membrane property \cite{Dembrow2015-zb}. 
+In contrast, \ih\ slowly inactivates with depolarization and produces inward or anomalous rectification, resisting current injection.
+\ih\ effects are similar, but not equivalent, to those produced by an inductor;
+the slow, anomalous rectification from \ih\ produces ``phenomenological'' inductance \cite{Cole1949-ca, Cole1941-vd}, 
+changing the membrane's properties from those of a low-pass filter to those of a band-pass resonator \cite{Hutcheon2000-gs} --
+\ih\ produces a peak in the voltage response to sinusoidal, or temporally-modulated, current or conductance changes at a particular frequency.
+\ih\ also changes the phase relationship between the voltage response and changes in current or conductance \cite{Mauro1961-ow}.
+** new 
+The basic passive parallel-conductance model of the neuron membrane is an RC circuit. 
+This provides low-pass filtering -- voltage amplitude falls off above a certain current-injection frequency, 
+determined primarily by membrane resistance (R) since membrane capacitance (C) is presumed to vary little in neurons \cite{Hodgkin1952-av}.
+In electrical engineering, a band-pass filter (or resonator) is produced by adding an inductor (L) to get an RLC circuit.
+Instead of a uniform response at low frequencies with fall-off at high (characteristic of the simple RC circuit \cite{Hodgkin1952-av}), 
+a resonator shows an augmented response at some restricted intermediate range of frequencies.  
+The neural membrane is simply RC; there is no inductor. 
+Voltage-gated ion channels, however, can under the right circumstances produce what is known as "phenomenological inductance" \cite{Cole1949-ca, Cole1941-vd}.
+By actively opposing changes to membrane potential and activating slowly relative to the membrane time constant,
+channels like HCN and delayed-rectifier \k\ channels change the membrane's properties from those of a low-pass filter 
+to those of a band-pass resonator as though there were an inductor present \cite{Mauro1961-ow, Mauro1970-km, Hutcheon2000-gs}.
+In PTs, \ih\ produces a peak in the voltage response to sinusoidal, or temporally-modulated, current or conductance changes at a particular frequency.
+\ih\ also changes the phase relationship between the voltage response and changes in current or conductance \cite{Hutcheon1996-db, Ulrich2002-dd}.
+** ted's suggested rewrite
+The electrical properties of the passive neuronal membrane are very similar
+to those of a parallel RC circuit, with the response of membrane
+potential to currents dropping off at frequencies above the "natural
+frequency" 1/(2 PI R C) (low-pass filtering).
+Under the right circumstances, however, voltage-gated ion channels
+can produce a "phenomenological inductance"
+\cite{Cole1941-vd, Cole1949-ca}
+that can, like a physical inductor in an RLC circuit, generate
+resonance:  an enhanced voltage response over an intermediate range
+of frequencies \cite{Mauro1961-ow, Mauro1970-km}.
+Phenomenological inductance is most likely to be seen when channels
+with slow gating are present, such as HCN channels and delayed
+rectifier K channels \cite{Puil1986-uv, Hutcheon1996-db}.
+Resonance becomes apparrent when currents through these channels
+are prominent enough and lag sufficiently far behind fluctuations
+of membrane potential \cite{Hutcheon2000-gs}.

@@ -1,6 +1,6 @@
 # Introduction
 This package contains code used in  
-[Effects of Ih and TASK-like shunting current on dendritic impedance in layer 5 pyramidal-tract type neurons](https://www.biorxiv.org/) (Kelley et al. 2020).  
+[Effects of Ih and TASK-like shunting current on dendritic impedance in layer 5 pyramidal-tract type neurons](https://www.biorxiv.org/content/10.1101/2021.01.08.425962v1) (Kelley et al. 2020).  
 
 This includes generalizable tools for computing neuronal impedance, 
 standalone versions of pyramidal tract neuron models previously 

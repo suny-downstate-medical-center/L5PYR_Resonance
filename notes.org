@@ -3721,3 +3721,195 @@ rectifier K channels \cite{Puil1986-uv, Hutcheon1996-db}.
 Resonance becomes apparrent when currents through these channels
 are prominent enough and lag sufficiently far behind fluctuations
 of membrane potential \cite{Hutcheon2000-gs}.
+
+* [2021-2-4 Thu] - reviewer comments 
+** Reviewer #1 (Comments to the Author (Required)):
+*** SUMMARY
+
+In this report the authors use computational models to investigate the linear 
+transfer function from the dendrites to the soma of pyramidal tract (PT) neurons. 
+In this study, the linear transfer function is defined to be that of the neuron at 
+rest with no synaptic inputs. PT neurons have been shown to have an interesting
+resonance in their transfer functions whose  properties are location-dependent. 
+The authors address the hypothesis that the amplitude and phase effects of a PT 
+neuron's resting liner transfer function is highly affected by dendritic HCN
+and TASK-like channels in the dendrites. They compare the transfer functions of 
+five published models of PT-like neurons, and find only one model comes close to 
+mimicking the linear transfer function observed in the data.
+
+The authors confirm that the frequency-dependent amplitude and phase properties 
+of real PT neurons are best accounted for by the model's HCN and TASK-like 
+channels, and that these channels can be used to improve the match between data 
+and another "less-well-fitting" model. It is notable that most of the published 
+models examined were not able to capture these basic linear properties. These 
+results further emphasize the importance of both HCN and TASK-like dendritic 
+channels in shaping synaptic integration. Importantly, this study demonstrates 
+how the linear resting-transfer function is an important dimension that should be 
+used in evaluating the ability of realistic models of single neurons to mimic the
+electrophysiological properties of real neurons.
+
+*** MAJOR
+
+**** 1) A brief statement regarding the linearity of the models is needed in the 
+Methods. That dendrites with non-linear voltage-dependent channels behave mostly 
+in a linear fashion for small subthreshold perturbations is an important aspect 
+of this study. This linear behavior has been observed for most real neurons 
+(I can't think of any study where this was not the case). However, this assumption
+of linearity may not apply to the models studied here, and could be a reason 
+why some did not fit the data. Nonlineaities (eg dendritic spikes) are more likely
+for distal dendritic inputs that can produce larger dendritic depolarizations. 
+Did any of the models exhibit nonlinear behavior during the sub-threshold chirps?
+
+**** 2) The authors should elaborate on their choice of a 20 sec long 1 to 20Hz chirp 
+stimulus. If the models are mainly linear at rest, then Zc (Eq 2) can be computed 
+using a much shorter noise stimulus. For example, I imagine a 2 sec simulation 
+injecting white-noise would have given the same results with a 10X reduction in 
+simulation time. In addition, a noise stimulus would allow Zc to computed at all 
+frequencies up to the Nyquist rate. An even shorter impulse could be used, but I 
+would worry about transient nonlinearities dominating the response. The reason I 
+bring this up is not that it affects the results (however the chirp reduces the 
+frequency ranges studied to 20Hz), but because these models are computationally 
+expensive. Other researchers who use this study to motivate their own simulations 
+might have limited computational resources available. Maybe there were good 
+reasons to use the longer simulations and reduced frequency range associated 
+with the chirp, but these should be elaborated in the manuscript.
+
+**** 3) The reactance versus resistance plot in Fig 2I is not discussed in any depth 
+in the text and representing the impedance in this manner is not used again in 
+the paper. Thus, I am not sure if Fig. 2I is really needed.
+
+**** 4) I really like the idea of using a simplified model in Fig 1 to illustrate the
+fundamental effects of inductance on amplitude and phase. But why not use a simple
+model that is a little more in line with realistic cells in terms of the frequency
+range? I am sure a combination of parameters could be found to produce a resonance
+closer to the 10Hz range seen in the real data.
+
+**** 5) What is the power spectrum of the alpha-function used to produce the EPSP? 
+I suspect that a lot of power is beyond 20Hz. Thus, the effects of HCN and TASK on 
+the EPSP could be due to frequencies outside the range being studied.
+
+**** 6) In line 302: Blocking HCN and TASK-like channels influences EPSPs in accordance 
+with changes to dendritic impedance (Fig. 7). This paragraph is somewhat confusing 
+that we now are all of a sudden looking at the response to an EPSP. I think it 
+would be more clear if the effects on an EPSP-like input were addressed in a 
+separate paragraph. I should add that how EPSPs are affected by the linear 
+transfer function is an important part of the paper.
+
+*** MINOR
+
+**** 1) Fig. 8, there is a reference to "experimentally observed values", but the 
+"experimentally observed values" are not included on the figure. Including theses
+would make the figure easier to read.
+***** *DONE*
+
+**** 2) FIg. 9. Heat maps would be more clear if they were the % change in each of the 
+4 parameters.
+***** *DONE*
+
+**** 3) Line 206: but there are differences impedance phase
+
+**** 4) I think everything would be clearer and easier to read if ZPP and ZAP were not
+used, but instead just 'amplitude;' and 'phase'.
+***** *DONE* - Figures
+
+**** 5) Line 207: using chirp to compute
+
+**** 6) Line 418: typo - there is a lost ' in this sentence
+
+**** 7) The comparison of the different models is a very nice contribution of this 
+study. Could the authors elaborate in the Methods or Results their choice of these 
+five models. Are these the only good models available in terms of capturing PT 
+neuron properties? Are there other models available that the authors decided not 
+to use in their study?
+
+
+** Reviewer #2 (Comments to the Author (Required)):
+
+*** General comments:
+This manuscript establishes that previous biophysical models of pyramidal-tract 
+neocortical pyramidal neurons cannot sufficiently account for experimental data 
+on how synaptic inputs are integrated along the primary apical dendritic branch. 
+As these neurons play an important role in neocortical circuit function and its 
+output to subcortical structures, understanding how the dendrites of these neurons 
+integrate is of great value. The key advance here is identifying that the shunting 
+current is necessary to best recapitulate previously published experimental data. 
+This manuscript provides testable experimental hypotheses for the field and lays 
+the groundwork for future studies in silica of this neuron type from both rodents 
+and primates.
+
+The authors identify that a shunting current, possibly from Twik-related 
+acid-sensitive potassium (TASK) channels, is necessary along with the 
+hyperpolarization activated cyclic nucleotide-gated (HCN) channels that mediate 
+the current (Ih) in order to accurately recapitulate the experimental data. The 
+model used to test how these currents interact to shape synaptic potentials and 
+predict that different combinations of these currents may provide some degeneracy 
+in how dendritic integration is tuned.
+
+*** Major Specific comments:
+**** 1. For Figure 1, a simplified model is used for illustrative purposes in the 
+Introduction to show how the addition of an inductive circuit shapes impedance 
+amplitude and phase. The authors add a circuit with an extremely high inductance 
+(10 kH) that causes the resonant frequency for this system is ~700 Hz and the 
+phase lead for any frequency <200 Hz. These values are several orders of magnitude 
+distant from those caused b y HCN currents, which also exhibit obvious effects 
+(as illustrated in the rest of the paper). Also, the methods for calculating 
+impedance here are different from those described in the paragraph before. Rather 
+than a linear chirp, sinusoids of different frequencies are utilized (the useful 
+rationale for this alternate calculation is later explained well in methods). It 
+is stated in the text that the peak in somatic membrane potential precedes the 
+peak current in the dendrite with the inclusion of such an extreme inductive 
+circuit, but this data is not presented in the figure, and it is acknowledged 
+that this is unlike what occurs for HCN channels. Combined these factors diminish 
+the clarity regarding this illustrative figure.
+
+**** 2. The TASK-like shunting current coupled to Ih is a central component and its 
+importance is a major finding of this paper. If space permits, the readers 
+would likely greatly benefit from having model details (e.g. the shunting current 
+relative to Ih and the reversal potential for that current) explicitly described 
+in the methods.
+
+**** 3. In the third experimentally verifiable prediction in the Discussion, the 
+authors indicate that the pharmacological agent XE991 will alter the dendritic 
+impedance profile. This is a fair prediction, but may not provide much clarity 
+as XE991 is commonly utilized as an M-current blocker. Based on simulations,
+it has been proposed that XE991 may also have an effect upon TASK channels (but 
+this has not been tested experimentally). The authors should acknowledge this 
+point for the reader. While XE991 has been shown to alter the impedance amplitude 
+profile at depolarized somatic potentials (but not resting ones: 
+Dembrow et al., 2010), muscarine does not alter K+ current in the dendrites 
+(Williams and Fletcher, 2019).
+
+**** 4. The major deviation of the experimental data from most models (except for #5) 
+is that the synchronous frequency is higher and/or the transfer frequency lower. 
+Even in Model 5, which provides the best fit, the synchronous frequency is higher 
+for many cases in the experimental data. Previous work on this subject has 
+suggested how h-current is distributed along the dendrite 
+(Vaidya and Johnston, 2013) and the differences in passive intracellular 
+resistivity associated with dendritic length (Fletcher and Williams, 2019) 
+may also greatly shape dendritic integration. This manuscript would be 
+strengthened by informing readers the relative importance of shunting currents 
+to these other factors, and how the simulations in this manuscript improve and 
+or contradict those previous reports.
+
+
+Minor specific comments.
+**** 5. In Figure 6C, the y-axis is confusing. It is labelled Peak absolute impedance 
+(Megaohms) but the values seem to correspond with resonance strength, possibly 
+transfer resonance strength.
+***** *DONE*
+
+**** 6. Line 15, In the abstract Ih is referred to as a conductance. Ih as an 
+abbreviation is commonly thought of as referring to current.
+
+**** 7. Line 92, there is no period between sentences.
+
+**** 8. For the model representations/reconstructions, no distance scale bar is shown 
+in Figures 1, 2 and 8. It would be beneficial to understand how distances relate 
+to the h-current gradient as well.
+***** *DONE* 2 & 8
+
+**** Refs
+Dembrow, N.C., Chitwood, R.A., and Johnston, D. (2010). Projection-Specific Neuromodulation of Medial Prefrontal Cortex Neurons. J. Neurosci. 30, 16922-16937.
+Fletcher, L.N., and Williams, S.R. (2019). Neocortical Topology Governs the Dendritic Integrative Capacity of Layer 5 Pyramidal Neurons. Neuron 101, 76-90.e4.
+Vaidya, S.P., and Johnston, D. (2013). Temporal synchrony and gamma-to-theta power conversion in the dendrites of CA1 pyramidal neurons. Nat. Neurosci. 16, 1812-1820.
+Williams, S.R., and Fletcher, L.N. (2019). A Dendritic Substrate for the Cholinergic Control of Neocortical Output Neurons. Neuron 101, 486-499.e4.

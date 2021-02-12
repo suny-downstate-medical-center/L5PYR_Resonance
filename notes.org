@@ -3766,7 +3766,8 @@ We have added a brief paragraph to the methods:
 "Transfer impedance is equivalent to the transfer function used in linear systems 
 theory and assumes the linearity of the system in question.  The biophysically-detailed
 models studied here all produce nonlinearities, such as dendritic spikes, action potentials,
-and back-propagating action potentials [CITATIONS]. At at V$_{rest}, however, the neuronal
+and back-propagating action potentials \cite{Kole2008-aj, Gao2020-hj, Hay2011-if, Neymotin2017-dr, Dura-Bernal2019-pj} .
+At at V$_{rest}, however, the neuronal
 membrane behaves as linear system for subthreshold depolarizations. Therefore, we have taken care 
 to ensure that measurements used to compute $Z_c$ are within a linear operating regime
 for the neuronal membrane. This was our motivation for ensuring that excursions in V$_{memb}$ 
@@ -3795,10 +3796,11 @@ studies from which we extracted values of transfer and synchronous frequencies.
 We have included a brief paragraph to the "Chirp and impedance" section of Methods:
 
 "Linear chirp stimulation was used to compute impedance along the apical trunks
-of PTs in experimental studies [CITATIONS], so we also used linear chirp stimulation in 
+of PTs in experimental studies \cite{Ulrich2002-dd, Dembrow2015-zb}, so we also used linear chirp stimulation in 
 most of our simulations to maintain consistency with experiments. Impedance may also be
 estimated using other subthreshold current stimuli, such as nonlinear chirps (quadratic,
-logarithmic, etc.) and white-noise [CITATIONS].  White-noise has the advantages of requiring
+logarithmic, etc.) and white-noise \cite{Cook2007-cz, Hong2007-rx, Kasevich2011-dd, Richardson2003-no, Kalmbach2017-yu}.  
+White-noise has the advantages of requiring
 shorter duration stimulations and a larger frequency range over which impedance may 
 be computed (up to the Nyquist rate), but runs the risk of transient nonlinearities dominating 
 the response, which is not an issue for the chirp stimulus."
@@ -3809,11 +3811,13 @@ this in mind, we have added a comparison between the white-noise stimulus method
 and the validation method (with indivudual constant frequency sinusoids) to the
 supplementary figure.  We have included text in the Methods sections:
 
-"We also evaluated the use of white-noise, rather than linear chirp, stimuli to
-compute impedance amplitude and phase.  We found that there are sizeable errors in 
-impedance phase at frequencies greater than 100 Hz, but since we only use this method
+"We also evaluated the use of 20 second long, subthreshold white-noise stimuli, rather than linear chirp,  
+to compute impedance amplitude and phase.  We found that there are errors in 
+impedance phase estimation at frequencies greater than 100 Hz, but since we only use this method
 for a qualititative comparison of impedance phase across a large frequency bandwidth,
-we consider these errors acceptable for our purposes."
+we consider white-noise acceptable for that purpose.  Therefore, when computing impedance 
+for the simple models seen in \fref{toymodel}, we 
+used a 5 s sinusoid at each frequency (0.5 - 1000 Hz in 0.5 Hz increments) rather than chirp or white-noise."
 
 We also use this method to estimate
 impedance phase below 500 Hz to address the relationship between impedance phase 
@@ -3835,9 +3839,9 @@ and for the passive neuron.  At L = 100 MH, the resonance and synchronous freque
 in line with experimentally observed values (> 10 Hz); however, there is little effect on 
 the EPSP compared to the passive neuron.  At L = 1 MH, the resonance and synchronous frequencies
 are much higher and there is more EPSP undershoot, but the reduction in EPSP lag is closer to 
-what is seen in the realistic models.
+what is seen in the realistic models. We have added the following to the introduction:
 
-To illustrate these effects, we modified the standard passive neuronal model 
+"To illustrate these effects, we modified the standard passive neuronal model 
 by adding an inductive circuit which mimics some of the properties of \ih\ (\fref{toymodel}A). 
 The resistor (R) stands in for the conductance of \ih; the battery (E), its reversal potential; and the
 inductance (L), the phenomenological inductance it generates.
@@ -3850,27 +3854,53 @@ The effects of the phenomenological inductance imparted by \ih\ can be recapitul
 by our simplified neuronal model with its inductive circuit attached, but no single inductance 
 can capture all the effects of \ih.
 For instance, when L = 100 MH, resonance frequency (\fref{toymodel}B) and synchronous frequency 
-(\fref{toymodel}C) are both roughly 7 Hz, much like what is seen in real PTs (CITATIONS). 
+(\fref{toymodel}C) are both ~7 Hz, much like what is seen in real PT dendrites \cite{Ulrich2002-dd, Dembrow2015-zb}. 
 However, there is little effect on excitatory post-synaptic potential (EPSP) timing (\fref{toymodel}D), because impedance phase 
 converges with that of the passive neuron around 50 Hz (\fref{toymodel}C).
 Conversely, when L = 1 MH, resonance and synchronous frequencies are much 
-higher (around 70 Hz, \fref{toymodel}B}), but impedance phase is higher than in the passive
+higher (~70 Hz, \fref{toymodel}B}), but impedance phase is higher than in the passive
 neuron over a far larger frequency range (\fref{toymodel}C).  The increased impedance phase 
 leads to a shorter lag between peak synaptic current and EPSP peak similar to what we will see 
 in the biophysically-detailed PT models (\fref{toymodel}D).  The EPSP shape is also narrower,
 which is consistent with the effects of HCN channels in dendrites,
 but there is excessive EPSP undershoot which is not seen experimentally \cite{Yi2010-sz, Kase2012-xt}.
-Thus, each inductance value mimics some effects of the phenomenological inductance generated by \ih, but not all of them. 
+Thus, each inductance value mimics some effects of the phenomenological inductance generated by \ih, but not all of them."
+
+The Methods have been modified as follows:
+"To demonstrate the varied effects of inductance on neuronal impedance and \vmemb\ dynamics, 
+the cell was connected to an inductor (L = 1 MH or 100 MH), resistor (R = 25 M$\Omega$), and a battery (E = -70 mV) 
+placed in series and connected to ground (\fref{toymodel}A)."
+
+And the Figure 1 caption:
+"(A) A simple, passive neuron model (soma and dendrite with membrane capacitance) was connected to a series circuit with an inductor (L = 1 MH or 100 MH),
+resistor (R = 25 M$\Omega$), and battery (E = -70 mV) to illustrate some of the effects of inductance on impedance and synaptic potentials.
+We computed impedance between the center of the dendrite and the center of the soma with this circuit attached (blue and red lines)
+and without it (black lines).
+(B) The inductive circuit combined with membrane capacitance from the neuron produces resonance. When L = 100 MH, resonance frequency (~7 Hz) is
+comparable to those seen in PT dendrites \cite{Ulrich2002-dd, Dembrow2015-zb}. They are much higher when L = 1 MH.
+In the passive neuron alone, impedance amplitude falls off with frequency. Resonance frequencies are indicated with vertical dashed lines.
+(C) The inductive circuit also increases impedance phase, with positive inductive/leading phase
+(voltage peak precedes current peak for an oscillatory input) seen at low frequencies. 
+The horizontal dotted line indicates 0 radian phase shift between the stimulating current in the dendrite and voltage response at the soma (i.e. synchrony).
+The vertical dashed lines indicate synchronous frequencies.
+When L = 100 MH, synchronous frequency (~7 Hz) is comparable to observed values in PT dendrites, but impedance phase converges with that of the passive neuron
+~50 Hz.  When L = 1 MH, synchronous frequency is much higher (~70 Hz), and impedance phase converges with that of the passive neuron at a much higher frequency (~500 Hz).
+(D) Effects of increased inductance on EPSPs measured at the soma: When L = 1 MH, peak EPSP voltage is earlier compared to the passive neuron 
+due to higher impedance phase across the power spectrum of the synaptic current stimulus, but it produces much more undershoot that seen in PTs \cite{Yi2010-sz, Kase2012-xt}.
+Conversely, when L = 100 MH, there is little change in peak EPSP time, but EPSP shape is more in line with that observed experimentally \cite{Yi2010-sz, Kase2012-xt}. 
+Time of peak synaptic conductance is indicated by the vertical dotted line.}"
+
 
 **** 5) What is the power spectrum of the alpha-function used to produce the EPSP? 
 I suspect that a lot of power is beyond 20Hz. Thus, the effects of HCN and TASK on 
 the EPSP could be due to frequencies outside the range being studied.
+
 ***** This is an excellent point, and we have updated Figure 7 to reflect it.  We
-have added a panel to this figure showing the transfer impedance phase up to 500 Hz
+have added a panel to this figure showing the transfer impedance phase up to 200 Hz
 computed from a white noise, rather than chirp, stimulus.  Superimposed on this panel
 is the power spectrum of the synaptic current.  Most of the power in the EPSP is below 
-100 Hz.  In this range, we see that impedance phase is highest for the control across 
-this frequency range, blocking shunting current shifts impedance phase down across the
+100 Hz.  In this range, we see that impedance phase is highest for the control PT model across 
+this frequency range, blocking shunting current shifts impedance phase down across that
 range, and blocking Ih decreases it further.
 
 **** 6) In line 302: Blocking HCN and TASK-like channels influences EPSPs in accordance 
@@ -3879,6 +3909,23 @@ that we now are all of a sudden looking at the response to an EPSP. I think it
 would be more clear if the effects on an EPSP-like input were addressed in a 
 separate paragraph. I should add that how EPSPs are affected by the linear 
 transfer function is an important part of the paper.
+
+***** We apologize for the confusion, and we agree with the need to clarify the channels' effects on EPSP-like input
+and emphasize the relationship between EPSPs and the linear transfer function.  We have therefore edited the paragraph in question, as well as Fig. 7:
+
+"Although the impact of dendritic impedance on neuronal phsyiology is often linked to oscillatory activity and input-freuqency discrimination 
+\cite{Vaidya2013-sx, Hutcheon1996-db, Branco2010-nr, Das2017-nz}, it is important to emphasize that dendritic impedance, 
+or the linear transfer function between the apical dendrite and the soma, shapes the \vmemb\ response at the soma to a single synaptic stimulation in the dendrites.
+The majority of the power in a single excitatory synaptic current stimulus resides between 0 - 100 Hz (\fref{blockIhIlkSyn}A, black dashed lines, right y-axis),
+so the transfer impedance amplitude and phase in this frequency range determines the somatic response to synaptic stimulation in the dendrite.
+Blocking TASK-like channels shifts transfer impedance phase down across this frequency range, and blocking HCN channels shifts it down further still 
+(\fref{blockIhIlkSyn}A, colored lines, left y-axis)).  
+The downward shifts in transfer impedance phase caused by blocking HCN and TASK-like channels correspond to reductions in the 
+compensation for membrane capacitance, increasing the delay in EPSP peak at the soma.  Blocking TASK-like shunting current increases the
+lag between peak synaptic current halfway along the apical trunk and peak \vmemb\ at the soma by ~1 ms.
+Blocking \ih\ increases the lag by 2.6 ms.  Similarly, blocking these currents reduces resonance strength (\fref{blockIhIlk}C) and the width of the EPSPs are narrowed accordingly. 
+Although the changes to EPSP shape and peak timing are fairly small, they can have a large impact on
+coincidence detection of synaptic potentials in the soma."
 
 *** MINOR
 
@@ -3946,7 +3993,10 @@ peak current in the dendrite with the inclusion of such an extreme inductive
 circuit, but this data is not presented in the figure, and it is acknowledged 
 that this is unlike what occurs for HCN channels. Combined these factors diminish 
 the clarity regarding this illustrative figure.
-*****  Please see response to Reviewer #1, Major Concern #4.
+
+*****  This is a fair criticism, and we hope that we have addressed the reviewer's
+concerns with modifications to the presentation of the simplified model.
+Please see response to Reviewer #1, Major Concern #4 for details.
 
 **** 2. The TASK-like shunting current coupled to Ih is a central component and its 
 importance is a major finding of this paper. If space permits, the readers 
@@ -3965,6 +4015,25 @@ profile at depolarized somatic potentials (but not resting ones:
 Dembrow et al., 2010), muscarine does not alter K+ current in the dendrites 
 (Williams and Fletcher, 2019).
 
+***** We agree that we should point out that XE991 modulating TASK channels 
+has not been tested experimentally and would like to thank the reviewer for pointing
+out the work regarding muscarine's lack of effect in the dendrites. We have edited
+the wording of the prediction in the Discussion:
+
+"The paradoxical effects of \ih\ observed by George et al. (2009) were abolished with
+application of the drug XE991. These effects are best accounted for by interaction between I$_h$ and
+a TASK-like shunting current, and simluation results have suggested that XE991 may block 
+TASK channels \cite{Migliore2012-ev, Dura-Bernal2019-pj}. XE991 modulation of TASK channels 
+has not been tested experimentally though.  XE991 is commonly ustilized as an M-current 
+blocker, and it has been shown to alter the input impedance amplitude profile in the soma 
+of hippocampal PCs at depolarized, but not resting, potentials \cite{Dembrow2010-lb}.
+It may be that XE991 blocks M-current in the soma and blocks the shunting current in the 
+apical dendrites.  Similarly, muscarine has been shown to alter \k-current in the soma 
+but not in the apical dendrites of PTs \cite{Williams2019-mc}. 
+Therefore, based on our simulations, we predict that bath application of XE991 to PT cells will produce 
+comparable changes to the dendritic impedance profile as those observed when
+blocking the shunting current in \fref{blockIhIlk}."
+
 **** 4. The major deviation of the experimental data from most models (except for #5) 
 is that the synchronous frequency is higher and/or the transfer frequency lower. 
 Even in Model 5, which provides the best fit, the synchronous frequency is higher 
@@ -3976,6 +4045,19 @@ may also greatly shape dendritic integration. This manuscript would be
 strengthened by informing readers the relative importance of shunting currents 
 to these other factors, and how the simulations in this manuscript improve and 
 or contradict those previous reports.
+
+***** Vaidya and Johnston demonstrate that realistic transfer resonance frequencies and 
+synchronous frequencies in hippocampal PCs are best achieved with HCN channel density increasing linearly with 
+distance from the soma, as in {\bf model 1}, or distributed following a sigmoid function,
+as in {\bf model 5}. Similarly, we found realistic transfer and synchronous frequencies when HCN and TASK-like channel distributions
+are either linear or sigmoidal (\fref{compareHayDura}).  The shape of a sigmoidal distribution (where channel density increases along the apical trunk and 
+saturates in the apical tufts) \cite{Harnett2015-sj}, as well as passive intracellular
+resistivity \cite{Fletcher2019-sm}, are both dependent on dendritic length. Futhermore, experimental evidence shows morphological, electrophysiological, and
+computational properties of PTs are closely related to anatomical location. While these morphologically-related factors no doubt 
+influence the properties of dendritic impedance, their precise contributions to resonance and synchrony are beyond the scope of this study. 
+Here we show two PT models with different apical trunk lengths and different distributions of HCN and TASK-like channels proucing  
+similar dendritic impedance properties, showing how degenracy of the impedance profiles may emerge.  However, factors like morphology and 
+intracellular resistivity may be strong contributors to the experimentally observed variance in impedance properties \cite{Ulrich2002-dd, Dembrow2015-zb}.
 
 *** Minor specific comments.
 **** 5. In Figure 6C, the y-axis is confusing. It is labelled Peak absolute impedance 

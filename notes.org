@@ -3264,17 +3264,17 @@ plt.title('Response to Synaptic Stimulation', fontsize=18)
   year = {2020}
 }
 
-* [2020-10-30 Fri] - still working on synaptic stuff 
+* [2020-10-30 Fri] - still working on synaptic stuff - synaptic stim figure
 ** no ih, no lk 
 from scipy.io import loadmat 
 from matplotlib import pyplot as plt 
 plt.ion() 
 import numpy as np 
 
-data = loadmat('m1pt_apic1305_syn_traces_v2.mat')
+data = loadmat('data/m1pt_apic1305_syn_traces_v2.mat')
 # data_zd = loadmat('m1pt_apic1305_zd_syn.mat')
-data_zd = loadmat('detailed_noih_syn_v2.mat')
-data_lk = loadmat('detailed_nolk_syn_v2.mat')
+data_zd = loadmat('data/detailed_noih_syn_v2.mat')
+data_lk = loadmat('data/detailed_nolk_syn_v2.mat')
 
 time = [t for t in data['time'][0] if 4995 <= t <= 5600]
 time_lk = [t for t in data_lk['time'][0] if 4995 <= t <= 5600]
@@ -3760,6 +3760,21 @@ why some did not fit the data. Nonlineaities (eg dendritic spikes) are more like
 for distal dendritic inputs that can produce larger dendritic depolarizations. 
 Did any of the models exhibit nonlinear behavior during the sub-threshold chirps?
 
+***** We agree with the necessity of a statement regarding the linearity of the models.
+We have added a brief paragraph to the methods:
+
+"Transfer impedance is equivalent to the transfer function used in linear systems 
+theory and assumes the linearity of the system in question.  The biophysically-detailed
+models studied here all produce nonlinearities, such as dendritic spikes, action potentials,
+and back-propagating action potentials [CITATIONS]. At at V$_{rest}, however, the neuronal
+membrane behaves as linear system for subthreshold depolarizations. Therefore, we have taken care 
+to ensure that measurements used to compute $Z_c$ are within a linear operating regime
+for the neuronal membrane. This was our motivation for ensuring that excursions in V$_{memb}$ 
+about V$_{rest}$ were symmetrical to within 0.01 mV.  An asymmetrical voltage response 
+would indicate that the neuron/system was in a nonlinear operating regime. 
+Additionally, no dendritic spikes or action potentials were observed during 
+stimulations."
+
 **** 2) The authors should elaborate on their choice of a 20 sec long 1 to 20Hz chirp 
 stimulus. If the models are mainly linear at rest, then Zc (Eq 2) can be computed 
 using a much shorter noise stimulus. For example, I imagine a 2 sec simulation 
@@ -3774,6 +3789,36 @@ might have limited computational resources available. Maybe there were good
 reasons to use the longer simulations and reduced frequency range associated 
 with the chirp, but these should be elaborated in the manuscript.
 
+***** Our choice of simulating a 20 second long 0.5 - 20 Hz chirp stimulus was 
+motivated by the fact that this stimulation paradigm was used in the experimental
+studies from which we extracted values of transfer and synchronous frequencies. 
+We have included a brief paragraph to the "Chirp and impedance" section of Methods:
+
+"Linear chirp stimulation was used to compute impedance along the apical trunks
+of PTs in experimental studies [CITATIONS], so we also used linear chirp stimulation in 
+most of our simulations to maintain consistency with experiments. Impedance may also be
+estimated using other subthreshold current stimuli, such as nonlinear chirps (quadratic,
+logarithmic, etc.) and white-noise [CITATIONS].  White-noise has the advantages of requiring
+shorter duration stimulations and a larger frequency range over which impedance may 
+be computed (up to the Nyquist rate), but runs the risk of transient nonlinearities dominating 
+the response, which is not an issue for the chirp stimulus."
+
+The reduction in simulation time and the increase in frequency range is certainly
+a major advantage of using a white-noise stimulus as opposed to the chirp.  With
+this in mind, we have added a comparison between the white-noise stimulus method
+and the validation method (with indivudual constant frequency sinusoids) to the
+supplementary figure.  We have included text in the Methods sections:
+
+"We also evaluated the use of white-noise, rather than linear chirp, stimuli to
+compute impedance amplitude and phase.  We found that there are sizeable errors in 
+impedance phase at frequencies greater than 100 Hz, but since we only use this method
+for a qualititative comparison of impedance phase across a large frequency bandwidth,
+we consider these errors acceptable for our purposes."
+
+We also use this method to estimate
+impedance phase below 500 Hz to address the relationship between impedance phase 
+and peak EPSP timing (Fig. 7, see below).
+
 **** 3) The reactance versus resistance plot in Fig 2I is not discussed in any depth 
 in the text and representing the impedance in this manner is not used again in 
 the paper. Thus, I am not sure if Fig. 2I is really needed.
@@ -3784,9 +3829,49 @@ model that is a little more in line with realistic cells in terms of the frequen
 range? I am sure a combination of parameters could be found to produce a resonance
 closer to the 10Hz range seen in the real data.
 
+*****  We have modified Figure 1 to address these concerns.  The figure now shows impedance 
+profiles and responses to synaptic stimulation for two values of inductance (L = 1 MH; 100 MH)
+and for the passive neuron.  At L = 100 MH, the resonance and synchronous frequencies are 
+in line with experimentally observed values (> 10 Hz); however, there is little effect on 
+the EPSP compared to the passive neuron.  At L = 1 MH, the resonance and synchronous frequencies
+are much higher and there is more EPSP undershoot, but the reduction in EPSP lag is closer to 
+what is seen in the realistic models.
+
+To illustrate these effects, we modified the standard passive neuronal model 
+by adding an inductive circuit which mimics some of the properties of \ih\ (\fref{toymodel}A). 
+The resistor (R) stands in for the conductance of \ih; the battery (E), its reversal potential; and the
+inductance (L), the phenomenological inductance it generates.
+Adding the inductive circuit changes the low-pass filter properties of the passive neuron 
+(\fref{toymodel} B, black lines) to those of a resonator (red and blue lines).
+Inductance also increases impedance phase, even creating phase lead at lower frequencies,
+where the impedance phase profile is greater than zero (\fref{toymodel}C).
+The inductance that shapes the impedance amplitude and phase profiles also influences synaptic potentials (\fref{toymodel}D).
+The effects of the phenomenological inductance imparted by \ih\ can be recapitulated 
+by our simplified neuronal model with its inductive circuit attached, but no single inductance 
+can capture all the effects of \ih.
+For instance, when L = 100 MH, resonance frequency (\fref{toymodel}B) and synchronous frequency 
+(\fref{toymodel}C) are both roughly 7 Hz, much like what is seen in real PTs (CITATIONS). 
+However, there is little effect on excitatory post-synaptic potential (EPSP) timing (\fref{toymodel}D), because impedance phase 
+converges with that of the passive neuron around 50 Hz (\fref{toymodel}C).
+Conversely, when L = 1 MH, resonance and synchronous frequencies are much 
+higher (around 70 Hz, \fref{toymodel}B}), but impedance phase is higher than in the passive
+neuron over a far larger frequency range (\fref{toymodel}C).  The increased impedance phase 
+leads to a shorter lag between peak synaptic current and EPSP peak similar to what we will see 
+in the biophysically-detailed PT models (\fref{toymodel}D).  The EPSP shape is also narrower,
+which is consistent with the effects of HCN channels in dendrites,
+but there is excessive EPSP undershoot which is not seen experimentally \cite{Yi2010-sz, Kase2012-xt}.
+Thus, each inductance value mimics some effects of the phenomenological inductance generated by \ih, but not all of them. 
+
 **** 5) What is the power spectrum of the alpha-function used to produce the EPSP? 
 I suspect that a lot of power is beyond 20Hz. Thus, the effects of HCN and TASK on 
 the EPSP could be due to frequencies outside the range being studied.
+***** This is an excellent point, and we have updated Figure 7 to reflect it.  We
+have added a panel to this figure showing the transfer impedance phase up to 500 Hz
+computed from a white noise, rather than chirp, stimulus.  Superimposed on this panel
+is the power spectrum of the synaptic current.  Most of the power in the EPSP is below 
+100 Hz.  In this range, we see that impedance phase is highest for the control across 
+this frequency range, blocking shunting current shifts impedance phase down across the
+range, and blocking Ih decreases it further.
 
 **** 6) In line 302: Blocking HCN and TASK-like channels influences EPSPs in accordance 
 with changes to dendritic impedance (Fig. 7). This paragraph is somewhat confusing 
@@ -3800,11 +3885,11 @@ transfer function is an important part of the paper.
 **** 1) Fig. 8, there is a reference to "experimentally observed values", but the 
 "experimentally observed values" are not included on the figure. Including theses
 would make the figure easier to read.
-***** *DONE*
+***** We have added the experimental values to the figure.
 
 **** 2) FIg. 9. Heat maps would be more clear if they were the % change in each of the 
 4 parameters.
-***** *DONE*
+***** We have changed the heat maps to reflect percent change in each parameter.
 
 **** 3) Line 206: but there are differences impedance phase
 
@@ -3861,6 +3946,7 @@ peak current in the dendrite with the inclusion of such an extreme inductive
 circuit, but this data is not presented in the figure, and it is acknowledged 
 that this is unlike what occurs for HCN channels. Combined these factors diminish 
 the clarity regarding this illustrative figure.
+*****  Please see response to Reviewer #1, Major Concern #4.
 
 **** 2. The TASK-like shunting current coupled to Ih is a central component and its 
 importance is a major finding of this paper. If space permits, the readers 
@@ -3891,13 +3977,13 @@ strengthened by informing readers the relative importance of shunting currents
 to these other factors, and how the simulations in this manuscript improve and 
 or contradict those previous reports.
 
-
-Minor specific comments.
+*** Minor specific comments.
 **** 5. In Figure 6C, the y-axis is confusing. It is labelled Peak absolute impedance 
 (Megaohms) but the values seem to correspond with resonance strength, possibly 
 transfer resonance strength.
-***** *DONE*
-
+***** Thank you for pointing this out.  We apologize for mislabeling the y-axis in Figure 6C
+and have fixed the label.
+ 
 **** 6. Line 15, In the abstract Ih is referred to as a conductance. Ih as an 
 abbreviation is commonly thought of as referring to current.
 
@@ -3906,7 +3992,7 @@ abbreviation is commonly thought of as referring to current.
 **** 8. For the model representations/reconstructions, no distance scale bar is shown 
 in Figures 1, 2 and 8. It would be beneficial to understand how distances relate 
 to the h-current gradient as well.
-***** *DONE* 2 & 8
+***** We have added scale bars to figures with model representations/reconstructions.
 
 **** Refs
 Dembrow, N.C., Chitwood, R.A., and Johnston, D. (2010). Projection-Specific Neuromodulation of Medial Prefrontal Cortex Neurons. J. Neurosci. 30, 16922-16937.
@@ -3945,7 +4031,7 @@ sampr = 40e3
 for f in freqs: 
     f0, f1 = f, f 
     I, t = getChirp(f0,f1,t0,amp,Fs,delay)
-    i = h.Vector().record(h.IClamp[0]._ref_i)
+    # i = h.Vector().record(h.IClamp[0]._ref_i)
     out = applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1)
     v_trim = [v for v, T in zip(soma_v, time) if 3000 < T < 5000] 
     i_trim = [i for i, T in zip(I,t) if 3000 < T < 5000] 
@@ -3968,3 +4054,271 @@ for f in freqs:
     ind = np.argmin(np.square(Freq-f))
     zPhase.append(phase[ind])
     zAmp.append(zamp[ind])
+
+* [2021-2-10 Wed] - updating figures 
+** plotting detailed impedance for PT cell 
+from scipy.io import loadmat 
+from os import listdir 
+from matplotlib import pyplot as plt 
+import numpy as np 
+plt.ion()
+
+files = listdir('./longImped/')
+freqs = []
+zAmp = []
+zPhase = []
+for file in files:
+    data = loadmat('./longImped/'+file)
+    freqs.extend(data['freqs'][0])
+    zAmp.extend(data['zAmp'][0])
+    zPhase.extend(data['zPhase'][0])
+
+** new synaptic timing figure 
+from scipy.io import loadmat 
+from pylab import fft 
+from matplotlib import pyplot as plt 
+plt.ion()
+
+fig, (ax1, ax2) = plt.subplots(1,2)
+
+data = loadmat('detail_noise.mat')
+ax1.semilogx(data['Freq'][0], data['ZcPhase'][0], 'r', label='Control')
+data = loadmat('detail_noLk_noise.mat')
+ax1.semilogx(data['Freq'][0], data['ZcPhase'][0], 'b', label='Block shunting current')
+data = loadmat('detail_noIh_noise.mat')
+ax1.semilogx(data['Freq'][0], data['ZcPhase'][0], 'g', label=r'Block I$_h$')
+ax1.set_xlim(1,300)
+ax1.set_ylim(-2.0, 0.3)
+ax1.set_ylabel(r'$\Phi_c$ (radians)', fontsize=16)
+ax1.set_xlabel('Frequency (Hz)', fontsize=16)
+ax1.legend(fontsize=14, loc='lower left')
+ax1.tick_params(labelsize=14)
+ax1.set_title('Transfer Impedance Phase', fontsize=18)
+
+ax3 = ax1.twinx()
+ax3.semilogx(Freq, np.divide(np.abs(f_i), np.max(np.abs(f_i))), 'k--', label='Syn. Current Power Spectrum')
+ax3.set_ylabel('Normalized Synaptic Power', fontsize=16)
+ax3.legend(fontsize=14, loc='upper right')
+ax3.tick_params(labelsize=14)
+
+data = loadmat('data/m1pt_apic1305_syn_traces_v2.mat')
+data_zd = loadmat('data/detailed_noih_syn_v2.mat')
+data_lk = loadmat('data/detailed_nolk_syn_v2.mat')
+
+time = [t for t in data['time'][0] if 4995 <= t <= 5600]
+time_lk = [t for t in data_lk['time'][0] if 4995 <= t <= 5600]
+time_zd = [t for t in data_zd['time'][0] if 4995 <= t <= 5600]
+
+soma_v = [v for v, t in zip(data['soma_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+dend_v = [v for v, t in zip(data['dend_v'][0], data['time'][0]) if 4995 <= t <= 5600]
+soma_v_zd = [v for v, t in zip(data_zd['soma_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+dend_v_zd = [v for v, t in zip(data_zd['dend_v'][0], data_zd['time'][0]) if 4995 <= t <= 5600]
+soma_v_lk = [v for v, t in zip(data_lk['soma_v'][0], data_lk['time'][0]) if 4995 <= t <= 5600]
+dend_v_lk = [v for v, t in zip(data_lk['dend_v'][0], data_lk['time'][0]) if 4995 <= t <= 5600]
+
+time = np.array(time)
+soma_v = np.array(soma_v)
+dend_v = np.array(dend_v)
+soma_v_zd = np.array(soma_v_zd)
+dend_v_zd = np.array(dend_v_zd)
+soma_v_lk = np.array(soma_v_lk)
+dend_v_lk = np.array(dend_v_lk)
+time_lk = np.array(time_lk)
+time_zd = np.array(time_zd)
+ax2.plot(time-5000, soma_v-soma_v[0], 'r', label='Control')
+ax2.plot(time_lk-5000, soma_v_lk-soma_v_lk[0], 'b', label=r'Block shunting current')
+ax2.plot(time_zd-5000, soma_v_zd-soma_v_zd[0], 'g', label=r'Block I$_{h}$')
+ax2.plot([time[np.argmax(soma_v)]-5000, time[np.argmax(soma_v)]-5000], [-0.1, np.max(soma_v)-soma_v[0]], 'r--')
+ax2.plot([time_lk[np.argmax(soma_v_lk)]-5000, time_lk[np.argmax(soma_v_lk)]-5000], [-0.1, np.max(soma_v_lk)-soma_v_lk[0]], 'b--')
+ax2.plot([time_zd[np.argmax(soma_v_zd)]-5000, time[np.argmax(soma_v_zd)]-5000], [-0.1, np.max(soma_v_zd)-soma_v_zd[0]], 'g--')
+ax2.plot([1,1],[0,7],'k--', label='Peak Syn. Current Time')
+ax2.legend(fontsize=14)
+ax2.set_ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+ax2.set_ylim(0,1.1)
+ax2.set_xlim(0,30)
+ax2.tick_params(labelsize=14)
+ax2.set_xlabel('Time (ms)', fontsize=16)
+ax2.set_title('Response to Synaptic Stimulation', fontsize=18)
+
+** new validation figure 
+from matplotlib import pyplot as plt 
+plt.ion()
+from scipy.io import loadmat 
+import numpy as np 
+from os import listdir 
+
+chirpDet = loadmat('models/DuraBernal/trunk_data2/apic_130.5.mat')
+validDet = loadmat('data/detailedValidate.mat')
+chirpPas = loadmat('data/noL_chirp.mat.mat')
+validPas = loadmat('data/noL_imped_v4.mat')
+chirpL = loadmat('data/withL_chirp.mat')
+validL = loadmat('data/withL_imped_v4.mat')
+
+fig, big_axes = plt.subplots( figsize=(15.0, 15.0) , nrows=4, ncols=1, sharey=True) 
+
+for row, big_ax in enumerate(big_axes, start=1):
+    # Turn off axis lines and ticks of the big subplot 
+    # obs alpha is 0 in RGBA string!
+    big_ax.tick_params(labelcolor=(1.,1.,1., 0.0), top='off', bottom='off', left='off', right='off')
+    # removes the white frame
+    big_ax._frameon = False
+
+big_axes[0].set_title('Simple Passive Model', fontsize=18)
+big_axes[1].set_title('Simple Model w/ Inductor', fontsize=18)
+big_axes[2].set_title('Detailed Model w/ HCN', fontsize=18)
+big_axes[3].set_title('Detailed Model w/ HCN', fontsize=18)
+
+ax1 = fig.add_subplot(4,2,1)
+ax1.plot(chirpPas['Freq'][0], chirpPas['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax1.plot(validPas['freqs'][0], validPas['zAmp'][0], label='Validation', color='k')
+ax1.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+
+ax2 = fig.add_subplot(4,2,2)
+ax2.plot(chirpPas['Freq'][0], chirpPas['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax2.plot(validPas['freqs'][0], validPas['zPhase'][0], label='Validation', color='k')
+ax2.legend(fontsize=14)
+ax2.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+
+ax3 = fig.add_subplot(4,2,3)
+ax3.plot(chirpL['Freq'][0], chirpL['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax3.plot(validL['freqs'][0], validL['zAmp'][0], label='Validation', color='k')
+ax3.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+
+ax4 = fig.add_subplot(4,2,4)
+ax4.plot(chirpL['Freq'][0], chirpL['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax4.plot(validL['freqs'][0], validL['zPhase'][0], label='Validation', color='k')
+ax4.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+ax4.legend(fontsize=14)
+
+ax5 = fig.add_subplot(4,2,5)
+ax5.plot(chirpDet['Freq'][0], chirpDet['ZcAmp'][0], label='Chirp', linestyle='-.', color='gray')
+ax5.plot(validDet['freqs'][0], validDet['zAmp'][0], label='Validation', color='k')
+ax5.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+# ax5.set_xlabel('Frequency (Hz)', fontsize=16)
+
+ax6 = fig.add_subplot(4,2,6)
+ax6.plot(chirpDet['Freq'][0], chirpDet['ZcPhase'][0], label='Chirp', linestyle='-.', color='gray')
+ax6.plot(validDet['freqs'][0], validDet['zPhase'][0], label='Validation', color='k')
+ax6.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+ax6.legend(fontsize=14)
+# ax6.set_xlabel('Frequency (Hz)', fontsize=16)
+
+files = listdir('./longImped/')
+freqs = []
+zAmp = []
+zPhase = []
+for file in files:
+    data = loadmat('./longImped/'+file)
+    freqs.extend(data['freqs'][0])
+    zAmp.extend(data['zAmp'][0])
+    zPhase.extend(data['zPhase'][0])
+noisy = loadmat('data/noise_validation.mat')
+freqs_sort = np.sort(freqs)      
+zAmp_sort = [zAmp[ind] for ind in np.argsort(freqs)]   
+zPhase_sort = [zPhase[ind] for ind in np.argsort(freqs)]
+
+ax7 = fig.add_subplot(4,2,7)
+ax7.semilogx(noisy['Freq'][0], noisy['ZcAmp'][0], label='Noise', linestyle='-.', color='gray')
+ax7.semilogx(freqs_sort, zAmp_sort, label='Validation', color='k')
+ax7.set_ylabel(r'|Z$_{c}$| (M$\Omega$)', fontsize=16)
+ax7.set_xlabel('Frequency (Hz)', fontsize=16)
+ax7.set_xlim(1,500)
+
+ax8 = fig.add_subplot(4,2,8)
+ax8.semilogx(noisy['Freq'][0], noisy['ZcPhase'][0], label='Noise', linestyle='-.', color='gray')
+ax8.semilogx(freqs_sort, zPhase_sort, label='Validation', color='k')
+ax8.set_ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+ax8.set_xlabel('Frequency (Hz)', fontsize=16)
+ax8.set_xlim(1,500)
+
+
+ax1.set_xlim(0,100)
+ax1.set_ylim(200,950)
+ax1.set_title('ZAPs', fontsize=16)
+
+ax2.set_xlim(0,100)
+ax2.set_ylim(-1.5, 0.05)
+ax2.set_title('ZPPs', fontsize=16)
+
+ax3.set_xlim(0,100)
+ax3.set_ylim(23.4,24.5)
+
+ax4.set_xlim(0,100)
+ax4.set_ylim(0,0.75)
+
+* [2021-2-11 Thu] - updating toy figure
+** new toy fig 
+from matplotlib import pyplot as plt 
+plt.ion()
+import numpy as np 
+from scipy.io import loadmat 
+
+data = loadmat('data/withL_1e8_imped.mat')
+plt.subplot(1,3,1)
+plt.semilogx(data['freqs'][0], data['zAmp'][0], color='r', linestyle='-', label='L = 100 MH')
+plt.semilogx([data['freqs'][0][np.argmax(data['zAmp'][0])], data['freqs'][0][np.argmax(data['zAmp'][0])]], [0,np.max(data['zAmp'][0])], 'r--')
+plt.subplot(1,3,2)
+plt.semilogx(data['freqs'][0], data['zPhase'][0], color='r', linestyle='-')
+plt.semilogx([6.64, 6.64], [-2,0], 'r--')
+
+data = loadmat('data/withL_1e6_imped.mat')
+plt.subplot(1,3,1)
+plt.semilogx(data['freqs'][0], data['zAmp'][0], color='b', linestyle='-', label='L = 1 MH')
+plt.semilogx([data['freqs'][0][np.argmax(data['zAmp'][0])], data['freqs'][0][np.argmax(data['zAmp'][0])]], [0,np.max(data['zAmp'][0])], 'b--')
+plt.subplot(1,3,2)
+plt.semilogx(data['freqs'][0], data['zPhase'][0], color='b', linestyle='-')
+plt.semilogx([67.1, 67.1], [-2, 0], 'b--')
+
+data = loadmat('data/noL_imped_v4.mat')
+plt.subplot(1,3,1)
+plt.semilogx(data['freqs'][0], data['zAmp'][0], color='k', linestyle='-', label='Passive Neuron')
+plt.subplot(1,3,2)
+plt.semilogx(data['freqs'][0], data['zPhase'][0], color='k', linestyle='-')
+
+plt.subplot(1,3,1)
+# plt.ylim(0,55)
+plt.xlim(1,1000)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel('$|Z_{c}|$ (M$\Omega$)', fontsize=16)
+plt.title('Impedance Amplitude', fontsize=18)
+plt.legend(fontsize=14)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+
+plt.subplot(1,3,2)
+plt.ylabel(r'$\Phi_{c}$ (rad)', fontsize=16)
+plt.xlabel('Frequency (Hz)', fontsize=16)
+# plt.yticks([-np.pi/2, 0, np.pi/2], [r'$\frac{-\pi}{2}$', '0', r'$\frac{\pi}{2}$'],fontsize=22)
+plt.yticks([-1.8, 0.0, 1.25], ['Lag', 'Sync', 'Lead'], fontsize=16)
+plt.xticks(fontsize=14)
+plt.plot([0,1000],[0,0], color='k', linestyle=':')
+plt.xlim(1,1000)
+plt.title('Impedance Phase', fontsize=18)
+
+data_low = loadmat('data/withL_1e6_syn.mat')
+data_high = loadmat('data/withL_1e8_syn.mat')
+data_zd = loadmat('data/noL_syn_v4.mat')
+soma_v = data_low['soma_v'][0]
+time = data_low['time'][0]
+time_noL = data_zd['time'][0]
+soma_v_high = data_high['soma_v'][0]
+# i = data['i'][0]
+soma_v_noL = data_zd['soma_v'][0]
+
+plt.subplot(1,3,3)
+plt.plot(time-time[0], np.divide(soma_v_high-soma_v_high[0],np.max(soma_v_high-soma_v_high[0])), 'r-', label='L = 100 MH')
+plt.plot([time[np.argmax(soma_v_high)]-time[0], time[np.argmax(soma_v_high)]-time[0]], [-1,1], 'r--')
+plt.plot(time-time[0], soma_v-soma_v[0], 'b-', label='L = 1 MH')
+plt.plot([time[np.argmax(soma_v)]-time[0], time[np.argmax(soma_v)]-time[0]], [-1,1], 'b--')
+plt.plot(time_noL, soma_v_noL-soma_v_noL[0], color='k', linestyle='-', label='Passive Neuron')
+plt.plot([time_noL[np.argmax(soma_v_noL)]-time_noL[0], time_noL[np.argmax(soma_v_noL)]-time_noL[0]], [-1,1], 'k-.')
+plt.xlim(0,15)
+plt.ylim(-0.85,1.05) 
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.ylabel(r'$\Delta$ V$_{memb}$ (mV)', fontsize=16)
+plt.xlabel('Time (ms)', fontsize=16)
+plt.title('Response to Synaptic Stimulation', fontsize=18)
+# plt.xlim(0,5)
+# plt.ylim(0,1.1)
+plt.plot([1,1],[-1,1.2], color='k', linestyle=':')

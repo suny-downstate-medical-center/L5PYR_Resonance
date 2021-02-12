@@ -443,23 +443,69 @@ def applyNoise(I, t, seg, soma_seg, t0, delay, Fs, out_file_name=None):
     h.tstop = (t0+delay*2) * Fs + 1
     h.run()
 
-    ## get numpy arrays from data
+    
     soma_np = soma_v.as_numpy()
+        
     current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
-                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs + 1,endpoint=True), I.as_numpy())
+                        np.linspace(0,(t0+delay*2) * Fs,I.as_numpy().shape[0],endpoint=True), I.as_numpy())
     time = t_vec.as_numpy()
     cis_np = cis_v.as_numpy()
-    
+        
     samp_rate = (1 / (time[1] - time[0])) * Fs
+        
+    ## calculate impedance
+    f1 = 1000
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=15)
+    _, ZcAmp, ZcPhase, ZcRes, ZcReact, ZcResAmp, ZcResFreq, QfactorTrans, fVarTrans = zMeasures(current_np, soma_np,  delay, samp_rate, f1, bwinsz=15)
 
-    ## find spikes
-    pks, _ = find_peaks(soma_np, 0)
-
-    ## compute STA stuff 
-    if len(pks):
-        out = STA(pks, current_np, soma_np, samp_rate, delay)
+    freqsIn = np.argwhere(ZinPhase > 0)
+    if len(freqsIn) > 0:
+        ZinSynchFreq = Freq[freqsIn[-1]]
+        ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+            [float(Freq[ind]) for ind in freqsIn])
     else:
-        out = {}
+        ZinSynchFreq = 0 
+        ZinPhaseL = 0
+
+    freqsC = np.argwhere(ZcPhase > 0)
+    if len(freqsC) > 0:
+        ZcSynchFreq = Freq[freqsC[-1]]
+        ZcPhaseL = np.trapz([float(ZcPhase[ind]) for ind in freqsC], 
+            [float(Freq[ind]) for ind in freqsC])
+    else:
+        ZcSynchFreq = 0
+        ZcPhaseL = 0
+
+    v_attenuation = Vattenuation(ZinAmp, ZcAmp)
+    phase_lag = phaseLag(ZinPhase, ZcPhase)
+
+    dist = fromtodistance(seg, soma_seg)
+
+    ## generate output
+    out = {'Freq' : Freq,
+        'ZinRes' : ZinRes,
+        'ZinReact' : ZinReact,
+        'ZinAmp' : ZinAmp,
+        'ZinPhase' : ZinPhase,
+        'ZcRes' : ZcRes,
+        'ZcReact' : ZcReact,
+        'ZcAmp' : ZcAmp,
+        'ZcPhase' : ZcPhase,
+        'ZinSynchFreq' : ZinSynchFreq,
+        'ZinPhaseL' : ZinPhaseL,
+        'ZcSynchFreq' : ZcSynchFreq,
+        'ZcPhaseL' : ZcPhaseL,
+        'phase_lag' : phase_lag,
+        'Vattenuation' : v_attenuation,
+        'ZinResAmp' : ZinResAmp,
+        'ZinResFreq' : ZinResFreq,
+        'ZcResAmp' : ZcResAmp,
+        'ZcResFreq' : ZcResFreq,
+        'QfactorIn' : QfactorIn,
+        'QfactorTrans' : QfactorTrans,
+        'fVarIn' : fVarIn,
+        'fVarTrans' : fVarTrans,
+        'dist' : dist}
 
     out2 = {'soma_np' : soma_np,
             'cis_np' : cis_np,

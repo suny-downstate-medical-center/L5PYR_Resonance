@@ -3766,8 +3766,8 @@ We have added a brief paragraph to the methods:
 "Transfer impedance is equivalent to the transfer function used in linear systems 
 theory and assumes the linearity of the system in question.  The biophysically-detailed
 models studied here all produce nonlinearities, such as dendritic spikes, action potentials,
-and back-propagating action potentials \cite{Kole2008-aj, Gao2020-hj, Hay2011-if, Neymotin2017-dr, Dura-Bernal2019-pj} .
-At at V$_{rest}, however, the neuronal
+and back-propagating action potentials \cite{Kole2008-aj, Gao2020-hj, Hay2011-if, Neymotin2017-dr, Dura-Bernal2019-pj}.
+At at V$_{rest}$, however, the neuronal
 membrane behaves as linear system for subthreshold depolarizations. Therefore, we have taken care 
 to ensure that measurements used to compute $Z_c$ are within a linear operating regime
 for the neuronal membrane. This was our motivation for ensuring that excursions in V$_{memb}$ 
@@ -3803,7 +3803,8 @@ logarithmic, etc.) and white-noise \cite{Cook2007-cz, Hong2007-rx, Kasevich2011-
 White-noise has the advantages of requiring
 shorter duration stimulations and a larger frequency range over which impedance may 
 be computed (up to the Nyquist rate), but runs the risk of transient nonlinearities dominating 
-the response, which is not an issue for the chirp stimulus."
+the response, which is not an issue for the chirp stimulus. We use this method for a qualitative 
+comparison of impedance phase across a large frequency range."
 
 The reduction in simulation time and the increase in frequency range is certainly
 a major advantage of using a white-noise stimulus as opposed to the chirp.  With
@@ -3815,9 +3816,9 @@ supplementary figure.  We have included text in the Methods sections:
 to compute impedance amplitude and phase.  We found that there are errors in 
 impedance phase estimation at frequencies greater than 100 Hz, but since we only use this method
 for a qualititative comparison of impedance phase across a large frequency bandwidth,
-we consider white-noise acceptable for that purpose.  Therefore, when computing impedance 
-for the simple models seen in \fref{toymodel}, we 
-used a 5 s sinusoid at each frequency (0.5 - 1000 Hz in 0.5 Hz increments) rather than chirp or white-noise."
+we consider white-noise acceptable for that purpose.  We therefore used a 5 s sinusoid at each frequency 
+(1 - 1000 Hz in 0.5 Hz increments) when computing impedance 
+for the simple models seen in \fref{toymodel} rather than use chirp or white-noise."
 
 We also use this method to estimate
 impedance phase below 500 Hz to address the relationship between impedance phase 
@@ -3826,6 +3827,11 @@ and peak EPSP timing (Fig. 7, see below).
 **** 3) The reactance versus resistance plot in Fig 2I is not discussed in any depth 
 in the text and representing the impedance in this manner is not used again in 
 the paper. Thus, I am not sure if Fig. 2I is really needed.
+
+***** This is true, we do not make much use of this representation of impedance, but 
+since it is the transfer function and an intermediate step in computing and 
+understanding impedance amplitude and phase, we would like to keep it with editorial 
+permission.
 
 **** 4) I really like the idea of using a simplified model in Fig 1 to illustrate the
 fundamental effects of inductance on amplitude and phase. But why not use a simple
@@ -3888,7 +3894,7 @@ When L = 100 MH, synchronous frequency (~7 Hz) is comparable to observed values 
 (D) Effects of increased inductance on EPSPs measured at the soma: When L = 1 MH, peak EPSP voltage is earlier compared to the passive neuron 
 due to higher impedance phase across the power spectrum of the synaptic current stimulus, but it produces much more undershoot that seen in PTs \cite{Yi2010-sz, Kase2012-xt}.
 Conversely, when L = 100 MH, there is little change in peak EPSP time, but EPSP shape is more in line with that observed experimentally \cite{Yi2010-sz, Kase2012-xt}. 
-Time of peak synaptic conductance is indicated by the vertical dotted line.}"
+Time of peak synaptic conductance is indicated by the vertical dotted line."
 
 
 **** 5) What is the power spectrum of the alpha-function used to produce the EPSP? 
@@ -3939,14 +3945,17 @@ would make the figure easier to read.
 ***** We have changed the heat maps to reflect percent change in each parameter.
 
 **** 3) Line 206: but there are differences impedance phase
+***** Fixed
 
 **** 4) I think everything would be clearer and easier to read if ZPP and ZAP were not
 used, but instead just 'amplitude;' and 'phase'.
 ***** *DONE* - Figures
 
 **** 5) Line 207: using chirp to compute
+***** We have changed "compute" to estimate.
 
 **** 6) Line 418: typo - there is a lost ' in this sentence
+***** Thank you, it's been removed.
 
 **** 7) The comparison of the different models is a very nice contribution of this 
 study. Could the authors elaborate in the Methods or Results their choice of these 
@@ -3954,6 +3963,47 @@ five models. Are these the only good models available in terms of capturing PT
 neuron properties? Are there other models available that the authors decided not 
 to use in their study?
 
+***** We are glad you appreciate the comparison of the different models. 
+We chose the models because they are biophysically and morphologically detailed;
+many of them were developed with nonlinear, and particularly dendritic, phenomena
+in mind; and they satisy the practical criterion of having been developed in NEURON.
+The last may seem arbitrary, but even using models developed with the same simulator,
+code and model reuse for purposes beyond their original intended use is nontrivial. 
+Another motivation was that some of these models (from Hay et al. 2011, Neymotin et al. 2017,
+and Dura-Beranl et al. 2019) are used in large scale cortical models, which makes their function 
+central to much these much larger modeling endeavors.  
+
+We hope that we haven't (at least explicitly) conveyed the message that one of these models 
+is "good" and the rest are "bad".  All of the models presented in this paper focus on 
+certain aspects of PT physiology, do certain things well, and no doubt have their own shortcomings.
+However, of the five original models, only one of them did the things interested to us here 
+(resosnance, synchrony, etc.) well.
+
+We did run simulations with PT models from the Allen Institute and have chosen not to include them
+here.  Some of the models from the Allen Institute only dendrites with active properties, but they
+are constant in the dendrites.  Not only is there plenty of evidence that HCN channel density
+increases with distance from the soma, but our initial simulations with a number of these models 
+showed impedance properties that were, frankly, all over the place.  We will indicate in the Methods 
+that we haven't chosen to include these models based on their simplified channel distributions,
+we prefer not to directly comment on their impedance properties. 
+
+We have added the following to the Methods:
+
+"We chose these models because they are biophysically and morphologically detailed;
+many of them were developed with nonlinear, and particularly dendritic, phenomena
+in mind; and they were developed in 
+NEURON \cite{Kole2008-aj, Gao2020-hj, Hay2011-if, Neymotin2017-dr, Dura-Bernal2019-pj}.
+The last criterion may seem arbitrary, but code and model reuse for purposes beyond 
+their original intended use is nontrivial. 
+Some of these models are also used in large scale cortical
+models \cite{Hay2011-if, Neymotin2017-dr, Dura-Bernal2019-pj}, so their linear transfer
+functions are of particular importance to the behavior of larger network 
+models \cite{Dura-Bernal2019-pj, Markram2015-zg}.  We did chose not to include 
+PT models from the Allen Institute's Cell Types Database (\url{http://celltypes.brain-map.org/}).
+The "All-active Biophysical" models, which contain active channels in the dendrites,
+have constant channel densities in the dendrites. They were excluded because of the 
+strong experimental evidence for location-dependent gradients in \ih\ distribution 
+and it's importance to dendritic impedance properties \cite{Vaidya2013-sx, Das2017-nz, Harnett2015-sj}."
 
 ** Reviewer #2 (Comments to the Author (Required)):
 
@@ -3996,13 +4046,21 @@ the clarity regarding this illustrative figure.
 
 *****  This is a fair criticism, and we hope that we have addressed the reviewer's
 concerns with modifications to the presentation of the simplified model.
-Please see response to Reviewer #1, Major Concern #4 for details.
+Please see our response to Reviewer #1, Major Concern #4 for details.
 
 **** 2. The TASK-like shunting current coupled to Ih is a central component and its 
 importance is a major finding of this paper. If space permits, the readers 
 would likely greatly benefit from having model details (e.g. the shunting current 
 relative to Ih and the reversal potential for that current) explicitly described 
 in the methods.
+
+***** We agree that due to the centrality of the shunting current to our findings it warrants
+including details. We have added the following to the Methods:
+
+"TASK-like channels were distributed in proportion to local HCN channel density. In basal
+dendrites below the soma, TASK-like channel density was equivalent to HCN channel density,
+while TASK-like channel density was 20% of HCN channel density in dendrites above the 
+soma \cite{Dura-Bernal2019-pj}. The reversal potential for the TASK-like channels was set to -86 mV."
 
 **** 3. In the third experimentally verifiable prediction in the Discussion, the 
 authors indicate that the pharmacological agent XE991 will alter the dendritic 
@@ -4046,18 +4104,32 @@ strengthened by informing readers the relative importance of shunting currents
 to these other factors, and how the simulations in this manuscript improve and 
 or contradict those previous reports.
 
-***** Vaidya and Johnston demonstrate that realistic transfer resonance frequencies and 
+***** Thank you for pointing out the relevance of these two studies.  We hope that
+we have addressed how our study relates to that work by including the following in 
+the Discussion:
+
+Vaidya and Johnston (2013) demonstrated that realistic transfer resonance frequencies and 
 synchronous frequencies in hippocampal PCs are best achieved with HCN channel density increasing linearly with 
 distance from the soma, as in {\bf model 1}, or distributed following a sigmoid function,
-as in {\bf model 5}. Similarly, we found realistic transfer and synchronous frequencies when HCN and TASK-like channel distributions
-are either linear or sigmoidal (\fref{compareHayDura}).  The shape of a sigmoidal distribution (where channel density increases along the apical trunk and 
-saturates in the apical tufts) \cite{Harnett2015-sj}, as well as passive intracellular
-resistivity \cite{Fletcher2019-sm}, are both dependent on dendritic length. Futhermore, experimental evidence shows morphological, electrophysiological, and
-computational properties of PTs are closely related to anatomical location. While these morphologically-related factors no doubt 
-influence the properties of dendritic impedance, their precise contributions to resonance and synchrony are beyond the scope of this study. 
-Here we show two PT models with different apical trunk lengths and different distributions of HCN and TASK-like channels proucing  
-similar dendritic impedance properties, showing how degenracy of the impedance profiles may emerge.  However, factors like morphology and 
-intracellular resistivity may be strong contributors to the experimentally observed variance in impedance properties \cite{Ulrich2002-dd, Dembrow2015-zb}.
+as in {\bf model 5}.  Similarly, we found realistic transfer and synchronous frequencies when HCN and TASK-like channel distributions
+are either linear or sigmoidal (\fref{compareHayDura}).
+The shape of a sigmoidal distribution (where channel density increases along the apical trunk and 
+saturates in the apical tufts \cite{Harnett2015-sj}), as well as passive intracellular
+resistivity, are both dependent on dendritic length. Furthermore, 
+experimental evidence shows morphological, electrophysiological, and
+computational properties of PTs are closely related to anatomical location \cite{Fletcher2019-sm}.
+While these morphologically-related factors no doubt influence the properties of dendritic impedance, 
+determining their contributions to resonance and synchrony are beyond the scope of this study. 
+Here we show two PT models with different morphologies, apical trunk lengths, passive properties,
+and intracellular resistivities, \ca\ channel distributions, and distributions of HCN and TASK-like channels
+along their apical trunks produced similar dendritic impedance properties. 
+This demonstrates how degeneracy of the impedance profiles may emerge.  
+Impedance analysis of the apical trunk could not, however, provide any indication as to
+whether either of these channel distribution schemes are more likely to exist in real neurons.
+In fact, differences in channel distribution and other morphologically-related properties may 
+be strong contributors to the experimentally observed variance in impedance properties \cite{Ulrich2002-dd, Dembrow2015-zb}.
+Further investigation of the precise contributions of morphology, channel
+distribution, and intracellular resistivity to dendritic impedance in PTs is one avenue for our future work.
 
 *** Minor specific comments.
 **** 5. In Figure 6C, the y-axis is confusing. It is labelled Peak absolute impedance 
@@ -4068,8 +4140,10 @@ and have fixed the label.
  
 **** 6. Line 15, In the abstract Ih is referred to as a conductance. Ih as an 
 abbreviation is commonly thought of as referring to current.
+***** We have altered this sentence to read: "TASK-like channel density in this model was proportional to local HCN channel density"
 
 **** 7. Line 92, there is no period between sentences.
+***** This sentence has been deleted.
 
 **** 8. For the model representations/reconstructions, no distance scale bar is shown 
 in Figures 1, 2 and 8. It would be beneficial to understand how distances relate 

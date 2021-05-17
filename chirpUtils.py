@@ -189,6 +189,70 @@ def applyChirp(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
         return out
 
 # apply chirp stimulus to segment
+def applyChirpZin(I, t, seg, t0, delay, Fs, f1, out_file_name = None):
+
+    ## place current clamp on soma
+    stim = h.IClamp(seg)
+    stim.amp = 0
+    stim.dur = (t0+delay*2) * Fs + 1
+    I.play(stim._ref_amp, t)
+
+    ## Record time
+    t_vec = h.Vector()
+    t_vec.record(h._ref_t)
+
+    ## Record soma voltage
+    cis_v = h.Vector()
+    cis_v.record(seg._ref_v)
+    
+    ## run simulation
+    h.celsius = 34
+    h.tstop = (t0+delay*2) * Fs + 1
+    h.run()
+
+    current_np = np.interp(np.linspace(0, (t0+delay*2) * Fs, soma_np.shape[0], endpoint=True),
+                           np.linspace(0,(t0+delay*2) * Fs,(t0+delay*2) * Fs * 40 + 1,endpoint=True), I.as_numpy())
+    time = t_vec.as_numpy()
+    cis_np = cis_v.as_numpy()
+    
+    samp_rate = (1 / (time[1] - time[0])) * Fs
+    
+    ## calculate impedance
+    Freq, ZinAmp, ZinPhase, ZinRes, ZinReact, ZinResAmp, ZinResFreq, QfactorIn, fVarIn = zMeasures(current_np, cis_np,  delay, samp_rate, f1, bwinsz=5)
+
+    freqsIn = np.argwhere(ZinPhase > 0)
+    if len(freqsIn) > 0:
+        ZinSynchFreq = Freq[freqsIn[-1]]
+        ZinPhaseL = np.trapz([float(ZinPhase[ind]) for ind in freqsIn], 
+            [float(Freq[ind]) for ind in freqsIn])
+    else:
+        ZinSynchFreq = 0 
+        ZinPhaseL = 0
+
+    ## generate output
+    out = {'Freq' : Freq,
+        'ZinRes' : ZinRes,
+        'ZinReact' : ZinReact,
+        'ZinAmp' : ZinAmp,
+        'ZinPhase' : ZinPhase,
+        'ZinSynchFreq' : ZinSynchFreq,
+        'ZinPhaseL' : ZinPhaseL,
+        'ZinResAmp' : ZinResAmp,
+        'ZinResFreq' : ZinResFreq,
+        'QfactorIn' : QfactorIn,
+        'fVarIn' : fVarIn}
+
+    out2 = {'cis_np' : cis_np,
+            'time' : time,
+            'current_np' : current_np}
+
+    if out_file_name:
+        savemat(out_file_name + '.mat', out)
+        savemat(out_file_name + '_traces.mat', out2)
+    else:
+        return out
+
+# apply chirp stimulus to segment
 def applyChirpHighFs(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None):
     h.dt = 0.005
     ## place current clamp on soma
@@ -391,10 +455,10 @@ def applyChirpVarDt(I, t, seg, soma_seg, t0, delay, Fs, f1, out_file_name = None
 # setup gaussian white noise for STA
 def getNoise(avg, std, t0, amp, Fs, delay):
     time = np.linspace(0,t0+delay*2, (t0+delay*2)*Fs+1)
-    means = np.zeros(t0*Fs+1)
+    means = [avg for i in range(int(t0*Fs+1))]
     stds = np.repeat(std,t0*Fs+1)
     ch = np.random.normal(means, stds, (t0)*Fs+1)
-    ch = np.hstack((np.zeros(Fs*delay), ch, np.zeros(Fs*delay)))
+    ch = np.hstack((np.add(np.zeros(Fs*delay),avg), ch, np.add(np.zeros(Fs*delay),avg)))
     vch = h.Vector(); vch.from_python(ch); vch.mul(amp)
     vtt = h.Vector(); vtt.from_python(time); vtt.mul(Fs)
     return vch, vtt

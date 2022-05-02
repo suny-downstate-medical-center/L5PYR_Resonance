@@ -8,13 +8,19 @@
 # Craig Kelley 9/1/2020
 
 ## load single cell from Dura-Bernal et al. 2019
-from getCells import M1Cell # see getCells.py for other cell model options
-s = M1Cell()
-sec_num = 'apic_20' # indicates stimulated section
-loc = 0.5 # indicates stimulated compartment (0-1)
-seg = s.net.cells[0].secs[sec_num]['hObj'](loc)
-soma_seg = s.net.cells[0].secs['soma']['hObj'](0.5)
+# from getCells import M1Cell # see getCells.py for other cell model options
+# s = M1Cell()
+# sec_num = 'apic_20' # indicates stimulated section
+# loc = 0.5 # indicates stimulated compartment (0-1)
+# seg = s.net.cells[0].secs[sec_num]['hObj'](loc)
+# soma_seg = s.net.cells[0].secs['soma']['hObj'](0.5)
 # seg = soma_seg 
+
+from getCells import HayCellMig
+cell, _ = HayCellMig()
+soma_seg = cell.soma[0](0.5)
+loc = 0.5 
+seg = cell.apic[14](0.5)
 
 ## record voltages
 from neuron import h, gui

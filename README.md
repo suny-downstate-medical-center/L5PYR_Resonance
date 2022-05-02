@@ -14,10 +14,12 @@ Clone this repository using 'git'
 git clone https://github.com/suny-downstate-medical-center/L5PYR_Resonance.git
 ```
 
+<!-- Compile .mod files for the cell model(s) you want to use.  To run *init.py*, you
+need to compile the .mod files from Dura-Bernal et al. 2019 in './models/DuraBernal'. -->
 Compile .mod files for the cell model(s) you want to use.  To run *init.py*, you
-need to compile the .mod files from Dura-Bernal et al. 2019 in './models/DuraBernal'.
+need to compile the .mod files from Hay et al. 2011 in './models/Hay'.
 ```
-cd L5PYR_Resonance/models/DuraBernal/
+cd L5PYR_Resonance/models/Hay/
 nrnivmodl mod
 cd ../../
 ```

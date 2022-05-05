@@ -14,8 +14,6 @@ Clone this repository using 'git'
 git clone https://github.com/suny-downstate-medical-center/L5PYR_Resonance.git
 ```
 
-<!-- Compile .mod files for the cell model(s) you want to use.  To run *init.py*, you
-need to compile the .mod files from Dura-Bernal et al. 2019 in './models/DuraBernal'. -->
 Compile .mod files for the cell model(s) you want to use.  To run *init.py*, you
 need to compile the .mod files from Hay et al. 2011 in './models/Hay'.
 ```
@@ -26,7 +24,15 @@ cd ../../
 To run an example simulation and compute impedance profiles for a single dendritic
 compartment:
 ```
-python -i init.py
+python3 -i init.py
+```
+
+To simulate chirp stimulation in the model neuron from Dura-Bernal et al. 2019,
+run the following:
+```
+cd L5PYR_Resonance/models/DuraBernal
+nrnivmodl mod
+python3 -i runChirp.py
 ```
 
 # Code
